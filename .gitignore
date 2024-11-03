@@ -1,0 +1,36 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+/node_modules
+/package-lock.json
+/yarn.lock
+
+# Compiled output
+/dist
+/out-tsc
+
+# Angular build
+/.angular
+
+# Temporary files
+/tmp
+/temp
+
+# IDE settings (optional, based on your editor)
+/.vscode/
+/.idea/
+/*.suo
+/*.ntvs
+/*.njsproj
+/*.sln
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Testing
+/coverage
+
+# Environment files (if sensitive data is stored)
+*.env
+src/environments/environment.*.ts
