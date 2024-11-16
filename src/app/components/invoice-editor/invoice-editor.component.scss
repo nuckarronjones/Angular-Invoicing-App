@@ -1,0 +1,25 @@
+form{
+    margin-top:3rem;
+}
+
+.flex-container {
+    display: flex;               /* Enables Flexbox */
+    justify-content: space-between; /* Optional: Add space between columns */
+  }
+  
+.flex-column {
+    flex: 1;                    /* Allows the column to grow and fill space */
+    /* Optional: To ensure each column takes up 50% */
+    max-width: 47%;            /* Optional: Adds padding inside the columns */
+    box-sizing: border-box;     /* Includes padding and border in the element's total width and height */
+}
+
+.input-group {
+  display: inline-block;
+  padding:5px;
+}
+
+
+label {
+  margin-bottom: 0.5rem;    /* Space between the label and input */
+}

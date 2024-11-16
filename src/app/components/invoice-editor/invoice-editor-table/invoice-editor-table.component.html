@@ -1,0 +1,33 @@
+<h3>Invoice Entries</h3>
+<div class="table-container">
+  <p-table [value]="tableRows" class="custom-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of columns" [class]="col.class">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-tableRows>
+      <tr>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
+        <td><i class="pi pi-trash" style="font-size: 1rem; color:red; opacity:.5"></i></td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <button
+    id="addTableRow"
+    pButton
+    pRipple
+    label="Add Row"
+    class="p-button-success"
+    (click)="addTableRow()"
+  ></button>
+</div>

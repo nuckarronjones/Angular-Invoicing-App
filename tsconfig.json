@@ -3,6 +3,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "noUnusedLocals": true,  // Report errors for unused locals (including imports)
+    "noUnusedParameters": true,  // Report errors for unused function parameters
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
