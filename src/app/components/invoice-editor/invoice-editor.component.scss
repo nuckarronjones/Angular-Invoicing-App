@@ -1,0 +1,54 @@
+form {
+  margin-top: 3rem;
+}
+
+.flex-container {
+  display: flex; /* Enables Flexbox */
+  justify-content: space-between; /* Optional: Add space between columns */
+}
+
+.flex-column {
+  flex: 1; 
+  max-width: 47%; 
+  box-sizing: border-box; 
+}
+
+.input-group {
+  display: inline-block;
+  padding: 5px;
+}
+
+label {
+  margin-bottom: 0.5rem; /* Space between the label and input */
+}
+
+#invoiceTotals {
+  width:100%;
+  display: flex;
+  justify-content: end;
+}
+
+#invoiceTotals table{
+  width:30% !important;
+}
+
+#invoiceTotals  table  td {
+  padding: .8rem; 
+}
+
+#invoiceTotals  table  td {
+  padding: .8rem; 
+}
+
+#invoiceTotals table td:not(:first-child) {
+  text-align: center;
+}
+
+#invoiceTotals table {
+  border-collapse: collapse; /* Remove gaps between cells */
+  width: 100%; /* Optional: Makes the table span the container */
+}
+
+#invoiceTotals table tr {
+  border-bottom: 2px solid grey; /* Apply underline to the entire row */
+}

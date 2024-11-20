@@ -1,0 +1,21 @@
+tr > td {
+    padding: .5rem !important;
+}
+
+.table-container {
+    border: 2px solid #eee;
+    padding-bottom:3rem;
+    position: relative;
+    margin-bottom:50px;
+}
+
+#addTableRows {
+    position: absolute;
+    bottom: -20px;
+    left:1rem;
+}
+
+input{
+    width:100%;
+    padding: .5rem;
+}

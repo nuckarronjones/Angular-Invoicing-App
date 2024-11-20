@@ -1,0 +1,234 @@
+<form>
+  <div class="flex-container">
+    <div class="flex-column">
+      <div class="input-group w-50">
+        <label for="invoiceNo">Invoice No:</label>
+        <input
+          id="invoiceNo"
+          name="invoiceNo"
+          pInputText
+          placeholder="Enter Invoice No"
+          class="w-100"
+          [(ngModel)]="invoiceData.invoiceNo"
+        />
+      </div>
+      <div class="input-group w-50">
+        <label for="invoiceDate">Invoice Date:</label>
+        <input
+          id="invoiceDate"
+          type="date"
+          name="invoiceDate"
+          pInputText
+          placeholder="Enter Invoice Date"
+          class="w-100"
+          [(ngModel)]="invoiceData.invoiceDate"
+        />
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+  <hr />
+
+  <br />
+
+  <div class="flex-container">
+    <div class="flex-column">
+      <div class="input-group w-100">
+        <label for="seller">Seller:</label>
+        <input
+          id="seller"
+          name="seller"
+          pInputText
+          placeholder="Enter Seller Information"
+          class="w-100"
+          [(ngModel)]="invoiceData.seller"
+        />
+      </div>
+
+      <div class="input-group w-100">
+        <label for="VAT">VAT ID:</label>
+        <input
+          id="VAT"
+          name="VAT"
+          pInputText
+          placeholder="Enter VAT"
+          class="w-100"
+          [(ngModel)]="invoiceData.vatId"
+        />
+      </div>
+
+      <div class="input-group w-100">
+        <label for="streetNo">Street and No:</label>
+        <input
+          id="streetNo"
+          name="streetNo"
+          pInputText
+          placeholder="Enter Street and No"
+          class="w-100"
+          [(ngModel)]="invoiceData.streetNo"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="postCode">Post Code:</label>
+        <input
+          id="postCode"
+          name="postCode"
+          pInputText
+          placeholder="Enter Post Code"
+          class="w-100"
+          [(ngModel)]="invoiceData.postCode"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="city">City:</label>
+        <input
+          id="city"
+          name="city"
+          pInputText
+          placeholder="Enter City"
+          class="w-100"
+          [(ngModel)]="invoiceData.city"
+        />
+      </div>
+
+      <div class="input-group w-100">
+        <label for="bankAccount">Bank Account:</label>
+        <input
+          id="bankAccount"
+          name="bankAccount"
+          pInputText
+          placeholder="Enter Bank Account"
+          class="w-100"
+          [(ngModel)]="invoiceData.bankAccount"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="bank">Bank:</label>
+        <input
+          id="bank"
+          name="bank"
+          pInputText
+          placeholder="Enter Bank"
+          class="w-100"
+          [(ngModel)]="invoiceData.bank"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="swift">Swift:</label>
+        <input
+          id="swift"
+          name="swift"
+          pInputText
+          placeholder="Enter Swift"
+          class="w-100"
+          [(ngModel)]="invoiceData.swift"
+        />
+      </div>
+    </div>
+
+    <div class="flex-column">
+      <div class="input-group w-100">
+        <label for="buyer">Buyer:</label>
+        <input
+          id="buyer"
+          name="buyer"
+          pInputText
+          placeholder="Enter Buyer Information"
+          class="w-100"
+          [(ngModel)]="invoiceData.buyer"
+        />
+      </div>
+
+      <div class="input-group w-100">
+        <label for="buyerVAT">VAT ID:</label>
+        <input
+          id="buyerVAT"
+          name="buyerVAT"
+          pInputText
+          placeholder="Enter Buyer VAT"
+          class="w-100"
+          [(ngModel)]="invoiceData.buyerVAT"
+        />
+      </div>
+
+      <div class="input-group w-100">
+        <label for="buyerStreetNo">Street and No:</label>
+        <input
+          id="buyerStreetNo"
+          name="buyerStreetNo"
+          pInputText
+          placeholder="Enter Buyer Street and No"
+          class="w-100"
+          [(ngModel)]="invoiceData.buyerStreetNo"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="buyerPostCode">Post Code:</label>
+        <input
+          id="buyerPostCode"
+          name="buyerPostCode"
+          pInputText
+          placeholder="Enter Buyer Post Code"
+          class="w-100"
+          [(ngModel)]="invoiceData.buyerPostCode"
+        />
+      </div>
+
+      <div class="input-group w-50">
+        <label for="buyerCity">City:</label>
+        <input
+          id="buyerCity"
+          name="buyerCity"
+          pInputText
+          placeholder="Enter Buyer City"
+          class="w-100"
+          [(ngModel)]="invoiceData.buyerCity"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+
+<br />
+
+<hr />
+
+<br />
+
+<app-invoice-editor-table (formChanges)="reCalculateTotals($event)" />
+
+<div id="invoiceTotals">
+  <table>
+    <tbody>
+      <tr>
+        <td><b>Net Total</b></td>
+        <td>{{invoiceData.netTotal}}</td>
+        <td>{{invoiceData.currency}}</td>
+      </tr>
+      <tr>
+        <td><b>VAT Total</b></td>
+        <td>{{invoiceData.vatTotal}}</td>
+        <td>{{invoiceData.currency}}</td>
+      </tr>
+      <tr>
+        <td><b>Gross Total</b></td>
+        <td>{{invoiceData.grossTotal}}</td>
+        <td>{{invoiceData.currency}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<br />
+
+<hr />
+
+<p-button label="Submit" />
