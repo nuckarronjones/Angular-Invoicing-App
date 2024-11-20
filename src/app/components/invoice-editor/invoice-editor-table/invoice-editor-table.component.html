@@ -9,21 +9,73 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-tableRows>
-      <tr>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><input id="city" name="city" pInputText class="w-100 p-2" /></td>
-        <td><i class="pi pi-trash" style="font-size: 1rem; color:red; opacity:.5"></i></td>
+    <ng-template pTemplate="body" let-tablerows>
+      <tr [id]="tablerows.rowId">
+        <td>
+          <input
+            name="name"
+            pInputText
+            class="w-100 p-2"
+            [(ngModel)]="tablerows.name"
+            (ngModelChange)="updateCalculations(tablerows.rowId)"
+          />
+        </td>
+        <td>
+          <input
+            name="quantity"
+            type="number"
+            pInputText
+            class="w-100 p-2"
+            [(ngModel)]="tablerows.quantity"
+            (ngModelChange)="updateCalculations(tablerows.rowId)"
+          />
+        </td>
+        <td>
+          <input
+            name="quantUnit"
+            type="number"
+            pInputText
+            class="w-100 p-2"
+            [(ngModel)]="tablerows.quantUnit"
+            (ngModelChange)="updateCalculations(tablerows.rowId)"
+          />
+        </td>
+        <td>
+          <input
+            name="unitNetPrice"
+            type="number"
+            pInputText
+            class="w-100 p-2"
+            [(ngModel)]="tablerows.unitNetPrice"
+            (ngModelChange)="updateCalculations(tablerows.rowId)"
+          />
+        </td>
+        <td>
+          <input
+            name="vatPercentage"
+            type="number"
+            pInputText
+            class="w-100 p-2"
+            [(ngModel)]="tablerows.vatPercentage"
+            (ngModelChange)="updateCalculations(tablerows.rowId)"
+          />
+        </td>
+        <td><input name="totalNet" pInputText class="w-100 p-2" readonly /></td>
+        <td>
+          <input name="totalGross" pInputText class="w-100 p-2" readonly />
+        </td>
+        <td>
+          <i
+            class="pi pi-trash"
+            style="font-size: 1rem; color: red; opacity: 0.5"
+            (click)="deleteRow(tablerows.rowId)"
+          ></i>
+        </td>
       </tr>
     </ng-template>
   </p-table>
   <button
-    id="addTableRow"
+    id="addTableRows"
     pButton
     pRipple
     label="Add Row"

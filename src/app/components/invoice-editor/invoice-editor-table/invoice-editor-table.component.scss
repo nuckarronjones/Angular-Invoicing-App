@@ -6,12 +6,16 @@ tr > td {
     border: 2px solid #eee;
     padding-bottom:3rem;
     position: relative;
-    margin-bottom:1000px;
+    margin-bottom:50px;
 }
 
-#addTableRow {
+#addTableRows {
     position: absolute;
     bottom: -20px;
     left:1rem;
 }
-  
+
+input{
+    width:100%;
+    padding: .5rem;
+}
