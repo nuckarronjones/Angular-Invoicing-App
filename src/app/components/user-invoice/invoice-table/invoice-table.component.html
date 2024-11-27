@@ -1,4 +1,12 @@
-<h3>Invoice Entries</h3>
+
+<ng-container *ngIf="editMode">
+  <b>Invoice Entries</b>
+</ng-container>
+
+<br>
+
+<br>
+
 <div class="table-container">
   <p-table [value]="tableRows" class="custom-table">
     <ng-template pTemplate="header">
@@ -16,6 +24,7 @@
             name="name"
             pInputText
             class="w-100 p-2"
+            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.name"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -26,6 +35,7 @@
             type="number"
             pInputText
             class="w-100 p-2"
+            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.quantity"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -36,6 +46,7 @@
             type="number"
             pInputText
             class="w-100 p-2"
+            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.quantUnit"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -46,6 +57,7 @@
             type="number"
             pInputText
             class="w-100 p-2"
+            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.unitNetPrice"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -56,16 +68,31 @@
             type="number"
             pInputText
             class="w-100 p-2"
+            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.vatPercentage"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
         </td>
-        <td><input name="totalNet" pInputText class="w-100 p-2" readonly /></td>
         <td>
-          <input name="totalGross" pInputText class="w-100 p-2" readonly />
+          <input
+            name="totalNet"
+            [ngClass]="{ 'print-mode': !editMode }"
+            pInputText
+            class="w-100 p-2"
+            readonly
+          />
         </td>
         <td>
-          <i
+          <input
+            name="totalGross"
+            [ngClass]="{ 'print-mode': !editMode }"
+            pInputText
+            class="w-100 p-2"
+            readonly
+          />
+        </td>
+        <td>
+          <i *ngIf="editMode"
             class="pi pi-trash"
             style="font-size: 1rem; color: red; opacity: 0.5"
             (click)="deleteRow(tablerows.rowId)"
@@ -74,7 +101,9 @@
       </tr>
     </ng-template>
   </p-table>
+
   <button
+    *ngIf="editMode"
     id="addTableRows"
     pButton
     pRipple

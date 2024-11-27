@@ -1,9 +1,16 @@
 import { Component } from "@angular/core";
 import { InputTextModule } from "primeng/inputtext";
-import { FormsModule } from "@angular/forms"; // Import FormsModule
-import { InvoiceEditorTableComponent } from "./invoice-editor-table/invoice-editor-table.component";
+import { FormsModule } from "@angular/forms";
+import { InvoiceEditorTableComponent } from "./invoice-table/invoice-table.component";
 import { CalendarModule } from "primeng/calendar";
 import { TableModule } from "primeng/table";
+import { InputFieldComponent } from "../../ui/input-field/input-field.component";
+import { NgFor, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
+import { ImageUploadComponent } from "./image-upload/image-upload.component";
+import { formFields } from "./form-fields.model";
+
+import { EditorNavbarComponent } from "./editor-navbar/editor-navbar.component";
 
 interface ITableUserInputs {
   rowId: string;
@@ -17,20 +24,28 @@ interface ITableUserInputs {
 }
 
 @Component({
-  selector: "app-invoice-editor",
+  selector: "app-user-invoice",
   standalone: true,
   imports: [
     InputTextModule,
     FormsModule,
     InvoiceEditorTableComponent,
     CalendarModule,
-    TableModule
+    TableModule,
+    EditorNavbarComponent,
+    InputFieldComponent,
+    NgFor,
+    NgIf,
+    NgClass,
+    ImageUploadComponent
   ],
-  templateUrl: "./invoice-editor.component.html",
-  styleUrl: "./invoice-editor.component.scss",
+  templateUrl: "./user-invoice.component.html",
+  styleUrl: "./user-invoice.component.scss",
 })
-export class InvoiceEditorComponent {
+export class UserInvoiceComponent {
   public tableData: ITableUserInputs[] = [];
+  public editMode = true;
+  public formFields = formFields;
 
   public invoiceData = {
     invoiceNo: "",
@@ -55,7 +70,11 @@ export class InvoiceEditorComponent {
     grossTotal: "",
   };
 
-  reCalculateTotals(tableRows: ITableUserInputs[]) {
+  public saveImageUrl(event : string ):void{
+    this.formFields.headerImage = event;
+  }
+
+  public reCalculateTotals(tableRows: ITableUserInputs[]):void {
     this.invoiceData.tableData = tableRows;
 
     this.invoiceData.netTotal = calculateTotal("totalNet");
@@ -71,9 +90,12 @@ export class InvoiceEditorComponent {
         }
       });
 
-      return accumulator ? accumulator.toString() : '';
+      return accumulator ? accumulator.toString() : "";
     }
-
-    console.log(this.invoiceData);
   }
+
+  changeEditMode() {
+    this.editMode = !this.editMode;
+  }
+  
 }

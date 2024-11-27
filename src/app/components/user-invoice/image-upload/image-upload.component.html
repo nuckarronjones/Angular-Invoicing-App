@@ -1,0 +1,33 @@
+<div class="logo-container">
+  <div *ngIf="editMode; else printMode">
+    <div
+      *ngIf="!imageUrl; else showLogo"
+      class="drop-zone"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event)"
+    >
+      <span>
+        Drop Your Logo Here
+        <i class="pi pi-upload"></i>
+      </span>
+    </div>
+
+    <ng-template #showLogo>
+      <img
+        [src]="imageUrl"
+        alt="Dropped Image"
+        style="max-width: 100%; height: auto"
+      />
+    </ng-template>
+  </div>
+
+  <ng-template #printMode>
+    <div *ngIf="headerImageUrl">
+      <img
+        [src]="headerImageUrl"
+        alt="Dropped Image"
+        style="max-width: 100%; height: auto"
+      />
+    </div>
+  </ng-template>
+</div>

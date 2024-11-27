@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
+import { NgIf } from "@angular/common";
 
 interface tableUserInputs {
   rowId: string;
@@ -19,12 +20,14 @@ interface tableUserInputs {
 @Component({
   selector: "app-invoice-editor-table",
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, FormsModule],
-  templateUrl: "./invoice-editor-table.component.html",
-  styleUrls: ["./invoice-editor-table.component.scss"],
+  imports: [TableModule, CommonModule, ButtonModule, FormsModule, NgIf],
+  templateUrl: "./invoice-table.component.html",
+  styleUrls: ["./invoice-table.component.scss"],
 })
+
 export class InvoiceEditorTableComponent {
   @Input() userInvoiceEntries?: tableUserInputs[];
+  @Input() editMode!: boolean;
   @Output()formChanges = new EventEmitter();
   tableRows: tableUserInputs[] = []; //Row data will be inserted upon saving the changes
 
@@ -39,9 +42,8 @@ export class InvoiceEditorTableComponent {
     { field: "", header: "" },
   ];
 
-  addTableRow(): void {
+  public addTableRow(): void {
     const rowId = uuidv4();
-
     this.tableRows.push({
       rowId: rowId,
       name: "",
@@ -54,7 +56,7 @@ export class InvoiceEditorTableComponent {
     });
   }
   
-  updateCalculations(rowId: string): void {
+  public updateCalculations(rowId: string): void {
     const tableRow = document.getElementById(`${rowId}`);
     const tableRowArrayObject = this.tableRows.find((obj)=> obj.rowId === rowId)
 
@@ -84,7 +86,7 @@ export class InvoiceEditorTableComponent {
     }
   }
 
-  deleteRow(id : string) : void{
+  public deleteRow(id : string) : void{
     this.tableRows = this.tableRows.filter((row)=>{
       return row.rowId !== id;
     })

@@ -1,47 +1,73 @@
+//***PRIMENG OVERRIDES//
+.p-menubar{
+  border:none !important;
+}
+
+//***GLOBAL//
 .container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-} 
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.flex-container {
+  margin: 0 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.mb-5 {
+  margin-bottom: 2rem;
+}
+
+.mt-5 {
+  margin-top: 2rem;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.w-auto {
+  width: auto;
+}
+
 @media (min-width: 576px) {
-    .container {
-        width: 540px;
-    }
+  .container {
+    width: 540px;
+  }
 }
 @media (min-width: 768px) {
-    .container {
-        width: 720px;
-    }
+  .container {
+    width: 720px;
+  }
 }
 @media (min-width: 992px) {
-    .container {
-        width: 960px;
-    }
+  .container {
+    width: 960px;
+  }
 }
 @media (min-width: 1200px) {
-    .container {
-        width: 1140px;
-    }
-}
-
-.w-100{
-    width:100%;
-}
-
-.w-75{
-    width:75%;
-}
-
-.w-50{
-    width:50%;
-}
-
-.w-40{
-    width:40%;
-}
-
-.w-25{
-    width:25%;
+  .container {
+    width: 1140px;
+  }
 }
