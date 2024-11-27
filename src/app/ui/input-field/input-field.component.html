@@ -1,0 +1,14 @@
+<div class="field-container" [ngClass]="class">
+  <label [for]="id">{{ label }} </label>
+
+  <input
+    class="input-field w-100"
+    [type]="inputType"
+    [id]="id"
+    [placeholder]="placeholder"
+    [value]="value"
+    [(ngModel)]="inputValue"
+    (ngModelChange)="updatedInputValue.emit($event)"
+    pInputText
+  />  
+</div>

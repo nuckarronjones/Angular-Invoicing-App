@@ -1,0 +1,29 @@
+tr > td {
+  padding: 0.5rem !important;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.table-container {
+  border: 2px solid #eee;
+  padding-bottom: 3rem;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+#addTableRows {
+  position: absolute;
+  bottom: -20px;
+  left: 1rem;
+}
+
+.print-mode {
+  outline: none !important;
+  border: none !important;
+  pointer-events: none; /* Prevent interactions like clicks and typing */
+  user-select: none;
+  font-size: 18px;
+}
