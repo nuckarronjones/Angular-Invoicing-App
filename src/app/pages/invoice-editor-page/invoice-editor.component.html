@@ -1,0 +1,7 @@
+<ng-container *ngIf="invoiceEditModeService.editMode$ | async; else printMode">
+  <app-edit-mode></app-edit-mode>
+</ng-container>
+
+<ng-template #printMode>
+  <app-print-mode></app-print-mode>
+</ng-template>

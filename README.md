@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Branch Naming Conventions
+Use the following prefixes for branch names:
+- `feature/`: For new features or enhancements
+- `bugfix/`: For fixing bugs
+- `chore/`: For maintenance tasks or refactoring
+- `hotfix/`: For urgent fixes in production
+- `task/`: For general or unclassified tasks
+- `refactor/`: For code refactoring

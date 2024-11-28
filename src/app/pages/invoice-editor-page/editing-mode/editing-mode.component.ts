@@ -1,16 +1,20 @@
 import { Component } from "@angular/core";
-import { InputTextModule } from "primeng/inputtext";
+import { NgIf, NgFor } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { InvoiceEditorTableComponent } from "./invoice-table/invoice-table.component";
+
+import { InputTextModule } from "primeng/inputtext";
 import { CalendarModule } from "primeng/calendar";
 import { TableModule } from "primeng/table";
-import { InputFieldComponent } from "../../ui/input-field/input-field.component";
-import { NgFor, NgIf } from "@angular/common";
-import { NgClass } from "@angular/common";
-import { ImageUploadComponent } from "./image-upload/image-upload.component";
-import { formFields } from "./form-fields.model";
 
-import { EditorNavbarComponent } from "./editor-navbar/editor-navbar.component";
+import { InvoiceEditorTableComponent } from "../../../ui/invoice-table/invoice-table.component";
+import { InputFieldComponent } from "../../../ui/input-field/input-field.component";
+import { ImageUploadComponent } from "./image-upload/image-upload.component";
+import { EditorNavbarComponent } from "../editor-navbar/editor-navbar.component";
+
+import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
+
+import { formFields } from "../../../models/form-fields.model";
+
 
 interface ITableUserInputs {
   rowId: string;
@@ -24,7 +28,7 @@ interface ITableUserInputs {
 }
 
 @Component({
-  selector: "app-user-invoice",
+  selector: "app-edit-mode",
   standalone: true,
   imports: [
     InputTextModule,
@@ -36,13 +40,13 @@ interface ITableUserInputs {
     InputFieldComponent,
     NgFor,
     NgIf,
-    NgClass,
     ImageUploadComponent
   ],
-  templateUrl: "./user-invoice.component.html",
-  styleUrl: "./user-invoice.component.scss",
+  templateUrl: "./editing-mode.component.html",
+  styleUrl: "./editing-mode.component.scss",
 })
-export class UserInvoiceComponent {
+export class EditingModeComponent {
+  constructor(public invoiceEditModeService: InvoiceEditModeService){}
   public tableData: ITableUserInputs[] = [];
   public editMode = true;
   public formFields = formFields;
@@ -92,10 +96,6 @@ export class UserInvoiceComponent {
 
       return accumulator ? accumulator.toString() : "";
     }
-  }
-
-  changeEditMode() {
-    this.editMode = !this.editMode;
   }
   
 }

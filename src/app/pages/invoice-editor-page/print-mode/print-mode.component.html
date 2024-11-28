@@ -1,5 +1,5 @@
 <div class="editorNavbarContainer">
-  <app-editor-navbar (changeEditMode)="changeEditMode()" />
+  <app-editor-navbar/>
 </div>
 
 <form id="form-container">
@@ -9,23 +9,9 @@
     <header class="flex-container">
       <section class="flex-column">
         <ng-container *ngFor="let headerField of formFields.header">
-          <ng-container *ngIf="editMode; else printMode">
-            <app-input-field
-              [id]="headerField.id"
-              [inputType]="headerField.inputType"
-              [label]="headerField.label"
-              [placeholder]="headerField.placeholder"
-              [value]="headerField.value"
-              [class]="headerField.style"
-              (updatedInputValue)="headerField.setValue($event)"
-            ></app-input-field>
-          </ng-container>
-
-          <ng-template #printMode>
             <div class="input-value w-100">
               <b>{{ headerField.label }}</b> {{ headerField.value }}
             </div>
-          </ng-template>
         </ng-container>
       </section>
 
@@ -42,33 +28,19 @@
     <hr class="mb-5 mt-5" />
 
     <section class="flex-container mt-5 mb-5">
-      <ng-container *ngIf="!editMode">
         <div class="flex-column">
           <h1>Buyer:</h1>
         </div>
         <div class="flex-column">
           <h1>Seller:</h1>
         </div>
-      </ng-container>
     </section>
 
     <body class="flex-container">
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'left'">
-            <ng-container *ngIf="editMode; else printMode">
-              <app-input-field
-                [id]="formField.id"
-                [inputType]="formField.inputType"
-                [label]="formField.label"
-                [placeholder]="formField.placeholder"
-                [value]="formField.value"
-                [class]="formField.style"
-                (updatedInputValue)="formField.setValue($event)"
-              ></app-input-field>
-            </ng-container>
 
-            <ng-template #printMode>
               <ng-container
                 *ngIf="formField.style.includes('w-50'); else fullWidth"
               >
@@ -83,7 +55,6 @@
                   <span>{{ formField.value }}</span>
                 </div>
               </ng-template>
-            </ng-template>
           </ng-container>
         </ng-container>
       </div>
@@ -91,21 +62,6 @@
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'right'">
-            <!-- If editMode is true -->
-            <ng-container *ngIf="editMode; else printMode">
-              <app-input-field
-                [id]="formField.id"
-                [inputType]="formField.inputType"
-                [label]="formField.label"
-                [placeholder]="formField.placeholder"
-                [value]="formField.value"
-                [class]="formField.style"
-                (updatedInputValue)="formField.setValue($event)"
-              ></app-input-field>
-            </ng-container>
-
-            <!-- Else block for displaying the value -->
-            <ng-template #printMode>
               <ng-container
                 *ngIf="formField.style.includes('w-50'); else fullWidth"
               >
@@ -120,7 +76,6 @@
                   <span>{{ formField.value }}</span>
                 </div>
               </ng-template>
-            </ng-template>
           </ng-container>
         </ng-container>
       </div>
@@ -129,8 +84,7 @@
     <div class="mb-5"></div>
 
     <app-invoice-editor-table
-      [editMode]="editMode"
-      (formChanges)="reCalculateTotals($event)"
+      [editMode]="false"
     />
 
     <footer id="invoiceTotals">

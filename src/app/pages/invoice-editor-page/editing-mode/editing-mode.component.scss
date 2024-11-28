@@ -1,0 +1,73 @@
+.editorNavbarContainer{
+  margin-top:50px;
+}
+
+*{
+  font-size:15pt;
+}
+
+#form-container{
+  width: 100%;
+  align-content: center;
+  justify-items: center;
+}
+
+form {
+  margin-top: 3rem;
+}
+
+#printable-area{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  box-shadow: 1px 3px 5px #000000bf;
+  zoom: .65;
+  width: 1240px;
+  height: 1754px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.flex-column {
+  flex: 1; 
+  max-width: 47%; 
+  box-sizing: border-box; 
+}
+
+.formFieldValue{
+  width:auto;
+}
+.input-value{
+  margin-bottom:20px;
+}
+
+label {
+  margin-bottom: 0.5rem; /* Space between the label and input */
+}
+#invoiceTotals {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  
+  table {
+    width: 30% !important;
+    border-collapse: collapse;
+    
+    td {
+      padding: 0.8rem;
+      text-align: center;
+
+      &:not(:first-child) {
+        text-align: center;
+      }
+    }
+
+    tr {
+      border-bottom: 2px solid grey;
+    }
+  }
+}

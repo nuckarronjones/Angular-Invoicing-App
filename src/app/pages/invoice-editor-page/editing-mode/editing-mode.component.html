@@ -1,0 +1,107 @@
+<div class="editorNavbarContainer">
+  <app-editor-navbar/>
+</div>
+
+<form id="form-container">
+  <div id="printable-area">
+    <header class="flex-container">
+      <section class="flex-column">
+        <ng-container *ngFor="let headerField of formFields.header">
+          <app-input-field
+            [id]="headerField.id"
+            [inputType]="headerField.inputType"
+            [label]="headerField.label"
+            [placeholder]="headerField.placeholder"
+            [value]="headerField.value"
+            [class]="headerField.style"
+            (updatedInputValue)="headerField.setValue($event)"
+          ></app-input-field>
+        </ng-container>
+      </section>
+
+      <section class="flex-column">
+        <app-image-upload
+          [editMode]="editMode"
+          [headerImageUrl]="formFields.headerImage"
+          (saveImageUrl)="saveImageUrl($event)"
+        ></app-image-upload>
+      </section>
+    </header>
+
+    <hr class="mb-5 mt-5" />
+
+    <body class="flex-container">
+      <div class="flex-column">
+        <ng-container *ngFor="let formField of formFields.body">
+          <ng-container *ngIf="formField.column === 'left'">
+            <app-input-field
+              [id]="formField.id"
+              [inputType]="formField.inputType"
+              [label]="formField.label"
+              [placeholder]="formField.placeholder"
+              [value]="formField.value"
+              [class]="formField.style"
+              (updatedInputValue)="formField.setValue($event)"
+            ></app-input-field>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="flex-column">
+        <ng-container *ngFor="let formField of formFields.body">
+          <ng-container *ngIf="formField.column === 'right'">
+            <app-input-field
+              [id]="formField.id"
+              [inputType]="formField.inputType"
+              [label]="formField.label"
+              [placeholder]="formField.placeholder"
+              [value]="formField.value"
+              [class]="formField.style"
+              (updatedInputValue)="formField.setValue($event)"
+            ></app-input-field>
+          </ng-container>
+        </ng-container>
+      </div>
+    </body>
+
+    <div class="mb-5"></div>
+
+    <app-invoice-editor-table
+      [editMode]="true"
+      (formChanges)="reCalculateTotals($event)"
+    />
+
+    <footer id="invoiceTotals">
+      <table>
+        <tbody>
+          <tr>
+            <td><b>Net Total</b></td>
+            <td>{{ invoiceData.netTotal }}</td>
+            <td>{{ invoiceData.currency }}</td>
+          </tr>
+          <tr>
+            <td><b>VAT Total</b></td>
+            <td>{{ invoiceData.vatTotal }}</td>
+            <td>{{ invoiceData.currency }}</td>
+          </tr>
+          <tr>
+            <td><b>Gross Total</b></td>
+            <td>{{ invoiceData.grossTotal }}</td>
+            <td>{{ invoiceData.currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </footer>
+
+    <hr class="mt-5" />
+
+    <table>
+      <tr>
+        <td><b>Total Due: </b></td>
+        <td>{{ invoiceData.grossTotal }}</td>
+      </tr>
+    </table>
+
+    <hr />
+  </div>
+</form>
