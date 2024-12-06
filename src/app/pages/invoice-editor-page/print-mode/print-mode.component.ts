@@ -7,9 +7,11 @@ import { TableModule } from "primeng/table";
 import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
 import { ImageUploadComponent } from "../editing-mode/image-upload/image-upload.component";
-import { formFields } from "../../../models/form-fields.model";
 
 import { EditorNavbarComponent } from "../editor-navbar/editor-navbar.component";
+
+import { formFields } from "../../../models/form-fields.model";
+import { documentData } from "../../../models/document-data.model";
 
 interface ITableUserInputs {
   rowId: string;
@@ -41,36 +43,17 @@ interface ITableUserInputs {
   styleUrl: "./print-mode.component.scss",
 })
 export class PrintModeComponent {
-
   public tableData: ITableUserInputs[] = [];
   public editMode = true;
   public formFields = formFields;
-
-  public invoiceData = {
-    invoiceNo: "",
-    invoiceDate: undefined as Date | undefined,
-    currency: "PLN",
-    seller: "",
-    vatId: "",
-    streetNo: "",
-    postCode: "",
-    city: "",
-    bankAccount: "",
-    bank: "",
-    swift: "",
-    buyer: "",
-    buyerVAT: "",
-    buyerStreetNo: "",
-    buyerPostCode: "",
-    buyerCity: "",
-    tableData: {},
-    netTotal: "",
-    vatTotal: "",
-    grossTotal: "",
-  };
+  public documentData = documentData;
 
   public saveImageUrl(event : string ):void{
     this.formFields.headerImage = event;
+  }
+
+  public getFormValue(key: string): string {
+    return this.documentData.invoice.form[key as keyof typeof this.documentData.invoice.form] || '';
   }
   
 }

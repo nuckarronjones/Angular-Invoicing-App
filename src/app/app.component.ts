@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NavbarComponent } from "./ui/navbar/navbar.component";
-import { InvoiceEditorComponent } from "./pages/invoice-editor-page/invoice-editor.component";
-import { UserInvoicesComponent } from "./pages/user-invoices-page/user-invoices.component";
+import { InvoiceEditorPageComponent } from "./pages/invoice-editor-page/invoice-editor-page.component";
+import { UserInvoicesPageComponent } from "./pages/user-invoices-page/user-invoices-page.component";
 import { NgIf } from "@angular/common";
 
 @Component({
@@ -9,8 +9,8 @@ import { NgIf } from "@angular/common";
   standalone: true,
   imports: [
     NavbarComponent,
-    InvoiceEditorComponent,
-    UserInvoicesComponent,
+    InvoiceEditorPageComponent,
+    UserInvoicesPageComponent,
     NgIf
   ],
   templateUrl: "./app.component.html",

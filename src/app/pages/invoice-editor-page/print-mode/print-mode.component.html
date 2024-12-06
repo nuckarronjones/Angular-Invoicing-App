@@ -10,7 +10,7 @@
       <section class="flex-column">
         <ng-container *ngFor="let headerField of formFields.header">
             <div class="input-value w-100">
-              <b>{{ headerField.label }}</b> {{ headerField.value }}
+              <b>{{ headerField.label }}</b> {{ getFormValue(headerField.id) }}
             </div>
         </ng-container>
       </section>
@@ -18,7 +18,7 @@
       <section class="flex-column">
         <app-image-upload
         [editMode]="editMode"
-        [headerImageUrl]="formFields.headerImage"
+        [headerImageUrl]="documentData.invoice.form.headerImage"
         (saveImageUrl)="saveImageUrl($event)"
         ></app-image-upload>
       </section>
@@ -40,19 +40,18 @@
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'left'">
-
               <ng-container
                 *ngIf="formField.style.includes('w-50'); else fullWidth"
               >
                 <!-- If the field was 50% width, we want to end up combining these fields together-->
                 <div class="w-auto inline-block input-value">
-                  {{ formField.value }}&nbsp;
+                  {{ getFormValue(formField.id) }}&nbsp;
                 </div>
               </ng-container>
               <ng-template #fullWidth>
                 <!-- Full-width style for inputs that took up 100% width, retain styling -->
                 <div class="input-value" [ngClass]="formField.style">
-                  <span>{{ formField.value }}</span>
+                  <span>{{ getFormValue(formField.id) }}&nbsp;</span>
                 </div>
               </ng-template>
           </ng-container>
@@ -67,13 +66,13 @@
               >
                 <!-- If the field was 50% width, we want to end up combining these fields together (e.g. 123 London Street)-->
                 <div class="w-auto inline-block input-value">
-                  {{ formField.value }}&nbsp;
+                  {{ getFormValue(formField.id) }}&nbsp;
                 </div>
               </ng-container>
               <ng-template #fullWidth>
                 <!-- Full-width style for inputs that took up 100% width, retain styling -->
                 <div class="input-value" [ngClass]="formField.style">
-                  <span>{{ formField.value }}</span>
+                  <span>{{ getFormValue(formField.id) }}</span>
                 </div>
               </ng-template>
           </ng-container>
@@ -92,18 +91,18 @@
         <tbody>
           <tr>
             <td><b>Net Total</b></td>
-            <td>{{ invoiceData.netTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.netTotal }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
             <td><b>VAT Total</b></td>
-            <td>{{ invoiceData.vatTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.vatTotal }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
             <td><b>Gross Total</b></td>
-            <td>{{ invoiceData.grossTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.grossTotal }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
         </tbody>
       </table>
@@ -114,7 +113,7 @@
     <table>
       <tr>
         <td><b>Total Due: </b></td>
-        <td>{{ invoiceData.grossTotal }}</td>
+        <td>{{ documentData.invoice.totals.grossTotal }}</td>
       </tr>
     </table>
 

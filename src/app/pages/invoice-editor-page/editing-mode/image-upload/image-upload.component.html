@@ -1,7 +1,7 @@
 <div class="logo-container">
   <div *ngIf="editMode; else printMode">
     <div
-      *ngIf="!imageUrl; else showLogo"
+      *ngIf="!headerImageUrl; else showLogo"
       class="drop-zone"
       (dragover)="onDragOver($event)"
       (drop)="onDrop($event)"
@@ -14,7 +14,7 @@
 
     <ng-template #showLogo>
       <img
-        [src]="imageUrl"
+        [src]="headerImageUrl"
         alt="Dropped Image"
         style="max-width: 100%; height: auto"
       />

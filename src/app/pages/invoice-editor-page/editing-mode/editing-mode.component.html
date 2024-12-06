@@ -11,18 +11,17 @@
             [id]="headerField.id"
             [inputType]="headerField.inputType"
             [label]="headerField.label"
-            [placeholder]="headerField.placeholder"
-            [value]="headerField.value"
+            [placeholder]="getFormValue(headerField.id)"  
             [class]="headerField.style"
-            (updatedInputValue)="headerField.setValue($event)"
+            (updatedInputValue)="setInvoiceValues($event)"
           ></app-input-field>
         </ng-container>
       </section>
 
       <section class="flex-column">
         <app-image-upload
-          [editMode]="editMode"
-          [headerImageUrl]="formFields.headerImage"
+          [editMode]="true"
+          [headerImageUrl]="documentData.invoice.form.headerImage"
           (saveImageUrl)="saveImageUrl($event)"
         ></app-image-upload>
       </section>
@@ -38,10 +37,9 @@
               [id]="formField.id"
               [inputType]="formField.inputType"
               [label]="formField.label"
-              [placeholder]="formField.placeholder"
-              [value]="formField.value"
+              [placeholder]="getFormValue(formField.id)"
               [class]="formField.style"
-              (updatedInputValue)="formField.setValue($event)"
+              (updatedInputValue)="setInvoiceValues($event)"
             ></app-input-field>
           </ng-container>
         </ng-container>
@@ -54,10 +52,9 @@
               [id]="formField.id"
               [inputType]="formField.inputType"
               [label]="formField.label"
-              [placeholder]="formField.placeholder"
-              [value]="formField.value"
+              [placeholder]="getFormValue(formField.id)"
               [class]="formField.style"
-              (updatedInputValue)="formField.setValue($event)"
+              (updatedInputValue)="setInvoiceValues($event)"
             ></app-input-field>
           </ng-container>
         </ng-container>
@@ -76,18 +73,18 @@
         <tbody>
           <tr>
             <td><b>Net Total</b></td>
-            <td>{{ invoiceData.netTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.netTotal }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
             <td><b>VAT Total</b></td>
-            <td>{{ invoiceData.vatTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.vatTotal  }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
             <td><b>Gross Total</b></td>
-            <td>{{ invoiceData.grossTotal }}</td>
-            <td>{{ invoiceData.currency }}</td>
+            <td>{{ documentData.invoice.totals.grossTotal }}</td>
+            <td>{{ documentData.currency }}</td>
           </tr>
         </tbody>
       </table>
@@ -98,7 +95,7 @@
     <table>
       <tr>
         <td><b>Total Due: </b></td>
-        <td>{{ invoiceData.grossTotal }}</td>
+        <td>{{ documentData.invoice.totals.grossTotal }}</td>
       </tr>
     </table>
 

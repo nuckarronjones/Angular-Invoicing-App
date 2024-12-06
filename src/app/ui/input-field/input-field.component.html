@@ -6,9 +6,8 @@
     [type]="inputType"
     [id]="id"
     [placeholder]="placeholder"
-    [value]="value"
     [(ngModel)]="inputValue"
-    (ngModelChange)="updatedInputValue.emit($event)"
+    (ngModelChange)="updateInputValue()"
     pInputText
   />  
 </div>

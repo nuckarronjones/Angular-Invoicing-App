@@ -6,12 +6,12 @@ import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 
 @Component({
-  selector: "app-invoice-editor",
+  selector: "app-invoice-editor-page",
   standalone: true,
   imports: [EditingModeComponent, NgIf, AsyncPipe, PrintModeComponent],
-  templateUrl: "./invoice-editor.component.html",
-  styleUrl: "./invoice-editor.component.scss",
+  templateUrl: "./invoice-editor-page.component.html",
+  styleUrl: "./invoice-editor-page.component.scss",
 })
-export class InvoiceEditorComponent {
+export class InvoiceEditorPageComponent {
   constructor(public invoiceEditModeService: InvoiceEditModeService) {}
 }

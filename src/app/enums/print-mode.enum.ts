@@ -1,4 +1,4 @@
 export enum PrintMode {
-    On = 1,
-    Off = 0
-  }
+  On = 1,
+  Off = 0,
+}

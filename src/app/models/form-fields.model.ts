@@ -6,11 +6,7 @@ export let formFields  ={
         placeholder: "Enter Invoice No",
         inputType: "text",
         style: "w-50",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
         id: "invoiceDate",
@@ -18,11 +14,7 @@ export let formFields  ={
         placeholder: "",
         inputType: "date",
         style: "w-50",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
         id: "invoiceDueDate",
@@ -30,11 +22,7 @@ export let formFields  ={
         placeholder: "",
         inputType: "date",
         style: "w-50",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
         id: "invoiceType",
@@ -42,11 +30,7 @@ export let formFields  ={
         placeholder: "Enter Invoice Type",
         inputType: "text",
         style: "w-50",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
     ],
     headerImage : "",
@@ -57,47 +41,31 @@ export let formFields  ={
         placeholder: "Enter Seller Information",
         inputType: "text",
         style: "w-100",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
-        id: "VAT",
+        id: "sellerVAT",
         label: "VAT ID:",
         placeholder: "Enter VAT",
         inputType: "text",
         style: "w-100",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = 'VAT ID: ' + input.toString();
-        },
+        column: "left"
       },
       {
-        id: "streetNo",
+        id: "sellerStreetNo",
         label: "Street and No:",
         placeholder: "Enter Street and No",
         inputType: "text",
         style: "w-100",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
-        id: "postCode",
+        id: "sellerPostCode",
         label: "Post Code:",
         placeholder: "Enter Post Code",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
         id: "sellerCity",
@@ -105,47 +73,31 @@ export let formFields  ={
         placeholder: "Enter City",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "left"
       },
       {
-        id: "bankAcct",
+        id: "sellerBankAcct",
         label: "Bank Account:",
         placeholder: "Enter Bank Account",
         inputType: "text",
         style: "w-100",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = 'Bank Acct: ' + input.toString();
-        },
+        column: "left"
       },
       {
-        id: "bank",
+        id: "sellerBank",
         label: "Bank:",
         placeholder: "Enter Bank",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = 'Bank: ' +input.toString();
-        },
+        column: "left"
       },
       {
-        id: "swift",
+        id: "sellerSwift",
         label: "Swift:",
         placeholder: "Enter Swift",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "left",
-        value: "",
-        setValue(input: Event) {
-          this.value = 'SWIFT: ' + input.toString();
-        },
+        column: "left"
       },
       {
         id: "buyer",
@@ -153,11 +105,7 @@ export let formFields  ={
         placeholder: "Enter Buyer Information",
         inputType: "text",
         style: "w-100",
-        column: "right",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "right"
       },
       {
         id: "buyerVAT",
@@ -165,11 +113,7 @@ export let formFields  ={
         placeholder: "Enter Buyer VAT",
         inputType: "text",
         style: "w-100",
-        column: "right",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "right"
       },
       {
         id: "buyerStreetNo",
@@ -177,23 +121,15 @@ export let formFields  ={
         placeholder: "Enter Buyer Street and No",
         inputType: "text",
         style: "w-100",
-        column: "right",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "right"
       },
       {
-        id: "postCode",
+        id: "buyerPostCode",
         label: "Post Code:",
         placeholder: "Enter Post Code",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "right",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "right"
       },
       {
         id: "buyerCity",
@@ -201,11 +137,7 @@ export let formFields  ={
         placeholder: "Enter City",
         inputType: "text",
         style: "w-50 inline-block",
-        column: "right",
-        value: "",
-        setValue(input: Event) {
-          this.value = input.toString();
-        },
+        column: "right"
       },
     ],
   };
