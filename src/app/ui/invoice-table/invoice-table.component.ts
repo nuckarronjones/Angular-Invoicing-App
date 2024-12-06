@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import { TableModule } from "primeng/table";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
+import { documentData } from "../../models/document-data.model";
 
 interface tableUserInputs {
   rowId: string;
@@ -25,13 +26,24 @@ interface tableUserInputs {
   styleUrls: ["./invoice-table.component.scss"],
 })
 
-export class InvoiceEditorTableComponent {
+export class InvoiceEditorTableComponent implements OnInit{
   @Input() userInvoiceEntries?: tableUserInputs[];
   @Input() editMode!: boolean;
   @Output()formChanges = new EventEmitter();
-  tableRows: tableUserInputs[] = []; //Row data will be inserted upon saving the changes
+  public tableRows: tableUserInputs[] = []; //Row data will be inserted upon saving the changes
+  public documentData = documentData;
 
-  columns = [
+  ngOnInit(): void {
+    const savedTableRows = documentData.invoice.formTable;
+    
+    if(savedTableRows.length > 0){
+      savedTableRows.forEach(row => {
+        this.tableRows.push(row);
+      });
+    }
+  }
+
+  public columns = [
     { field: "name", header: "Name", class: "w-40" },
     { field: "quantity", header: "Quantity" },
     { field: "quantityUnit", header: "Quant. Unit" },
@@ -42,7 +54,7 @@ export class InvoiceEditorTableComponent {
     { field: "", header: "" },
   ];
 
-  public addTableRow(): void {
+  public addEmptyTableRow(): void {
     const rowId = uuidv4();
     this.tableRows.push({
       rowId: rowId,

@@ -5,13 +5,17 @@ tr > td {
 input {
     width: 100%;
     padding: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .table-container {
   border: 2px solid #eee;
-  padding-bottom: 3rem;
   position: relative;
   margin-bottom: 50px;
+}
+
+.edit-mode-padding{
+  padding-bottom: 3rem;
 }
 
 #addTableRows {

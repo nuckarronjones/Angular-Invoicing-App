@@ -3,6 +3,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from "primeng/button";
 import { PrimeIcons } from 'primeng/api';
+import { InvoiceEditModeService } from '../../../services/invoice-edit-mode.service';
 
 @Component({
   selector: 'app-editor-navbar',
@@ -12,8 +13,8 @@ import { PrimeIcons } from 'primeng/api';
   styleUrl: './editor-navbar.component.scss'
 })
 export class EditorNavbarComponent {
+  constructor(public invoiceEditModeService: InvoiceEditModeService){}
   @Output() printEvent = new EventEmitter();
-  @Output() changeEditMode = new EventEmitter();
   items: MenuItem[] = [];
 
   ngOnInit() {
@@ -21,7 +22,7 @@ export class EditorNavbarComponent {
       {
         label: 'Edit',
         icon: PrimeIcons.PENCIL,
-        command: () => this.changeEditMode.emit()
+        command: () => this.invoiceEditModeService.toggleEditMode()
       },
       {
         label: 'Print',

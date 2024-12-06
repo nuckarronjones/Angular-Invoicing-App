@@ -11,10 +11,8 @@ import { NgIf } from "@angular/common";
 export class ImageUploadComponent {
   @Output() saveImageUrl = new EventEmitter<string>();
   
-  @Input() headerImageUrl?:string;
+  @Input() headerImageUrl?:string | ArrayBuffer | null = null;
   @Input({required: true}) editMode!:boolean;
-
-  public imageUrl: string | ArrayBuffer | null = null;
 
   public onDragOver(event: DragEvent): void {
     event.preventDefault();
@@ -30,10 +28,12 @@ export class ImageUploadComponent {
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.imageUrl = reader.result;
+          this.headerImageUrl = reader.result;
 
-          if (this.imageUrl && typeof this.imageUrl === 'string') {
-            this.saveImageUrl.emit(this.imageUrl);
+          console.log(this.headerImageUrl);
+
+          if (this.headerImageUrl && typeof this.headerImageUrl === 'string') {
+            this.saveImageUrl.emit(this.headerImageUrl);
           }else{
             console.error("Image upload unsuccessful, url not valid");
           }

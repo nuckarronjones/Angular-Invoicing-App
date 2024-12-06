@@ -7,7 +7,7 @@
 
 <br>
 
-<div class="table-container">
+<div class="table-container" [ngClass]="{'edit-mode-padding': editMode}">
   <p-table [value]="tableRows" class="custom-table">
     <ng-template pTemplate="header">
       <tr>
@@ -32,7 +32,7 @@
         <td>
           <input
             name="quantity"
-            type="number"
+            type="string"
             pInputText
             class="w-100 p-2"
             [ngClass]="{ 'print-mode': !editMode }"
@@ -43,7 +43,7 @@
         <td>
           <input
             name="quantUnit"
-            type="number"
+            type="string"
             pInputText
             class="w-100 p-2"
             [ngClass]="{ 'print-mode': !editMode }"
@@ -54,7 +54,7 @@
         <td>
           <input
             name="unitNetPrice"
-            type="number"
+            type="string"
             pInputText
             class="w-100 p-2"
             [ngClass]="{ 'print-mode': !editMode }"
@@ -65,7 +65,7 @@
         <td>
           <input
             name="vatPercentage"
-            type="number"
+            type="string"
             pInputText
             class="w-100 p-2"
             [ngClass]="{ 'print-mode': !editMode }"
@@ -109,6 +109,6 @@
     pRipple
     label="Add Row"
     class="p-button-success"
-    (click)="addTableRow()"
+    (click)="addEmptyTableRow()"
   ></button>
 </div>
