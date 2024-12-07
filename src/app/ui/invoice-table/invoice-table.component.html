@@ -1,13 +1,12 @@
-
 <ng-container *ngIf="editMode">
   <b>Invoice Entries</b>
 </ng-container>
 
-<br>
+<br />
 
-<br>
+<br />
 
-<div class="table-container" [ngClass]="{'edit-mode-padding': editMode}">
+<div class="table-container" [ngClass]="{ 'edit-mode-padding': editMode }">
   <p-table [value]="tableRows" class="custom-table">
     <ng-template pTemplate="header">
       <tr>
@@ -23,7 +22,7 @@
           <input
             name="name"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.name"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
@@ -32,31 +31,32 @@
         <td>
           <input
             name="quantity"
-            type="string"
+            type="number"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.quantity"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
         </td>
         <td>
-          <input
-            name="quantUnit"
-            type="string"
-            pInputText
-            class="w-100 p-2"
-            [ngClass]="{ 'print-mode': !editMode }"
+          <select
             [(ngModel)]="tablerows.quantUnit"
-            (ngModelChange)="updateCalculations(tablerows.rowId)"
-          />
+            class="cell-field"
+            name="quantUnit"
+            [ngClass]="{ 'print-mode': !editMode }"
+          >
+            <option value="hrs">hrs</option>
+            <option value="days">days</option>
+            <option value="months">months</option>
+          </select>
         </td>
         <td>
           <input
             name="unitNetPrice"
-            type="string"
+            type="number"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.unitNetPrice"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
@@ -65,9 +65,9 @@
         <td>
           <input
             name="vatPercentage"
-            type="string"
+            type="number"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.vatPercentage"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
@@ -78,7 +78,7 @@
             name="totalNet"
             [ngClass]="{ 'print-mode': !editMode }"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             readonly
           />
         </td>
@@ -87,12 +87,13 @@
             name="totalGross"
             [ngClass]="{ 'print-mode': !editMode }"
             pInputText
-            class="w-100 p-2"
+            class="w-100 p-2 cell-field"
             readonly
           />
         </td>
         <td>
-          <i *ngIf="editMode"
+          <i
+            *ngIf="editMode"
             class="pi pi-trash"
             style="font-size: 1rem; color: red; opacity: 0.5"
             (click)="deleteRow(tablerows.rowId)"

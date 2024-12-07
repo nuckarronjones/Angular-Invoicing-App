@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from "@angular/core";
 import { TableModule } from "primeng/table";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
@@ -26,25 +26,36 @@ interface tableUserInputs {
   styleUrls: ["./invoice-table.component.scss"],
 })
 
-export class InvoiceEditorTableComponent implements OnInit{
+export class InvoiceEditorTableComponent implements OnInit,AfterViewInit{
   @Input() userInvoiceEntries?: tableUserInputs[];
   @Input() editMode!: boolean;
   @Output()formChanges = new EventEmitter();
-  public tableRows: tableUserInputs[] = []; //Row data will be inserted upon saving the changes
+
+  public tableRows: tableUserInputs[] = [];
   public documentData = documentData;
 
   ngOnInit(): void {
     const savedTableRows = documentData.invoice.formTable;
-    
+    //If we have saved data for this invoice saved, we want to populate tableRows OnInit
     if(savedTableRows.length > 0){
+      console.log("here ");
       savedTableRows.forEach(row => {
+        //Push saved data from rows into our component table rows
         this.tableRows.push(row);
       });
     }
   }
 
+  ngAfterViewInit():void{
+    if(this.tableRows.length > 0){
+      this.tableRows.forEach((row)=>{
+        this.updateCalculations(row.rowId);
+      })
+    };
+  }
+
   public columns = [
-    { field: "name", header: "Name", class: "w-40" },
+    { field: "item", header: "Item", class: "w-40" },
     { field: "quantity", header: "Quantity" },
     { field: "quantityUnit", header: "Quant. Unit" },
     { field: "unitNetPrice", header: "Unit Net Price" },
@@ -81,8 +92,8 @@ export class InvoiceEditorTableComponent implements OnInit{
       const totalNetHTML= tableRow?.querySelector('td input[name="totalNet"]') as HTMLInputElement;
       const totalGrossHTML =tableRow?.querySelector('td input[name="totalGross"]') as HTMLInputElement;
       //Returns calculations into cells as values
-      const totalNetCalculated = (quantity * unitNetPrice);
-      const totalGrossCalculated = (quantity * (unitNetPrice + (unitNetPrice * (vatPercentage / 1000))));
+      const totalNetCalculated = parseFloat((quantity * unitNetPrice).toFixed(2));
+      const totalGrossCalculated = parseFloat((quantity * (unitNetPrice + (unitNetPrice * (vatPercentage / 1000)))).toFixed(2));
 
       totalNetHTML.value = totalNetCalculated ? totalNetCalculated.toString() : "";
       totalGrossHTML.value = totalGrossCalculated 
@@ -90,9 +101,11 @@ export class InvoiceEditorTableComponent implements OnInit{
         : totalNetCalculated 
         ? totalNetCalculated.toString() 
         : "";
-      //Set the object reference values
-      tableRowArrayObject.totalNet = totalNetHTML.value;
-      tableRowArrayObject.totalGross = totalGrossHTML.value;
+
+      // Round the values to 2 decimal places and assign to the tableRowArrayObject
+      tableRowArrayObject.totalNet = parseFloat(totalNetHTML.value).toFixed(2);
+      tableRowArrayObject.totalGross = parseFloat(totalGrossHTML.value).toFixed(2);
+
       //We want to signal to the parent component that totals need to be re-calcualted, and supply the tableRows with data
       this.formChanges.emit(this.tableRows);
     }
