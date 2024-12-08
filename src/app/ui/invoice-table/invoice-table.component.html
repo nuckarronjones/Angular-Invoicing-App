@@ -17,7 +17,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-tablerows>
-      <tr [id]="tablerows.rowId">
+      <tr [id]="tablerows.rowId" class="appear-animation ">
         <td>
           <input
             name="name"
@@ -96,7 +96,7 @@
             *ngIf="editMode"
             class="pi pi-trash"
             style="font-size: 1rem; color: red; opacity: 0.5"
-            (click)="deleteRow(tablerows.rowId)"
+            (click)="deleteRowFromTable(tablerows.rowId)"
           ></i>
         </td>
       </tr>

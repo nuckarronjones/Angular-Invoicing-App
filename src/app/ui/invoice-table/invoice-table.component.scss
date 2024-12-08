@@ -1,3 +1,35 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveOutAndFade {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+    visibility: hidden; /* This ensures the element is not clickable/interactive */
+  }
+}
+
+.slide-out-animation {
+  animation: moveOutAndFade .7s ease-in forwards;
+}
+
+.appear-animation {
+  animation: fadeIn 1s ease-out;
+}
+
 tr > td {
   padding: 0.5rem !important;
 }
@@ -5,8 +37,9 @@ tr > td {
 .cell-field {
     width: 100%;
     padding: .5rem !important;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
+
 
 .table-container {
   border: 2px solid #eee;
@@ -29,7 +62,7 @@ tr > td {
   border: none !important;
   pointer-events: none;
   user-select: none;
-  font-size: 18px;
+  font-size: 1.2rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
