@@ -7,7 +7,6 @@ import { InputTextModule } from "primeng/inputtext";
 import { TableModule } from "primeng/table";
 
 import { ImageUploadComponent } from "./image-upload/image-upload.component";
-import { EditorNavbarComponent } from "../editor-navbar/editor-navbar.component";
 import { InvoiceEditorTableComponent } from "../../../ui/invoice-table/invoice-table.component";
 import { InputFieldComponent } from "../../../ui/input-field/input-field.component";
 
@@ -26,7 +25,6 @@ import { ITableUserInputs } from "../../../enums/invoice-table.enum";
     InvoiceEditorTableComponent,
     CalendarModule,
     TableModule,
-    EditorNavbarComponent,
     InputFieldComponent,
     NgFor,
     NgIf,
@@ -48,7 +46,6 @@ export class EditingModeComponent {
 
   public reCalculateTotals(tableRows: ITableUserInputs[]): void {
     this._saveTableRowData(tableRows);
-    console.log(this.documentData);
 
     this.documentData.invoice.totals.netTotal = calculateTotal("totalNet");
     this.documentData.invoice.totals.vatTotal = calculateTotal("vatPercentage");
