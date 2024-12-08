@@ -30,7 +30,7 @@ import { ITableUserInputs } from "../../../enums/invoice-table.enum";
     InputFieldComponent,
     NgFor,
     NgIf,
-    ImageUploadComponent,
+    ImageUploadComponent
   ],
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
@@ -48,8 +48,6 @@ export class EditingModeComponent {
 
   public reCalculateTotals(tableRows: ITableUserInputs[]): void {
     this._saveTableRowData(tableRows);
-    console.log(this.documentData);
-
     this.documentData.invoice.totals.netTotal = calculateTotal("totalNet");
     this.documentData.invoice.totals.vatTotal = calculateTotal("vatPercentage");
     this.documentData.invoice.totals.grossTotal = calculateTotal("totalGross");
@@ -63,7 +61,7 @@ export class EditingModeComponent {
         }
       });
 
-      return accumulator ? accumulator.toString() : "";
+      return accumulator ? accumulator.toFixed(2).toString() : "";
     }
   }
 

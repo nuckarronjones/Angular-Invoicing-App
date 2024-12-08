@@ -30,8 +30,6 @@ export class ImageUploadComponent {
         reader.onload = () => {
           this.headerImageUrl = reader.result;
 
-          console.log(this.headerImageUrl);
-
           if (this.headerImageUrl && typeof this.headerImageUrl === 'string') {
             this.saveImageUrl.emit(this.headerImageUrl);
           }else{

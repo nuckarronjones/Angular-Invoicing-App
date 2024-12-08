@@ -63,7 +63,7 @@ export let documentData = {
           "rowId": "eaed1963-e21b-41d8-a567-534cc491925a",
           "name": "IT Services October",
           "quantity": "40",
-          "quantUnit": "1",
+          "quantUnit": "hrs",
           "unitNetPrice": "54",
           "vatPercentage": "0",
           "totalNet": "2160",
@@ -73,9 +73,9 @@ export let documentData = {
           "rowId": "1739272f-d78b-4590-a147-90721c6228a4",
           "name": "IT Services November",
           "quantity": "40",
-          "quantUnit": "1",
+          "quantUnit": "hrs",
           "unitNetPrice": "54",
-          "vatPercentage": "0",
+          "vatPercentage": "12",
           "totalNet": "2160",
           "totalGross": "2160"
       },
@@ -83,9 +83,9 @@ export let documentData = {
           "rowId": "f37a5043-9923-4e57-8fd9-9c0cdf412342",
           "name": "IT Services December",
           "quantity": "40",
-          "quantUnit": "1",
+          "quantUnit": "hrs",
           "unitNetPrice": "54",
-          "vatPercentage": "0",
+          "vatPercentage": "1",
           "totalNet": "2160",
           "totalGross": "2160"
       }
