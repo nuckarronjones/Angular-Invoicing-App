@@ -3,7 +3,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from "primeng/button";
 import { PrimeIcons } from 'primeng/api';
-import { InvoiceEditModeService } from '../../../services/invoice-edit-mode.service';
+import { InvoiceEditModeService } from '../../services/invoice-edit-mode.service';
 
 @Component({
   selector: 'app-editor-navbar',

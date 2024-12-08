@@ -1,59 +1,52 @@
-<div class="editorNavbarContainer">
-  <app-editor-navbar/>
-</div>
-
 <form id="form-container">
-
   <div id="printable-area">
-
     <header class="flex-container">
       <section class="flex-column">
         <ng-container *ngFor="let headerField of formFields.header">
-            <div class="input-value w-100">
-              <b>{{ headerField.label }}</b> {{ getFormValue(headerField.id) }}
-            </div>
+          <div class="input-value w-100">
+            <b>{{ headerField.label }}</b> {{ getFormValue(headerField.id) }}
+          </div>
         </ng-container>
       </section>
 
       <section class="flex-column">
         <app-image-upload
-        [editMode]="editMode"
-        [headerImageUrl]="documentData.invoice.form.headerImage"
-        (saveImageUrl)="saveImageUrl($event)"
+          [editMode]="editMode"
+          [headerImageUrl]="documentData.invoice.form.headerImage"
+          (saveImageUrl)="saveImageUrl($event)"
         ></app-image-upload>
       </section>
-
     </header>
 
     <hr class="mb-5 mt-5" />
 
     <section class="flex-container mt-5 mb-5">
-        <div class="flex-column">
-          <h1>Buyer:</h1>
-        </div>
-        <div class="flex-column">
-          <h1>Seller:</h1>
-        </div>
+      <div class="flex-column">
+        <h1>Buyer:</h1>
+      </div>
+      <div class="flex-column">
+        <h1>Seller:</h1>
+      </div>
     </section>
 
     <body class="flex-container">
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'left'">
-              <ng-container
-                *ngIf="formField.style.includes('w-50'); else fullWidth"
-              >
-                <!-- If the field was 50% width, we want to end up combining these fields together-->
-                <div class="w-auto inline-block input-value">
-                  {{ getFormValue(formField.id) }}&nbsp;
-                </div>
-              </ng-container>
-              <ng-template #fullWidth>
-                <!-- Full-width style for inputs that took up 100% width, retain styling -->
-                <div class="input-value" [ngClass]="formField.style">
-                  <span>{{ getFormValue(formField.id) }}&nbsp;</span>
-                </div>
-              </ng-template>
+            <ng-container
+              *ngIf="formField.style.includes('w-50'); else fullWidth"
+            >
+              <!-- If the field was 50% width, we want to end up combining these fields together-->
+              <div class="w-auto inline-block input-value">
+                {{ getFormValue(formField.id) }}&nbsp;
+              </div>
+            </ng-container>
+            <ng-template #fullWidth>
+              <!-- Full-width style for inputs that took up 100% width, retain styling -->
+              <div class="input-value" [ngClass]="formField.style">
+                <span>{{ getFormValue(formField.id) }}&nbsp;</span>
+              </div>
+            </ng-template>
           </ng-container>
         </ng-container>
       </div>
@@ -61,20 +54,20 @@
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'right'">
-              <ng-container
-                *ngIf="formField.style.includes('w-50'); else fullWidth"
-              >
-                <!-- If the field was 50% width, we want to end up combining these fields together (e.g. 123 London Street)-->
-                <div class="w-auto inline-block input-value">
-                  {{ getFormValue(formField.id) }}&nbsp;
-                </div>
-              </ng-container>
-              <ng-template #fullWidth>
-                <!-- Full-width style for inputs that took up 100% width, retain styling -->
-                <div class="input-value" [ngClass]="formField.style">
-                  <span>{{ getFormValue(formField.id) }}</span>
-                </div>
-              </ng-template>
+            <ng-container
+              *ngIf="formField.style.includes('w-50'); else fullWidth"
+            >
+              <!-- If the field was 50% width, we want to end up combining these fields together (e.g. 123 London Street)-->
+              <div class="w-auto inline-block input-value">
+                {{ getFormValue(formField.id) }}&nbsp;
+              </div>
+            </ng-container>
+            <ng-template #fullWidth>
+              <!-- Full-width style for inputs that took up 100% width, retain styling -->
+              <div class="input-value" [ngClass]="formField.style">
+                <span>{{ getFormValue(formField.id) }}</span>
+              </div>
+            </ng-template>
           </ng-container>
         </ng-container>
       </div>
@@ -82,9 +75,7 @@
 
     <div class="mb-5"></div>
 
-    <app-invoice-editor-table
-      [editMode]="false"
-    />
+    <app-invoice-editor-table [editMode]="false" />
 
     <footer id="invoiceTotals">
       <table>

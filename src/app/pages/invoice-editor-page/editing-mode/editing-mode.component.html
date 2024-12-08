@@ -1,7 +1,3 @@
-<div class="editorNavbarContainer">
-  <app-editor-navbar/>
-</div>
-
 <form id="form-container">
   <div id="printable-area">
     <header class="flex-container">
@@ -11,7 +7,7 @@
             [id]="headerField.id"
             [inputType]="headerField.inputType"
             [label]="headerField.label"
-            [placeholder]="getFormValue(headerField.id)"  
+            [placeholder]="getFormValue(headerField.id)"
             [class]="headerField.style"
             (updatedInputValue)="setInvoiceValues($event)"
           ></app-input-field>
@@ -78,7 +74,7 @@
           </tr>
           <tr>
             <td><b>VAT Total</b></td>
-            <td>{{ documentData.invoice.totals.vatTotal  }}</td>
+            <td>{{ documentData.invoice.totals.vatTotal }}</td>
             <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
