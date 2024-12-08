@@ -1,7 +1,18 @@
-<p-menubar [model]="items">
-    <ng-template pTemplate="end">
-        <button class="pi pi-plus"></button>
-        <button class="pi pi-minus"></button>
-        <span>100%</span>
-    </ng-template>
+<p-menubar>
+  <ng-template pTemplate="start">
+    <button
+      class="pi pi-pen-to-square"
+      (click)="invoiceEditModeService.toggleEditMode()"
+    ></button>
+    <button
+      class="pi pi-print"
+      (click)="printInvoice()"
+      [disabled]="(invoiceEditModeService.editMode$ | async)"
+    ></button>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button class="pi pi-plus"></button>
+    <button class="pi pi-minus"></button>
+    <span>100%</span>
+  </ng-template>
 </p-menubar>

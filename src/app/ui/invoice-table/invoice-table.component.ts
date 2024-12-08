@@ -3,8 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
-  AfterViewInit,
+  OnInit
 } from "@angular/core";
 import { TableModule } from "primeng/table";
 import { CommonModule } from "@angular/common";
@@ -32,7 +31,7 @@ interface tableUserInputs {
   templateUrl: "./invoice-table.component.html",
   styleUrls: ["./invoice-table.component.scss"],
 })
-export class InvoiceEditorTableComponent implements OnInit, AfterViewInit {
+export class InvoiceEditorTableComponent implements OnInit {
   @Input() userInvoiceEntries?: tableUserInputs[];
   @Input() editMode!: boolean;
   @Output() formChanges = new EventEmitter();
@@ -47,14 +46,6 @@ export class InvoiceEditorTableComponent implements OnInit, AfterViewInit {
       savedTableRows.forEach((row) => {
         //Push saved data from rows into our component table rows
         this.tableRows.push(row);
-      });
-    }
-  }
-
-  ngAfterViewInit(): void {
-    if (this.tableRows.length > 0) {
-      this.tableRows.forEach((row) => {
-        this.updateCalculations(row.rowId);
       });
     }
   }

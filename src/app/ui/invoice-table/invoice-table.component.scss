@@ -1,3 +1,4 @@
+/* Keyframe Animations */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -18,37 +19,54 @@
   100% {
     opacity: 0;
     transform: translateX(-100%);
-    visibility: hidden; /* This ensures the element is not clickable/interactive */
+    visibility: hidden; 
   }
-}
-
-.slide-out-animation {
-  animation: moveOutAndFade .7s ease-in forwards;
 }
 
 .appear-animation {
   animation: fadeIn 1s ease-out;
 }
 
-tr > td {
-  padding: 0.5rem !important;
+.slide-out-animation {
+  animation: moveOutAndFade 0.7s ease-in forwards;
 }
+
+.custom-table {
+  tr {
+    color: black !important;
+    td {
+      padding: 0.5rem;
+    }
+  }
+
+  th {
+    color: black !important;
+  }
+
+  td {
+    color: black !important;
+  }
+}
+
+.printable-rows > td {
+  padding: 1rem !important;
+}
+
 
 .cell-field {
-    width: 100%;
-    padding: .5rem !important;
-    font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem !important;
+  font-size: 1rem;
 }
-
 
 .table-container {
   border: 2px solid #eee;
   position: relative;
   margin-bottom: 50px;
-}
 
-.edit-mode-padding{
-  padding-bottom: 3rem;
+  &.edit-mode-padding {
+    padding-bottom: 3rem;
+  }
 }
 
 #addTableRows {
@@ -77,6 +95,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
