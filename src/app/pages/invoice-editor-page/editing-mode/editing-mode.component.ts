@@ -28,7 +28,7 @@ import { ITableUserInputs } from "../../../enums/invoice-table.enum";
     InputFieldComponent,
     NgFor,
     NgIf,
-    ImageUploadComponent,
+    ImageUploadComponent
   ],
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
@@ -60,7 +60,7 @@ export class EditingModeComponent {
         }
       });
 
-      return accumulator ? accumulator.toString() : "";
+      return accumulator ? accumulator.toFixed(2).toString() : "";
     }
   }
 
