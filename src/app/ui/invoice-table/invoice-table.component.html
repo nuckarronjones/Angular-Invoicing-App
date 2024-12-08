@@ -17,13 +17,13 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-tablerows>
-      <tr [id]="tablerows.rowId" class="appear-animation ">
+
+      <tr *ngIf="editMode; else printableRows" [id]="tablerows.rowId" class="appear-animation">
         <td>
           <input
             name="name"
             pInputText
             class="w-100 p-2 cell-field"
-            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.name"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -34,7 +34,6 @@
             type="number"
             pInputText
             class="w-100 p-2 cell-field"
-            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.quantity"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -44,7 +43,6 @@
             [(ngModel)]="tablerows.quantUnit"
             class="cell-field"
             name="quantUnit"
-            [ngClass]="{ 'print-mode': !editMode }"
           >
             <option value="hrs">hrs</option>
             <option value="days">days</option>
@@ -57,7 +55,6 @@
             type="number"
             pInputText
             class="w-100 p-2 cell-field"
-            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.unitNetPrice"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -68,7 +65,6 @@
             type="number"
             pInputText
             class="w-100 p-2 cell-field"
-            [ngClass]="{ 'print-mode': !editMode }"
             [(ngModel)]="tablerows.vatPercentage"
             (ngModelChange)="updateCalculations(tablerows.rowId)"
           />
@@ -76,18 +72,18 @@
         <td>
           <input
             name="totalNet"
-            [ngClass]="{ 'print-mode': !editMode }"
             pInputText
             class="w-100 p-2 cell-field"
+            [(ngModel)]="tablerows.totalNet"
             readonly
           />
         </td>
         <td>
           <input
             name="totalGross"
-            [ngClass]="{ 'print-mode': !editMode }"
             pInputText
             class="w-100 p-2 cell-field"
+            [(ngModel)]="tablerows.totalGross"
             readonly
           />
         </td>
@@ -100,6 +96,34 @@
           ></i>
         </td>
       </tr>
+
+      <ng-template #printableRows>
+        <tr  [id]="tablerows.rowId" class="printable-rows">
+          <td>
+            {{tablerows.name}}
+          </td>
+          <td>
+            {{tablerows.quantity}}
+          </td>
+          <td>
+            {{tablerows.quantUnit}}
+          </td>
+          <td>
+            {{tablerows.unitNetPrice}}
+          </td>
+          <td>
+            {{tablerows.vatPercentage}}
+          </td>
+          <td>
+            {{tablerows.totalNet}}
+          </td>
+          <td>
+            {{tablerows.totalGross}}
+          </td>
+          <td></td>
+        </tr>
+      </ng-template>
+      
     </ng-template>
   </p-table>
 

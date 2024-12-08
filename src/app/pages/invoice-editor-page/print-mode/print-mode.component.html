@@ -1,6 +1,8 @@
 <form id="form-container">
   <div id="printable-area">
     <header class="flex-container">
+
+
       <section class="flex-column">
         <ng-container *ngFor="let headerField of formFields.header">
           <div class="input-value w-100">
@@ -29,7 +31,7 @@
       </div>
     </section>
 
-    <body class="flex-container">
+    <section class="flex-container">
       <div class="flex-column">
         <ng-container *ngFor="let formField of formFields.body">
           <ng-container *ngIf="formField.column === 'left'">
@@ -71,9 +73,7 @@
           </ng-container>
         </ng-container>
       </div>
-    </body>
-
-    <div class="mb-5"></div>
+    </section>
 
     <app-invoice-editor-table [editMode]="false" />
 
