@@ -6,7 +6,7 @@ import { CalendarModule } from "primeng/calendar";
 import { TableModule } from "primeng/table";
 import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
-import { ImageUploadComponent } from "../editing-mode/image-upload/image-upload.component";
+import { ImageUploadComponent } from "../../../ui/image-upload/image-upload.component";
 
 import { formFields } from "../../../models/form-fields.model";
 import { documentData } from "../../../models/document-data.model";

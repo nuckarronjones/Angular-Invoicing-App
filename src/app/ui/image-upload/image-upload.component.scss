@@ -5,12 +5,9 @@
   text-align: center;
   justify-self: end;
 
-  width: 150px;
-  height: 150px;
-
   img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height:200px;
   }
 
   .pi-upload{
@@ -20,6 +17,7 @@
   }
 
   .drop-zone {
+    opacity: .3;
     display: flex;
     border: 5px dotted grey;
     padding:10px;
