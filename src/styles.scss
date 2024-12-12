@@ -18,6 +18,9 @@
 .text-centered{
   text-align: center !important;
 }
+.text-left{
+  text-align: start !important;
+}
 
 .w-100 {
   width: 100%;
@@ -62,6 +65,7 @@
 .w-auto {
   width: auto;
 }
+
 
 @media (min-width: 576px) {
   .container {

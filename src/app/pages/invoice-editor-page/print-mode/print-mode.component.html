@@ -81,18 +81,18 @@
       <table>
         <tbody>
           <tr>
-            <td><b>Net Total</b></td>
-            <td>{{ documentData.invoice.totals.netTotal }}</td>
+            <td class="text-left"><b>Net Total</b></td>
+            <td>{{ documentData.invoice.totals.netTotal != "" ? documentData.invoice.totals.netTotal : 0 }}</td>
             <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
-            <td><b>VAT Total</b></td>
-            <td>{{ documentData.invoice.totals.vatTotal }}</td>
+            <td class="text-left"><b>VAT Total</b></td>
+            <td>{{ documentData.invoice.totals.vatTotal != "" ? documentData.invoice.totals.vatTotal : 0 }}</td>
             <td>{{ documentData.currency }}</td>
           </tr>
           <tr>
-            <td><b>Gross Total</b></td>
-            <td>{{ documentData.invoice.totals.grossTotal }}</td>
+            <td class="text-left"><b>Gross Total</b></td>
+            <td>{{ documentData.invoice.totals.grossTotal != "" ? documentData.invoice.totals.grossTotal : 0 }}</td>
             <td>{{ documentData.currency }}</td>
           </tr>
         </tbody>

@@ -4,12 +4,11 @@ import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { InvoiceEditModeService } from "../../services/invoice-edit-mode.service";
 import { AsyncPipe } from "@angular/common";
-import { NgIf } from "@angular/common";
 
 @Component({
   selector: "app-editor-navbar",
   standalone: true,
-  imports: [MenubarModule, ButtonModule, AsyncPipe, NgIf],
+  imports: [MenubarModule, ButtonModule, AsyncPipe],
   templateUrl: "./editor-navbar.component.html",
   styleUrl: "./editor-navbar.component.scss",
 })

@@ -25,7 +25,7 @@
             pInputText
             class="w-100 p-2 cell-field"
             [(ngModel)]="tablerows.name"
-            (ngModelChange)="updateCalculations(tablerows.rowId)"
+            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
           />
         </td>
         <td>
@@ -35,7 +35,7 @@
             pInputText
             class="w-100 p-2 cell-field"
             [(ngModel)]="tablerows.quantity"
-            (ngModelChange)="updateCalculations(tablerows.rowId)"
+            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
           />
         </td>
         <td>
@@ -56,7 +56,7 @@
             pInputText
             class="w-100 p-2 cell-field"
             [(ngModel)]="tablerows.unitNetPrice"
-            (ngModelChange)="updateCalculations(tablerows.rowId)"
+            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
           />
         </td>
         <td>
@@ -66,7 +66,7 @@
             pInputText
             class="w-100 p-2 cell-field"
             [(ngModel)]="tablerows.vatPercentage"
-            (ngModelChange)="updateCalculations(tablerows.rowId)"
+            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
           />
         </td>
         <td>
