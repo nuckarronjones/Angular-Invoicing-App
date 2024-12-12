@@ -11,7 +11,7 @@ import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
-import { documentData } from "../../models/document-data.model";
+import { documentData } from "../../../models/document-data.model";
 
 interface tableUserInputs {
   rowId: string;

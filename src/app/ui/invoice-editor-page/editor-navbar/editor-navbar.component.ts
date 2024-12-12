@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from "@angular/core";
 import { MenubarModule } from "primeng/menubar";
 import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
-import { InvoiceEditModeService } from "../../services/invoice-edit-mode.service";
+import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
 import { AsyncPipe } from "@angular/common";
 
 @Component({
