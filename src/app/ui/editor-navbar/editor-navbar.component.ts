@@ -43,6 +43,10 @@ export class EditorNavbarComponent {
                 line-height: 4px !important;
                 margin-bottom: 20px;
               }
+              .logo-image{
+                width:150px !important;
+                height:150px !important;
+              }
             </style>
           </head>
           <body>

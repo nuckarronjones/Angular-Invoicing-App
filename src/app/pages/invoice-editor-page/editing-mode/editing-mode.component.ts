@@ -6,7 +6,7 @@ import { CalendarModule } from "primeng/calendar";
 import { InputTextModule } from "primeng/inputtext";
 import { TableModule } from "primeng/table";
 
-import { ImageUploadComponent } from "./image-upload/image-upload.component";
+import { ImageUploadComponent } from "../../../ui/image-upload/image-upload.component";
 import { InvoiceEditorTableComponent } from "../../../ui/invoice-table/invoice-table.component";
 import { InputFieldComponent } from "../../../ui/input-field/input-field.component";
 
@@ -33,6 +33,7 @@ import { ITableUserInputs } from "../../../enums/invoice-table.enum";
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
 })
+
 export class EditingModeComponent {
   constructor(public invoiceEditModeService: InvoiceEditModeService) {}
 
