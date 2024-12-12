@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { InputTextModule } from "primeng/inputtext";
 import { FormsModule } from "@angular/forms";
-import { InvoiceEditorTableComponent } from "../../../ui/invoice-table/invoice-table.component";
+import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/invoice-table/invoice-table.component";
 import { CalendarModule } from "primeng/calendar";
 import { TableModule } from "primeng/table";
 import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
-import { ImageUploadComponent } from "../../../ui/image-upload/image-upload.component";
+import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
 
 import { formFields } from "../../../models/form-fields.model";
 import { documentData } from "../../../models/document-data.model";

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { NgIf, AsyncPipe } from "@angular/common";
 
-import { InvoiceEditModeService } from "../../services/invoice-edit-mode.service";
+import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
 
 @Component({
   selector: "app-image-upload",

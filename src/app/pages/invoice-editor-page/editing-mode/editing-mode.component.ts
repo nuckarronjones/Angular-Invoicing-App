@@ -6,15 +6,14 @@ import { CalendarModule } from "primeng/calendar";
 import { InputTextModule } from "primeng/inputtext";
 import { TableModule } from "primeng/table";
 
-import { ImageUploadComponent } from "../../../ui/image-upload/image-upload.component";
-import { InvoiceEditorTableComponent } from "../../../ui/invoice-table/invoice-table.component";
-import { InputFieldComponent } from "../../../ui/input-field/input-field.component";
-
+import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
+import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/invoice-table/invoice-table.component";
 import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
 
 import { documentData } from "../../../models/document-data.model";
 import { formFields } from "../../../models/form-fields.model";
 import { ITableUserInputs } from "../../../enums/invoice-table.enum";
+import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field/input-field.component";
 
 @Component({
   selector: "app-edit-mode",
