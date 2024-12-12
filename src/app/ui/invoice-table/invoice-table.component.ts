@@ -88,7 +88,7 @@ export class InvoiceEditorTableComponent implements OnInit {
   }
 
   //Updates calculation for saved invoicing table totals, and updates dom accordingly
-  public updateCalculations(rowId: string): void {
+  public updateRowCalculations(rowId: string): void {
     const tableRow = document.getElementById(`${rowId}`);
     const tableRowArrayObject = this.tableRows.find(
       (obj) => obj.rowId === rowId
@@ -116,25 +116,23 @@ export class InvoiceEditorTableComponent implements OnInit {
       tableRowArrayObject.totalNet = parseFloat(totalNetHTML.value).toFixed(2);
       tableRowArrayObject.totalGross = parseFloat(totalGrossHTML.value).toFixed(2);
 
-      //We want to signal to the parent component that totals need to be re-calcualted, and supply the tableRows with data
+      //We want to signal to the parent component that totals need to be re-calculated, and supply the tableRows with data
       this.formChanges.emit(this.tableRows);
     }
   }
 
   public deleteRowFromTable(id: string): void {
-    this._deleteRowsAnimation(id);
-    this.formChanges.emit(this.tableRows);
-
+    this._addDeleteRowAnimation(id);
     //Give the animation enough time to finish, then remove row from tableRows
     setTimeout(() => {
       this.tableRows = this.tableRows.filter((row) => {
         return row.rowId !== id;
       });
-    }, 500);
-
+      this.formChanges.emit(this.tableRows);
+    }, 500)
   }
 
-  private _deleteRowsAnimation(id: string) {
+  private _addDeleteRowAnimation(id: string) {
     const rowElement = document.getElementById(`${id}`);
 
     if (rowElement) {

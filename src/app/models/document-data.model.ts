@@ -91,9 +91,9 @@ export let documentData = {
       }
   ],
     totals: {
-      netTotal: "111",
-      vatTotal: "111",
-      grossTotal: "111",
+      netTotal: "6480.00",
+      vatTotal: "13",
+      grossTotal: "6480.00",
     },
   },
 };
