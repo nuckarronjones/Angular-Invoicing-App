@@ -32,6 +32,7 @@ export class EditorNavbarComponent {
             <title>Print Preview</title>
             ${styles}
             <style>
+              @page { size: auto;  margin: 0mm; }
 
               *, input {
                 font-size: 12px !important;
@@ -51,6 +52,7 @@ export class EditorNavbarComponent {
             </style>
           </head>
           <body>
+            <div id="printable-area" style="padding:5mm;">
               ${printContent.innerHTML}
             </div>
           </body>
