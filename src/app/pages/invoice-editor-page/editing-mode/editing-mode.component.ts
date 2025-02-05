@@ -56,7 +56,11 @@ export class EditingModeComponent {
 
       tableRows.forEach((row) => {
         if (row[property]) {
-          accumulator += parseFloat(row[property]);
+          if(property == "totalNet" || property == "totalGross"){
+            accumulator += parseFloat(row[property]);
+          }else if(property = "vatPercentage"){
+            accumulator += ((parseInt(row[property], 10) / 100) * parseFloat(row["totalNet"]));
+          }
         }
       });
 
