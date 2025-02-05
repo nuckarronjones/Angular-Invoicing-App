@@ -99,13 +99,13 @@ export class InvoiceEditorTableComponent implements OnInit {
       const quantity = parseFloat(tableRowArrayObject.quantity as string);
       const unitNetPrice = parseFloat(tableRowArrayObject.unitNetPrice as string);
       const vatPercentage = parseFloat(tableRowArrayObject.vatPercentage as string);
+      const totalNet = quantity * unitNetPrice;
       //Input values we want to malipulate
       const totalNetHTML = tableRow?.querySelector('td input[name="totalNet"]') as HTMLInputElement;
       const totalGrossHTML = tableRow?.querySelector('td input[name="totalGross"]') as HTMLInputElement;
       //Returns calculations into cells as values
       const totalNetCalculated = parseFloat((quantity * unitNetPrice).toFixed(2));
-      const totalGrossCalculated = parseFloat((quantity * (unitNetPrice + unitNetPrice * (vatPercentage / 1000))).toFixed(2));
-
+      const totalGrossCalculated = parseFloat((totalNet + ((vatPercentage / 100) * totalNet)).toFixed(2));
       totalNetHTML.value = totalNetCalculated ? totalNetCalculated.toString() : "";
       totalGrossHTML.value = totalGrossCalculated
         ? totalGrossCalculated.toString()
