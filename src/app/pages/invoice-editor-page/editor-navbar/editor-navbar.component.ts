@@ -32,6 +32,7 @@ export class EditorNavbarComponent {
             <title>Print Preview</title>
             ${styles}
             <style>
+
               *, input {
                 font-size: 12px !important;
                 color: black;
@@ -50,7 +51,6 @@ export class EditorNavbarComponent {
             </style>
           </head>
           <body>
-            <div id="printable-area">
               ${printContent.innerHTML}
             </div>
           </body>
