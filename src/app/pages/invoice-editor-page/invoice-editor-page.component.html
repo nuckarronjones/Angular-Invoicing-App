@@ -2,7 +2,7 @@
   <app-editor-navbar/>
 </div>
 
-<ng-container *ngIf="invoiceEditModeService.editMode$ | async; else printMode">
+<ng-container *ngIf="invoiceEditModeState.editMode$ | async; else printMode">
   <app-edit-mode></app-edit-mode>
 </ng-container>
 

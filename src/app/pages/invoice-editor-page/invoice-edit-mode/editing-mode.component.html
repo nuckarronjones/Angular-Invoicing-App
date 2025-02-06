@@ -9,7 +9,7 @@
             [label]="headerField.label"
             [placeholder]="getFormValue(headerField.id)"
             [class]="headerField.style"
-            (updatedInputValue)="setInvoiceValues($event)"
+            (updatedInputValue)="updateInvoiceModelObject($event)"
           ></app-input-field>
         </ng-container>
       </section>
@@ -35,7 +35,7 @@
               [label]="formField.label"
               [placeholder]="getFormValue(formField.id)"
               [class]="formField.style"
-              (updatedInputValue)="setInvoiceValues($event)"
+              (updatedInputValue)="updateInvoiceModelObject($event)"
             ></app-input-field>
           </ng-container>
         </ng-container>
@@ -50,7 +50,7 @@
               [label]="formField.label"
               [placeholder]="getFormValue(formField.id)"
               [class]="formField.style"
-              (updatedInputValue)="setInvoiceValues($event)"
+              (updatedInputValue)="updateInvoiceModelObject($event)"
             ></app-input-field>
           </ng-container>
         </ng-container>
@@ -61,7 +61,7 @@
 
     <app-invoice-editor-table
       [editMode]="true"
-      (formChanges)="reCalculateTotals($event)"
+      (formChanges)="recalculateTableRows($event)"
     />
 
     <footer id="invoiceTotals">

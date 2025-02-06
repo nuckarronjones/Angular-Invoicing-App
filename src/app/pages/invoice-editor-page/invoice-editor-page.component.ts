@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { EditingModeComponent } from "./invoice-edit-mode/editing-mode.component";
-import { InvoiceEditModeService } from "../../services/invoice-edit-mode.service";
+import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
 import { EditorNavbarComponent } from "./editor-navbar/editor-navbar.component";
 import { PrintModeComponent } from "./invoice-print-mode/print-mode.component";
 import { AsyncPipe } from "@angular/common";
@@ -14,5 +14,5 @@ import { NgIf } from "@angular/common";
   styleUrl: "./invoice-editor-page.component.scss",
 })
 export class InvoiceEditorPageComponent {
-  constructor(public invoiceEditModeService: InvoiceEditModeService) {}
+  constructor(public invoiceEditModeState: InvoiceEditModeState) {}
 }

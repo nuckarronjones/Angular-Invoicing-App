@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from "@angular/core";
 import { MenubarModule } from "primeng/menubar";
 import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
-import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
+import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 import { AsyncPipe } from "@angular/common";
 
 @Component({
@@ -17,7 +17,7 @@ export class EditorNavbarComponent {
 
   items: MenuItem[] = [];
 
-  constructor(public invoiceEditModeService: InvoiceEditModeService) {}
+  constructor(public invoiceEditModeState: InvoiceEditModeState) {}
 
   printInvoice(): void {
     const printContent = document.getElementById('printable-area');

@@ -8,7 +8,8 @@ import { TableModule } from "primeng/table";
 
 import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
 import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/invoice-table/invoice-table.component";
-import { InvoiceEditModeService } from "../../../services/invoice-edit-mode.service";
+import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
+import { UserInvoiceModelService } from "../../../services/user-invoice-model.service";
 
 import { documentData } from "../../../models/document-data.model";
 import { formFields } from "../../../models/form-fields.model";
@@ -34,55 +35,30 @@ import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field
 })
 
 export class EditingModeComponent {
-  constructor(public invoiceEditModeService: InvoiceEditModeService) {}
+  constructor(
+    public invoiceEditModeState: InvoiceEditModeState,
+    private _userInvoiceModelService: UserInvoiceModelService
+  ) {}
 
   public tableData: ITableUserInputs[] = [];
   public formFields = formFields;
   public documentData = documentData;
 
   public saveImageUrl(event: string): void {
-    this.documentData.invoice.form.headerImage = event;
+    this._userInvoiceModelService.setImageUrl(event);
   }
 
-  public reCalculateTotals(tableRows: ITableUserInputs[]): void {
-    this._saveTableRowData(tableRows);
-
-    this.documentData.invoice.totals.netTotal = calculateTotal("totalNet");
-    this.documentData.invoice.totals.vatTotal = calculateTotal("vatPercentage");
-    this.documentData.invoice.totals.grossTotal = calculateTotal("totalGross");
-
-    function calculateTotal(property: keyof (typeof tableRows)[0]): string {
-      let accumulator = 0;
-
-      tableRows.forEach((row) => {
-        if (row[property]) {
-          if(property == "totalNet" || property == "totalGross"){
-            accumulator += parseFloat(row[property]);
-          }else if(property = "vatPercentage"){
-            accumulator += ((parseInt(row[property], 10) / 100) * parseFloat(row["totalNet"]));
-          }
-        }
-      });
-
-      return accumulator ? accumulator.toFixed(2).toString() : "";
-    }
+  public recalculateTableRows(tableRows: ITableUserInputs[]): void {
+    this._userInvoiceModelService.updateFormTableRows(tableRows);
+    this._userInvoiceModelService.updateTotals(tableRows);
   }
 
-  public setInvoiceValues(event: Record<string, any>): void {
-    const key = Object.keys(event)[0] as keyof typeof this.documentData.invoice.form; 
-    if (key && key in this.documentData.invoice.form) {
-      this.documentData.invoice.form[key] = event[key]; 
-    } else {
-      console.warn(`Key ${key} not found in documentData.form`);
-    }
+  public updateInvoiceModelObject(event: Record<string, any>): void {
+    this._userInvoiceModelService.setCellValue(event);
   }
 
   public getFormValue(key: string): string {
     return this.documentData.invoice.form[key as keyof typeof this.documentData.invoice.form] || '';
-  }
-
-  private _saveTableRowData(tableRows: ITableUserInputs[]): void{
-    this.documentData.invoice.formTable = tableRows;
   }
   
 }

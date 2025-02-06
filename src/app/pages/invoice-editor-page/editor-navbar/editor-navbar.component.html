@@ -2,12 +2,12 @@
   <ng-template pTemplate="start">
     <button
       class="pi pi-pen-to-square"
-      (click)="invoiceEditModeService.toggleEditMode()"
+      (click)="invoiceEditModeState.InvoiceEditModeState()"
     ></button>
     <button
       class="pi pi-print"
       (click)="printInvoice()"
-      [disabled]="(invoiceEditModeService.editMode$ | async)"
+      [disabled]="(invoiceEditModeState.editMode$ | async)"
     ></button>
   </ng-template>
   <ng-template pTemplate="end">

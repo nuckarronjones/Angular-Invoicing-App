@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceEditModeService {
+export class InvoiceEditModeState {
   private editModeSubject = new BehaviorSubject<boolean>(true);
   editMode$ = this.editModeSubject.asObservable();
 
@@ -14,7 +14,7 @@ export class InvoiceEditModeService {
     this.editModeSubject.next(state);
   }
 
-  toggleEditMode(): void {
+  InvoiceEditModeState(): void {
     const currentState = this.editModeSubject.getValue();
     this.editModeSubject.next(!currentState); 
   }
