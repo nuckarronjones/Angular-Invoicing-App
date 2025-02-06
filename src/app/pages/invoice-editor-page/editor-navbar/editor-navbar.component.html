@@ -1,18 +1,42 @@
 <p-menubar>
   <ng-template pTemplate="start">
-    <button
-      class="pi pi-pen-to-square"
+    <p-button
+      icon="pi pi-pen-to-square"
+      size="small"
+      aria-label="Save"
+      severity="secondary"
       (click)="invoiceEditModeState.InvoiceEditModeState()"
-    ></button>
-    <button
-      class="pi pi-print"
-      (click)="printInvoice()"
+    />
+    <p-button
+      icon="pi pi-print"
       [disabled]="(invoiceEditModeState.editMode$ | async)"
-    ></button>
+      size="small"
+      aria-label="Save"
+      severity="secondary"
+      (click)="printInvoice()"
+    />
+    <p-button
+      icon="pi pi-save"
+      [disabled]="!(invoiceEditModeState.editMode$ | async)"
+      size="small"
+      aria-label="Save"
+      label="Save"
+      severity="success"
+    />
   </ng-template>
   <ng-template pTemplate="end">
-    <button class="pi pi-plus"></button>
-    <button class="pi pi-minus"></button>
-    <span>100%</span>
+    <p-button
+      icon="pi pi-plus"
+      size="small"
+      severity="secondary"
+    />
+    <p-button
+      icon="pi pi-minus"
+      size="small"
+      severity="secondary"
+    />
+    <div id="zoom-percentage">
+      <span>100%</span>
+    </div>
   </ng-template>
 </p-menubar>
