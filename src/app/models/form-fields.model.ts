@@ -1,4 +1,19 @@
-export let formFields  ={
+interface InputField{
+  id: string,
+  label: string,
+  placeholder: string,
+  inputType:  "date" | "text",
+  style:  "w-100" | "w-50" | "w-50 inline-block",
+  column: "left" | "right";
+}
+
+interface formFields{
+  header: ReadonlyArray<InputField>,
+  headerImage: string,
+  body: ReadonlyArray<InputField>
+}
+
+export const formFields: formFields ={
     header: [
       {
         id: "invoiceNo",
