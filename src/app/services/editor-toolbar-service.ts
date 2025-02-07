@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { documentData } from '../models/document-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,10 @@ export class EditorToolbarService {
         } else {
           console.error('Printable area not found');
         }
-      }
+    }
+
+    saveInvoice(): void{
+        localStorage.setItem(documentData.id, JSON.stringify(documentData));
+    }
 
 }

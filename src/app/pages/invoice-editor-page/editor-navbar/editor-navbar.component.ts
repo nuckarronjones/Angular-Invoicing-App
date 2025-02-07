@@ -23,5 +23,9 @@ export class EditorNavbarComponent {
   public printInvoice(){
     this._editorToolbarService.printInvoice();
   }
+
+  public saveInvoice(){
+    this._editorToolbarService.saveInvoice();
+  }
   
 }
