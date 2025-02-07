@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
         label: 'Home',
       },
       {
-        label: 'Editor',
+        label: 'Invoices',
       }
     ];
   }
