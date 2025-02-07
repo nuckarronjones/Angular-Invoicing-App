@@ -1,0 +1,21 @@
+.table-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+  
+    p-button {
+      margin-left: auto;  
+    }
+  }
+
+  
+.dropdown-cell {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.actions-column {
+  text-align: center;
+}
