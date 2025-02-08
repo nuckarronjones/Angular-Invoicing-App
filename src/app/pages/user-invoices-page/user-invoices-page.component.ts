@@ -31,7 +31,7 @@ export class UserInvoicesPageComponent implements OnInit {
   selectedCity: any;
 
   ngOnInit(): void {
-    this.userInvoicesService.getUserInvoices();
+    this.userInvoicesService.setUserInvoices();
 
     this.userInvoicesService.userInvoices$.subscribe((value) => {
       if (value !== null) {

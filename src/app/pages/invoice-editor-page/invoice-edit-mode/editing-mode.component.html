@@ -1,4 +1,4 @@
-<form id="form-container">
+<form *ngIf="currentInvoice" id="form-container">
   <div id="printable-area">
     <header class="flex-container">
       <section class="flex-column">
@@ -17,7 +17,7 @@
       <section class="flex-column">
         <app-image-upload
           [editMode]="true"
-          [headerImageUrl]="documentData.invoice.form.headerImage"
+          [headerImageUrl]="getHeaderImage"
           (saveImageUrl)="saveImageUrl($event)"
         ></app-image-upload>
       </section>
@@ -69,18 +69,18 @@
         <tbody>
           <tr>
             <td class="text-left"><b>Net Total</b></td>
-            <td>{{ documentData.invoice.totals.netTotal != "" ? documentData.invoice.totals.netTotal : 0 }}</td>
-            <td>{{ documentData.currency }}</td>
+            <td>{{ getNetTotal != "" ? getNetTotal : 0 }}</td>
+            <td>{{ currentInvoice.currency }}</td>
           </tr>
           <tr>
             <td class="text-left"><b>VAT Total</b></td>
-            <td>{{ documentData.invoice.totals.vatTotal != "" ? documentData.invoice.totals.vatTotal : 0 }}</td>
-            <td>{{ documentData.currency }}</td>
+            <td>{{ getVatTotal != "" ? getVatTotal: 0 }}</td>
+            <td>{{ currentInvoice.currency }}</td>
           </tr>
           <tr>
             <td class="text-left"><b>Gross Total</b></td>
-            <td>{{ documentData.invoice.totals.grossTotal != "" ? documentData.invoice.totals.grossTotal : 0 }}</td>
-            <td>{{ documentData.currency }}</td>
+            <td>{{ getGrossTotal != "" ? getGrossTotal : 0 }}</td>
+            <td>{{ currentInvoice.currency }}</td>
           </tr>
         </tbody>
       </table>
@@ -91,7 +91,7 @@
     <table>
       <tr>
         <td><b>Total Due: </b></td>
-        <td>{{ documentData.invoice.totals.grossTotal }}</td>
+        <td>{{ getGrossTotal }}</td>
       </tr>
     </table>
 
