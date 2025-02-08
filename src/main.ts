@@ -7,7 +7,7 @@ import { InvoiceEditorPageComponent } from './app/pages/invoice-editor-page/invo
 import { UserInvoicesPageComponent } from './app/pages/user-invoices-page/user-invoices-page.component';
 
 bootstrapApplication(AppComponent, {
-  ...appConfig,  // Spread existing config
+  ...appConfig, 
   providers: [
     ...appConfig.providers, 
     provideAnimations(),
