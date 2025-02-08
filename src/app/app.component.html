@@ -1,9 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar></app-navbar> 
 <div class="container">
-  <div *ngIf="selectedInvoice">
-    <app-invoice-editor-page/>
-  </div>
-  <div *ngIf="!selectedInvoice">
-    <app-user-invoices-page/>
-  </div>
+  <router-outlet></router-outlet>  
 </div>
