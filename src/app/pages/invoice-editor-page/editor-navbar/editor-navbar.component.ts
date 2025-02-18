@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter, Input } from "@angular/core";
 import { MenubarModule } from "primeng/menubar";
 import { ButtonModule } from "primeng/button";
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
@@ -13,6 +13,9 @@ import { AsyncPipe } from "@angular/common";
   styleUrl: "./editor-navbar.component.scss",
 })
 export class EditorNavbarComponent {
+  @Input() invoiceId: string = "";
+  @Input() currentInvoice?: any = null;
+
   @Output() printEvent = new EventEmitter();
 
   constructor(
@@ -25,7 +28,7 @@ export class EditorNavbarComponent {
   }
 
   public saveInvoice(){
-    this._editorToolbarService.saveInvoice();
+    this._editorToolbarService.saveInvoice(this.invoiceId, this.currentInvoice);
   }
   
 }

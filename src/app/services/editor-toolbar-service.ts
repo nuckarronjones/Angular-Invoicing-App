@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { documentData } from '../models/document-data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditorToolbarService {
-  
+
     printInvoice(): void {
         const printContent = document.getElementById('printable-area');
         if (printContent) {
@@ -64,8 +63,8 @@ export class EditorToolbarService {
         }
     }
 
-    saveInvoice(): void{
-        localStorage.setItem(documentData.id, JSON.stringify(documentData));
+    saveInvoice(invoiceId: string, currentInvoice: any): void {
+      //NOTE: implement local cache saving here. Using id and current invoice
+      //localStorage.setItem(documentData.id, JSON.stringify(documentData));
     }
-
 }
