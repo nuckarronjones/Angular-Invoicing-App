@@ -27,13 +27,12 @@ import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field
     InputFieldComponent,
     NgFor,
     NgIf,
-    ImageUploadComponent
+    ImageUploadComponent,
   ],
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
 })
-
-export class EditingModeComponent{
+export class EditingModeComponent {
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
     private _userInvoiceModelService: UserInvoiceModelService
@@ -58,23 +57,31 @@ export class EditingModeComponent{
   }
 
   public getFormValue(key: string): string {
-    return this.currentInvoice.invoice.form[key as keyof typeof this.currentInvoice.invoice.form] || '';
+    if(this.currentInvoice){
+      return (
+        this.currentInvoice.invoice.form[
+          key as keyof typeof this.currentInvoice.invoice.form
+        ] || ""
+      );
+    }else{
+      return "";
+    }
   }
 
-  public get getHeaderImage(){
-    return this.currentInvoice.invoice.form.headerImage;
+  public get headerImage(): string {
+    return this.currentInvoice?.invoice.form.headerImage ?? "";
   }
-
-  public get getNetTotal(){
-    return this.currentInvoice.invoice.totals.netTotal;
+  
+  public get netTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.netTotal ?? "";
   }
-
-  public get getVatTotal(){
-    return this.currentInvoice.invoice.totals.vatTotal;
+  
+  public get vatTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.vatTotal ?? "";
   }
-
-  public get getGrossTotal(){
-    return this.currentInvoice.invoice.totals.grossTotal;
+  
+  public get grossTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.grossTotal ?? "";
   }
   
 }

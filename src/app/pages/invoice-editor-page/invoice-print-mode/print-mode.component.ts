@@ -49,7 +49,26 @@ export class PrintModeComponent{
   }
 
   public getFormValue(key: string): string {
-      return this.currentInvoice.invoice.form[key as keyof typeof this.currentInvoice.invoice.form] || '';
+      if(this.currentInvoice){
+        return this.currentInvoice.invoice.form[key as keyof typeof this.currentInvoice.invoice.form] || '';
+      } 
+      return "";
+  }
+
+  public get headerImage(): string {
+    return this.currentInvoice?.invoice.form.headerImage ?? "";
+  }
+  
+  public get netTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.netTotal ?? "";
+  }
+  
+  public get vatTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.vatTotal ?? "";
+  }
+  
+  public get grossTotal(): number | string {
+    return this.currentInvoice?.invoice.totals.grossTotal ?? "";
   }
   
 }
