@@ -40,7 +40,6 @@ interface ITableUserInputs {
 export class PrintModeComponent{
   @Input() currentInvoice: any = null;
   
-  public tableData: ITableUserInputs[] = [];
   public editMode = true;
   public formFields = formFields;
   
@@ -53,6 +52,10 @@ export class PrintModeComponent{
         return this.currentInvoice.invoice.form[key as keyof typeof this.currentInvoice.invoice.form] || '';
       } 
       return "";
+  }
+
+  public get tableData(): ITableUserInputs[]{
+      return this.currentInvoice?.invoice.formTable;
   }
 
   public get headerImage(): string {

@@ -73,7 +73,10 @@
       </div>
     </section>
 
-    <app-invoice-editor-table [editMode]="false" />
+    <app-invoice-editor-table 
+      [invoiceTableRowData]="tableData"
+      [editMode]="false"
+     />
 
     <footer id="invoiceTotals">
       <table>
