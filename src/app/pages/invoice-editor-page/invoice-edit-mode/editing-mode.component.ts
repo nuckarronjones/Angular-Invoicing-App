@@ -39,6 +39,7 @@ export class EditingModeComponent {
   ) {}
 
   @Input() currentInvoice: any = null;
+
   public formFields = formFields;
 
   public saveImageUrl(event: string): void {
@@ -55,35 +56,34 @@ export class EditingModeComponent {
   }
 
   public getFormValue(key: string): string {
-    if(this.currentInvoice){
+    if (this.currentInvoice) {
       return (
         this.currentInvoice.invoice.form[
           key as keyof typeof this.currentInvoice.invoice.form
         ] || ""
       );
-    }else{
+    } else {
       return "";
     }
   }
 
-  public get tableData(): ITableUserInputs[]{
+  public get tableData(): ITableUserInputs[] {
     return this.currentInvoice?.invoice.formTable;
   }
 
   public get headerImage(): string {
     return this.currentInvoice?.invoice.form.headerImage ?? "";
   }
-  
+
   public get netTotal(): number | string {
     return this.currentInvoice?.invoice.totals.netTotal ?? "";
   }
-  
+
   public get vatTotal(): number | string {
     return this.currentInvoice?.invoice.totals.vatTotal ?? "";
   }
-  
+
   public get grossTotal(): number | string {
     return this.currentInvoice?.invoice.totals.grossTotal ?? "";
   }
-  
 }
