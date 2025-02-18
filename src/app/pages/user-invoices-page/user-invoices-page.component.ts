@@ -28,8 +28,6 @@ export class UserInvoicesPageComponent implements OnInit {
   public allUserInvoices: any[] | null = null;
   public actionItems: any[] = [];
 
-  selectedCity: any;
-
   ngOnInit(): void {
     this.userInvoicesService.setUserInvoices();
 
