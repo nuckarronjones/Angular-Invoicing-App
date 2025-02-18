@@ -26,41 +26,41 @@
     </ng-template>
     <ng-template pTemplate="body" let-userInvoice>
       <tr>
-        <ng-container *ngIf="userInvoice.invoice?.form as form;">
-        <td>{{ form.invoiceNo }}</td>
-        <td>{{ form.invoiceDate }}</td>
-        <td>{{ form.invoiceDueDate }}</td>
-        <td>
-          {{
-            userInvoice.invoice.totals.grossTotal + " " + userInvoice.currency
-          }}
-        </td>
-        <td>{{ form.buyer }}</td>
-        <td>
-          <p-button
-            label="Issued"
-            [outlined]="true"
-            icon="pi pi-check"
-            severity="success"
-            size="small"
-          />
-        </td>
-        <td>
-          <div class="dropdown-cell">
-            <p-menu
-              #menu
-              [model]="actionItems"
-              [popup]="true"
-              appendTo="body"
-            />
+        <ng-container *ngIf="userInvoice.invoice?.form as form">
+          <td>{{ form.invoiceNo }}</td>
+          <td>{{ form.invoiceDate }}</td>
+          <td>{{ form.invoiceDueDate }}</td>
+          <td>
+            {{
+              userInvoice.invoice.totals.grossTotal + " " + userInvoice.currency
+            }}
+          </td>
+          <td>{{ form.buyer }}</td>
+          <td>
             <p-button
-              (click)="menu.toggle($event)"
-              icon="pi pi-cog"
+              label="Issued"
+              [outlined]="true"
+              icon="pi pi-check"
+              severity="success"
               size="small"
-              severity="secondary"
             />
-          </div>
-        </td>
+          </td>
+          <td>
+            <div class="dropdown-cell">
+              <p-menu
+                #menu
+                [model]="actionItems"
+                [popup]="true"
+                appendTo="body"
+              />
+              <p-button
+                (click)="menu.toggle($event)"
+                icon="pi pi-cog"
+                size="small"
+                severity="secondary"
+              />
+            </div>
+          </td>
         </ng-container>
       </tr>
     </ng-template>
