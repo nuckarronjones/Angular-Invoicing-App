@@ -41,9 +41,13 @@ export class UserInvoicesPageComponent implements OnInit {
     this._dropdownSelectedInvoice = invoiceId;
   }
 
+  public createNewInvoice(){
+    this._invoiceEditModeState.setEditMode(true);
+    this._router.navigate([`/invoices`]);
+  }
+
   ngOnInit(): void {
     this.userInvoicesService.setUserInvoices();
-
     this.userInvoicesService.userInvoices$.subscribe((value) => {
       if (value !== null) {
         this.isLoading = false;

@@ -10,7 +10,7 @@
       label="New Invoice"
       severity="success"
       size="small"
-      [routerLink]="['/invoices']"
+      (click)="createNewInvoice()"
     />
   </div>
   <p-table *ngIf="allUserInvoices" [value]="allUserInvoices">
