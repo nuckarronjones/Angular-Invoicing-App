@@ -26,15 +26,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-userInvoice>
       <tr>
-        <td>{{ userInvoice.invoice.form.invoiceNo }}</td>
-        <td>{{ userInvoice.invoice.form.invoiceDate }}</td>
-        <td>{{ userInvoice.invoice.form.invoiceDueDate }}</td>
+        <ng-container *ngIf="userInvoice.invoice?.form as form;">
+        <td>{{ form.invoiceNo }}</td>
+        <td>{{ form.invoiceDate }}</td>
+        <td>{{ form.invoiceDueDate }}</td>
         <td>
           {{
             userInvoice.invoice.totals.grossTotal + " " + userInvoice.currency
           }}
         </td>
-        <td>{{ userInvoice.invoice.form.buyer }}</td>
+        <td>{{ form.buyer }}</td>
         <td>
           <p-button
             label="Issued"
@@ -60,6 +61,7 @@
             />
           </div>
         </td>
+        </ng-container>
       </tr>
     </ng-template>
   </p-table>
