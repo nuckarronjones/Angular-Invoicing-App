@@ -40,7 +40,6 @@ interface ITableUserInputs {
 export class PrintModeComponent{
   @Input() currentInvoice: any = null;
   
-  public editMode = true;
   public formFields = formFields;
   
   public saveImageUrl(event : string ):void{
