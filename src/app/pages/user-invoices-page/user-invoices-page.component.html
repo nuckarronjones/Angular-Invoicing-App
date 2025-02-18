@@ -10,6 +10,7 @@
       label="New Invoice"
       severity="success"
       size="small"
+      [routerLink]="['/invoices']"
     />
   </div>
   <p-table *ngIf="allUserInvoices" [value]="allUserInvoices">
@@ -54,7 +55,9 @@
                 appendTo="body"
               />
               <p-button
-                (click)="menu.toggle($event)"
+                (click)="
+                  setSelectedInvoice(userInvoice.id); menu.toggle($event)
+                "
                 icon="pi pi-cog"
                 size="small"
                 severity="secondary"

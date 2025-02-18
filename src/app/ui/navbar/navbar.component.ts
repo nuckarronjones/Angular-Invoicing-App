@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
     this.items = [
       {
         label: 'Home',
+        routerLink: ["/"]
       },
       {
         label: 'Invoices',
