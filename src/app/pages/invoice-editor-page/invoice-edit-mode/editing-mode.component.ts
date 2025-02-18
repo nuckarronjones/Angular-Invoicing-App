@@ -39,8 +39,6 @@ export class EditingModeComponent {
   ) {}
 
   @Input() currentInvoice: any = null;
-
-  public tableData: ITableUserInputs[] = [];
   public formFields = formFields;
 
   public saveImageUrl(event: string): void {
@@ -66,6 +64,10 @@ export class EditingModeComponent {
     }else{
       return "";
     }
+  }
+
+  public get tableData(): ITableUserInputs[]{
+    return this.currentInvoice?.invoice.formTable;
   }
 
   public get headerImage(): string {

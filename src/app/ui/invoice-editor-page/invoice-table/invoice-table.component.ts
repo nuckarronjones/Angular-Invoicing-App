@@ -11,18 +11,7 @@ import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
-import { documentData } from "../../../models/document-data.model";
-
-interface tableUserInputs {
-  rowId: string;
-  name: string;
-  quantity: string;
-  quantUnit: string;
-  unitNetPrice: string;
-  vatPercentage: string;
-  totalNet: string;
-  totalGross: string;
-}
+import { ITableUserInputs } from "../../../enums/invoice-table.enum";
 
 @Component({
   selector: "app-invoice-editor-table",
@@ -32,17 +21,16 @@ interface tableUserInputs {
   styleUrls: ["./invoice-table.component.scss"],
 })
 export class InvoiceEditorTableComponent implements OnInit {
-  @Input() userInvoiceEntries?: tableUserInputs[];
+  @Input() invoiceTableRowData?: ITableUserInputs[];
   @Input() editMode!: boolean;
   @Output() formChanges = new EventEmitter();
 
-  public tableRows: tableUserInputs[] = [];
-  public documentData = documentData;
+  public tableRows: ITableUserInputs[] = [];
 
   ngOnInit(): void {
-    const savedTableRows = documentData.invoice.formTable;
+    const savedTableRows = this.invoiceTableRowData;
     //If we have saved data for this invoice saved, we want to populate tableRows OnInit
-    if (savedTableRows.length > 0) {
+    if ((savedTableRows) && savedTableRows.length > 0) {
       savedTableRows.forEach((row) => {
         //Push saved data from rows into our component table rows
         this.tableRows.push(row);
@@ -123,6 +111,7 @@ export class InvoiceEditorTableComponent implements OnInit {
 
   public deleteRowFromTable(id: string): void {
     this._addDeleteRowAnimation(id);
+    
     //Give the animation enough time to finish, then remove row from tableRows
     setTimeout(() => {
       this.tableRows = this.tableRows.filter((row) => {

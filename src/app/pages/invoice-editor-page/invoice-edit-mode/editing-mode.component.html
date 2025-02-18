@@ -61,6 +61,7 @@
 
     <app-invoice-editor-table
       [editMode]="true"
+      [invoiceTableRowData]="tableData"
       (formChanges)="recalculateTableRows($event)"
     />
 
