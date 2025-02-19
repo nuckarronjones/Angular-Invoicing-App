@@ -33,12 +33,12 @@ import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field
   styleUrl: "./editing-mode.component.scss",
 })
 export class EditingModeComponent {
+  @Input() currentInvoice: any = null;
+  
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
     private _userInvoiceModelService: UserInvoiceModelService
   ) {}
-
-  @Input() currentInvoice: any = null;
 
   public formFields = formFields;
 

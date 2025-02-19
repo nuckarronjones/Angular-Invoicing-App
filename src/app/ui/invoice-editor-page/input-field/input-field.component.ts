@@ -17,9 +17,9 @@ export class InputFieldComponent {
   @Input() placeholder!: string;
   @Input() class!: string;
 
-  public inputValue = "";
-
   @Output() updatedInputValue = new EventEmitter();
+
+  public inputValue = "";
 
   public updateInputValue(): void {
     this.updatedInputValue.emit({ [this.id]: this.inputValue });

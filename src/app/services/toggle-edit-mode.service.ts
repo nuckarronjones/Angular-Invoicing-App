@@ -10,11 +10,11 @@ export class InvoiceEditModeState {
 
   constructor() { }
 
-  setEditMode(state: boolean): void {
+  public setEditMode(state: boolean): void {
     this.editModeSubject.next(state);
   }
 
-  InvoiceEditModeState(): void {
+  public toggleEditModeState(): void {
     const currentState = this.editModeSubject.getValue();
     this.editModeSubject.next(!currentState); 
   }

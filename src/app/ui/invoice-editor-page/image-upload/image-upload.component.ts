@@ -12,10 +12,10 @@ import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service
   styleUrls: ["./image-upload.component.scss"],
 })
 export class ImageUploadComponent {
-  @Output() saveImageUrl = new EventEmitter<string>();
-
   @Input() headerImageUrl?: string | ArrayBuffer | null = null;
   @Input({ required: true }) editMode!: boolean;
+
+  @Output() saveImageUrl = new EventEmitter<string>();
 
   constructor(public invoiceEditModeState: InvoiceEditModeState) {}
 
@@ -32,6 +32,7 @@ export class ImageUploadComponent {
 
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
+
         reader.onload = () => {
           this.headerImageUrl = reader.result;
 
@@ -40,7 +41,9 @@ export class ImageUploadComponent {
           } else {
             console.error("Image upload unsuccessful, url not valid");
           }
+
         };
+        
         reader.readAsDataURL(file);
       } else {
         alert("Please drop an image file.");

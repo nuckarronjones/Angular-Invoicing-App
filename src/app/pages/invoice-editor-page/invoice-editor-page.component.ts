@@ -30,8 +30,6 @@ export class InvoiceEditorPageComponent implements OnInit {
     private _route: ActivatedRoute
   ) {}
 
-  public selectedInvoice: any;
-
   ngOnInit() {
     this._route.paramMap.subscribe((params) => {
       const invoiceId = String(params.get("id"));
@@ -45,4 +43,6 @@ export class InvoiceEditorPageComponent implements OnInit {
       });
     });
   }
+
+  public selectedInvoice: any;
 }

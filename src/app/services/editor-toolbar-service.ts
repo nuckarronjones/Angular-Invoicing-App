@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EditorToolbarService {
+  printInvoice(): void {
+    const printContent = document.getElementById("printable-area");
+    if (printContent) {
+      const styles = Array.from(
+        document.querySelectorAll('style, link[rel="stylesheet"]')
+      )
+        .map((style) => style.outerHTML)
+        .join("\n");
 
-    printInvoice(): void {
-        const printContent = document.getElementById('printable-area');
-        if (printContent) {
-          const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-            .map(style => style.outerHTML)
-            .join('\n');
-    
-          const content = `
+      const content = `
             <html>
               <head>
                 <title>Print Preview</title>
@@ -44,26 +45,26 @@ export class EditorToolbarService {
               </body>
             </html>
           `;
-      
-          const printWindow = window.open();
-          if (printWindow) {
-            printWindow.document.open();
-            printWindow.document.write(content);
-            printWindow.document.close();
-      
-            printWindow.onload = () => {
-              printWindow.print();
-              printWindow.close();
-            };
-          } else {
-            console.error('Failed to open print window');
-          }
-        } else {
-          console.error('Printable area not found');
-        }
-    }
 
-    saveInvoice(invoiceId: string, currentInvoice: any): void {
-      localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+      const printWindow = window.open();
+      if (printWindow) {
+        printWindow.document.open();
+        printWindow.document.write(content);
+        printWindow.document.close();
+
+        printWindow.onload = () => {
+          printWindow.print();
+          printWindow.close();
+        };
+      } else {
+        console.error("Failed to open print window");
+      }
+    } else {
+      console.error("Printable area not found");
     }
+  }
+
+  public saveInvoice(invoiceId: string, currentInvoice: any): void {
+    localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { documentData } from "../models/document-data.model";
-import { ITableUserInputs } from "../enums/invoice-table.enum";
+import { ITableUserInputs } from "../enums/invoice-document.enum";
 
 @Injectable({
   providedIn: "root",
@@ -8,9 +8,10 @@ import { ITableUserInputs } from "../enums/invoice-table.enum";
 export class UserInvoiceModelService {
   public documentData = documentData;
 
-  public updateTotals(tableRows: ITableUserInputs[]):void{
+  public updateTotals(tableRows: ITableUserInputs[]): void {
     this.documentData.invoice.totals.netTotal = _calculateTotal("totalNet");
-    this.documentData.invoice.totals.vatTotal = _calculateTotal("vatPercentage");
+    this.documentData.invoice.totals.vatTotal =
+      _calculateTotal("vatPercentage");
     this.documentData.invoice.totals.grossTotal = _calculateTotal("totalGross");
 
     function _calculateTotal(property: keyof (typeof tableRows)[0]): string {
@@ -18,10 +19,11 @@ export class UserInvoiceModelService {
 
       tableRows.forEach((row) => {
         if (row[property]) {
-          if(property == "totalNet" || property == "totalGross"){
+          if (property == "totalNet" || property == "totalGross") {
             accumulator += parseFloat(row[property]);
-          }else if(property = "vatPercentage"){
-            accumulator += ((parseInt(row[property], 10) / 100) * parseFloat(row["totalNet"]));
+          } else if ((property = "vatPercentage")) {
+            accumulator +=
+              (parseInt(row[property], 10) / 100) * parseFloat(row["totalNet"]);
           }
         }
       });
@@ -39,8 +41,10 @@ export class UserInvoiceModelService {
   }
 
   public setCellValue(event: Record<string, any>): void {
-    const key = Object.keys(event)[0] as keyof typeof this.documentData.invoice.form;
-    
+    const key = Object.keys(
+      event
+    )[0] as keyof typeof this.documentData.invoice.form;
+
     if (key && key in this.documentData.invoice.form) {
       this.documentData.invoice.form[key] = event[key];
     } else {

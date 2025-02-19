@@ -18,8 +18,6 @@ export class EditorNavbarComponent implements OnInit {
   @Input() currentInvoice?: any = null;
   @Output() printEvent = new EventEmitter();
 
-  public newInvoiceID: string = "";
-
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
     private _editorToolbarService: EditorToolbarService
@@ -33,21 +31,21 @@ export class EditorNavbarComponent implements OnInit {
     }
   }
 
-  public printInvoice() {
+  public newInvoiceID: string = "";
+
+  public printInvoice(): void {
     this._editorToolbarService.printInvoice();
   }
 
-  public saveInvoice() {
-    const invoiceId =
-      this.currentInvoice.invoiceId
-        ? this.currentInvoice.invoiceId
-        : this.newInvoiceID;
+  public saveInvoice(): void {
+    const invoiceId = this.currentInvoice.invoiceId
+      ? this.currentInvoice.invoiceId
+      : this.newInvoiceID;
 
     this._editorToolbarService.saveInvoice(invoiceId, this.currentInvoice);
   }
 
-  private _createBlankDocument() {
+  private _createBlankDocument(): any {
     return documentData;
   }
-  
 }

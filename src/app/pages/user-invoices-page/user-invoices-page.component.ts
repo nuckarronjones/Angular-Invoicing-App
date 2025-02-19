@@ -41,7 +41,7 @@ export class UserInvoicesPageComponent implements OnInit {
     this._dropdownSelectedInvoice = invoiceId;
   }
 
-  public createNewInvoice(){
+  public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
     this._router.navigate([`/invoices`]);
   }
