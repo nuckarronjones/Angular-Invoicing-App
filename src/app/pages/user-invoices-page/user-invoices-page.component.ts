@@ -48,6 +48,7 @@ export class UserInvoicesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInvoicesService.setUserInvoices();
+
     this.userInvoicesService.userInvoices$.subscribe((value) => {
       if (value !== null) {
         this.isLoading = false;
@@ -70,6 +71,13 @@ export class UserInvoicesPageComponent implements OnInit {
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
+        },
+      },
+      {
+        label: "Delete",
+        icon: "pi pi-trash",
+        command: () => {
+          localStorage.removeItem(this._dropdownSelectedInvoice);
         },
       },
     ];
