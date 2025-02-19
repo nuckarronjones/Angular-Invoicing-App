@@ -1,6 +1,6 @@
-import { ITableUserInputs } from "../enums/invoice-table.enum";
+import { DocumentData, ITableUserInputs } from "../enums/invoice-document.enum";
 
-export let documentData = {
+export const documentData: DocumentData = {
   id:"",
   documentName: "",
   currency: "PLN",
