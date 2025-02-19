@@ -12,7 +12,7 @@ import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service
 import { UserInvoiceModelService } from "../../../services/user-invoice-model.service";
 
 import { formFields } from "../../../models/form-fields.model";
-import { ITableUserInputs } from "../../../enums/invoice-table.enum";
+import { ITableUserInputs } from "../../../enums/invoice-document.enum";
 import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field/input-field.component";
 
 @Component({
