@@ -8,7 +8,6 @@ import { CommonModule } from "@angular/common";
 import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 import { UserInvoicesService } from "../../services/api/user-invoices.service";
-import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
 
 @Component({
   selector: "app-invoice-editor-page",
@@ -32,12 +31,6 @@ export class InvoiceEditorPageComponent implements OnInit {
   ) {}
 
   public selectedInvoice: any;
-
-  public get invoiceId(): string {
-    return this.selectedInvoice?.id
-      ? this.selectedInvoice?.id
-      : generateNewInvoiceId();
-  }
 
   ngOnInit() {
     this._route.paramMap.subscribe((params) => {
