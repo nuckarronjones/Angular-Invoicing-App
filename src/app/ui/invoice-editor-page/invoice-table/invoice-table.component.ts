@@ -11,7 +11,7 @@ import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
-import { ITableUserInputs } from "../../../enums/invoice-table.enum";
+import { ITableUserInputs } from "../../../enums/invoice-document.enum";
 
 @Component({
   selector: "app-invoice-editor-table",
@@ -111,7 +111,7 @@ export class InvoiceEditorTableComponent implements OnInit {
 
   public deleteRowFromTable(id: string): void {
     this._addDeleteRowAnimation(id);
-    
+
     //Give the animation enough time to finish, then remove row from tableRows
     setTimeout(() => {
       this.tableRows = this.tableRows.filter((row) => {
