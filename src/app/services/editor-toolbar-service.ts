@@ -64,7 +64,6 @@ export class EditorToolbarService {
     }
 
     saveInvoice(invoiceId: string, currentInvoice: any): void {
-      //NOTE: implement local cache saving here. Using id and current invoice
-      //localStorage.setItem(documentData.id, JSON.stringify(documentData));
+      localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
     }
 }
