@@ -1,6 +1,6 @@
-import { DocumentData, ITableUserInputs } from "../enums/invoice-document.enum";
+import { DocumentData, TableUserInputs } from "../enums/invoice-document.enum";
 
-export const documentData: DocumentData = {
+export const documentData: Readonly<DocumentData> = {
   id:"",
   documentName: "",
   currency: "PLN",
@@ -25,7 +25,7 @@ export const documentData: DocumentData = {
       buyerPostCode: "",
       buyerCity: ""
     },
-    formTable: [] as ITableUserInputs[],
+    formTable: [] as TableUserInputs[],
     totals: {
       netTotal: "",
       vatTotal: "",
