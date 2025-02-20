@@ -8,17 +8,7 @@ import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
 import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
 import { formFields } from "../../../models/form-fields.model";
-
-interface ITableUserInputs {
-  rowId: string;
-  name: string;
-  quantity: string;
-  quantUnit: string;
-  unitNetPrice: string;
-  vatPercentage: string;
-  totalNet: string;
-  totalGross: string;
-}
+import { TableUserInputs } from "../../../enums/invoice-document.enum";
 
 @Component({
   selector: "app-print-mode",
@@ -57,7 +47,7 @@ export class PrintModeComponent {
     return "";
   }
 
-  public get tableData(): ITableUserInputs[] {
+  public get tableData(): TableUserInputs[] {
     return this.currentInvoice?.invoice.formTable;
   }
 
