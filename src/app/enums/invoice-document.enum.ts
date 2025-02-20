@@ -1,4 +1,4 @@
-export interface ITableUserInputs {
+export interface TableUserInputs {
   rowId: string;
   name: string;
   quantity: string;
@@ -17,7 +17,7 @@ export interface DocumentData {
 
 interface Invoice {
   form: Form;
-  formTable: ITableUserInputs[];
+  formTable: TableUserInputs[];
   totals: Totals;
 }
 
