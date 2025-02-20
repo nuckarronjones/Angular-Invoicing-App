@@ -11,7 +11,7 @@ import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
-import { ITableUserInputs } from "../../../enums/invoice-document.enum";
+import { TableUserInputs } from "../../../enums/invoice-document.enum";
 
 @Component({
   selector: "app-invoice-editor-table",
@@ -21,11 +21,11 @@ import { ITableUserInputs } from "../../../enums/invoice-document.enum";
   styleUrls: ["./invoice-table.component.scss"],
 })
 export class InvoiceEditorTableComponent implements OnInit {
-  @Input() invoiceTableRowData?: ITableUserInputs[];
+  @Input() invoiceTableRowData?: TableUserInputs[];
   @Input() editMode!: boolean;
   @Output() formChanges = new EventEmitter();
 
-  public tableRows: ITableUserInputs[] = [];
+  public tableRows: TableUserInputs[] = [];
 
   ngOnInit(): void {
     const savedTableRows = this.invoiceTableRowData;

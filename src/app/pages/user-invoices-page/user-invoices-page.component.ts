@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { UserInvoicesService } from "../../services/api/user-invoices.service";
+import { UserInvoicesServiceApi} from "../../services/api/user-invoices.service";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
@@ -8,6 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
+import { DocumentData } from "../../enums/invoice-document.enum";
 
 @Component({
   selector: "app-user-invoices-page",
@@ -23,15 +24,16 @@ import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
   templateUrl: "./user-invoices-page.component.html",
   styleUrl: "./user-invoices-page.component.scss",
 })
+
 export class UserInvoicesPageComponent implements OnInit {
   constructor(
-    public userInvoicesService: UserInvoicesService,
+    private _userInvoicesServiceApi: UserInvoicesServiceApi,
     private _router: Router,
     private _invoiceEditModeState: InvoiceEditModeState
   ) {}
 
   public isLoading: boolean = true;
-  public allUserInvoices: any[] | null = null;
+  public allUserInvoices: DocumentData[] | null = null;
   public actionItems: any[] = [];
 
   private _dropdownSelectedInvoice: string = "";
@@ -43,16 +45,18 @@ export class UserInvoicesPageComponent implements OnInit {
 
   public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
+
     this._router.navigate([`/invoices`]);
   }
 
   ngOnInit(): void {
-    this.userInvoicesService.setUserInvoices();
+    this._userInvoicesServiceApi.setAllUserInvoices();
 
-    this.userInvoicesService.userInvoices$.subscribe((value) => {
-      if (value !== null) {
+    //Get a "list" of all saved user invoices
+    this._userInvoicesServiceApi.allUserInvoices$.subscribe((userInvoices) => {
+      if (userInvoices !== null) {
         this.isLoading = false;
-        this.allUserInvoices = value;
+        this.allUserInvoices = userInvoices;
       }
     });
 
@@ -62,6 +66,7 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-pencil",
         command: () => {
           this._invoiceEditModeState.setEditMode(true);
+          this._userInvoicesServiceApi.setCurrentInvoiceById(this._dropdownSelectedInvoice);
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },
@@ -70,6 +75,7 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-search",
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
+          this._userInvoicesServiceApi.setCurrentInvoiceById(this._dropdownSelectedInvoice);
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },

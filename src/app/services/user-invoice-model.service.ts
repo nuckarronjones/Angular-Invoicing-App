@@ -1,14 +1,20 @@
 import { Injectable } from "@angular/core";
-import { documentData } from "../models/document-data.model";
-import { ITableUserInputs } from "../enums/invoice-document.enum";
+import { DocumentData, TableUserInputs } from "../enums/invoice-document.enum";
+import { UserInvoicesServiceApi } from "./api/user-invoices.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class UserInvoiceModelService {
-  public documentData = documentData;
+  constructor(
+   private _userInvoicesServiceApi: UserInvoicesServiceApi
+  ) {
+    this._initialSubscription();
+  }
 
-  public updateTotals(tableRows: ITableUserInputs[]): void {
+  public documentData!: DocumentData;
+
+  public updateTotals(tableRows: TableUserInputs[]): void {
     this.documentData.invoice.totals.netTotal = _calculateTotal("totalNet");
     this.documentData.invoice.totals.vatTotal =
       _calculateTotal("vatPercentage");
@@ -32,7 +38,7 @@ export class UserInvoiceModelService {
     }
   }
 
-  public updateFormTableRows(tableRows: ITableUserInputs[]): void {
+  public updateFormTableRows(tableRows: TableUserInputs[]): void {
     this.documentData.invoice.formTable = tableRows;
   }
 
@@ -58,5 +64,13 @@ export class UserInvoiceModelService {
         key as keyof typeof this.documentData.invoice.form
       ] || ""
     );
+  }
+
+  private _initialSubscription(): void {
+    this._userInvoicesServiceApi.currentInvoice$.subscribe((invoice) => {
+      if (invoice) {
+        this.documentData = invoice;
+      }
+    });
   }
 }

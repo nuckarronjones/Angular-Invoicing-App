@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgFor, NgIf } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
@@ -12,8 +12,9 @@ import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service
 import { UserInvoiceModelService } from "../../../services/user-invoice-model.service";
 
 import { formFields } from "../../../models/form-fields.model";
-import { ITableUserInputs } from "../../../enums/invoice-document.enum";
+import { DocumentData, TableUserInputs } from "../../../enums/invoice-document.enum";
 import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field/input-field.component";
+import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.service";
 
 @Component({
   selector: "app-edit-mode",
@@ -32,21 +33,30 @@ import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
 })
-export class EditingModeComponent {
-  @Input() currentInvoice: any = null;
-  
+export class EditingModeComponent implements OnInit{
+  public currentInvoice!: DocumentData;
+
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
-    private _userInvoiceModelService: UserInvoiceModelService
+    private _userInvoiceModelService: UserInvoiceModelService,
+    private _userInvoicesService: UserInvoicesServiceApi
   ) {}
 
   public formFields = formFields;
+
+  ngOnInit(): void {
+    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
+      if(currentInvoice){
+        this.currentInvoice = currentInvoice;
+      }
+    })
+  }
 
   public saveImageUrl(event: string): void {
     this._userInvoiceModelService.setImageUrl(event);
   }
 
-  public recalculateTableRows(tableRows: ITableUserInputs[]): void {
+  public recalculateTableRows(tableRows: TableUserInputs[]): void {
     this._userInvoiceModelService.updateFormTableRows(tableRows);
     this._userInvoiceModelService.updateTotals(tableRows);
   }
@@ -67,7 +77,7 @@ export class EditingModeComponent {
     }
   }
 
-  public get tableData(): ITableUserInputs[] {
+  public get tableData(): TableUserInputs[] {
     return this.currentInvoice?.invoice.formTable;
   }
 
