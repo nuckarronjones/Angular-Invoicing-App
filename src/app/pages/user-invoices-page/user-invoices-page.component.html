@@ -1,5 +1,7 @@
 <ng-container *ngIf="isLoading; else userInvoices">
-  <p-progressSpinner></p-progressSpinner>
+  <div class="spinner-container">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
 </ng-container>
 
 <ng-template #userInvoices>

@@ -1,15 +1,22 @@
 .table-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-  
-    p-button {
-      margin-left: auto;  
-    }
-  }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  
+  p-button {
+    margin-left: auto;
+  }
+}
+
+.spinner-container {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .dropdown-cell {
   display: flex;
   justify-content: center;

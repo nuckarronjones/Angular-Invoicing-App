@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { UserInvoicesServiceApi} from "../../services/api/user-invoices.service";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { UserInvoicesServiceApi } from "../../services/api/user-invoices.service";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
@@ -23,8 +23,8 @@ import { DocumentData } from "../../enums/invoice-document.enum";
   ],
   templateUrl: "./user-invoices-page.component.html",
   styleUrl: "./user-invoices-page.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class UserInvoicesPageComponent implements OnInit {
   constructor(
     private _userInvoicesServiceApi: UserInvoicesServiceApi,
@@ -66,7 +66,9 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-pencil",
         command: () => {
           this._invoiceEditModeState.setEditMode(true);
-          this._userInvoicesServiceApi.setCurrentInvoiceById(this._dropdownSelectedInvoice);
+          this._userInvoicesServiceApi.setCurrentInvoiceById(
+            this._dropdownSelectedInvoice
+          );
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },
@@ -75,7 +77,9 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-search",
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
-          this._userInvoicesServiceApi.setCurrentInvoiceById(this._dropdownSelectedInvoice);
+          this._userInvoicesServiceApi.setCurrentInvoiceById(
+            this._dropdownSelectedInvoice
+          );
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },
@@ -84,8 +88,16 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-trash",
         command: () => {
           localStorage.removeItem(this._dropdownSelectedInvoice);
+          //Our user invoice data needs to be refreshed, as the user has just deleted and invoice
+          this._refreshComponent();
         },
       },
     ];
   }
+
+  private _refreshComponent(): void {
+    this.isLoading = true;
+    this.ngOnInit();
+  }
+
 }
