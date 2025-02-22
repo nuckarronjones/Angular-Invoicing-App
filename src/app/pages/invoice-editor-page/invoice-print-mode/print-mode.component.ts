@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { InputTextModule } from "primeng/inputtext";
 import { FormsModule } from "@angular/forms";
 import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/invoice-table/invoice-table.component";
@@ -8,7 +8,8 @@ import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
 import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
 import { formFields } from "../../../models/form-fields.model";
-import { TableUserInputs } from "../../../enums/invoice-document.enum";
+import { DocumentData, TableUserInputs } from "../../../enums/invoice-document.enum";
+import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 
 @Component({
   selector: "app-print-mode",
@@ -27,10 +28,21 @@ import { TableUserInputs } from "../../../enums/invoice-document.enum";
   templateUrl: "./print-mode.component.html",
   styleUrl: "./print-mode.component.scss",
 })
-export class PrintModeComponent {
-  @Input() currentInvoice: any = null;
-
+export class PrintModeComponent implements OnInit{
+  public currentInvoice!: DocumentData;
   public formFields = formFields;
+
+  constructor(
+    private _userInvoicesService: UserInvoicesServiceApi
+  ){}
+
+  ngOnInit(): void {
+    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
+      if(currentInvoice){
+        this.currentInvoice = currentInvoice;
+      }
+    })
+  }
 
   public saveImageUrl(event: string): void {
     this.formFields.headerImage = event;
