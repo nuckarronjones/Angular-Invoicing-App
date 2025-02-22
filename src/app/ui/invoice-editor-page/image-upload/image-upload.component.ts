@@ -4,10 +4,12 @@ import { NgIf, AsyncPipe } from "@angular/common";
 
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 
+import { Button } from "primeng/button";
+
 @Component({
   selector: "app-image-upload",
   standalone: true,
-  imports: [NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, Button],
   templateUrl: "./image-upload.component.html",
   styleUrls: ["./image-upload.component.scss"],
 })
@@ -21,6 +23,10 @@ export class ImageUploadComponent {
 
   public onDragOver(event: DragEvent): void {
     event.preventDefault();
+  }
+
+  public removeCurrentImageUrl():void{
+    this.headerImageUrl = null;
   }
 
   public onDrop(event: DragEvent): void {
@@ -38,6 +44,7 @@ export class ImageUploadComponent {
 
           if (this.headerImageUrl && typeof this.headerImageUrl === "string") {
             this.saveImageUrl.emit(this.headerImageUrl);
+            console.log("saved image url");
           } else {
             console.error("Image upload unsuccessful, url not valid");
           }

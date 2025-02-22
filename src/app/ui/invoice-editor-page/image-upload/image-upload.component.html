@@ -1,10 +1,10 @@
-
 <ng-container *ngIf="invoiceEditModeState.editMode$ | async; else printMode">
   <ng-content *ngIf="!headerImageUrl; else showLogo">
     <div class="logo-container">
-      <div class="drop-zone"
-      (dragover)="onDragOver($event)"
-      (drop)="onDrop($event)"
+      <div
+        class="drop-zone"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)"
       >
         <span>
           Drop Your Logo Here
@@ -16,21 +16,21 @@
 
   <ng-template #showLogo>
     <div class="logo-container">
-      <img
-        class="logo-image"
-        [src]="headerImageUrl"
-        alt="Dropped Image"
-      />
+      <div class="revision-button-container">
+        <p-button
+          (click)="removeCurrentImageUrl()"
+          icon="pi pi-pen-to-square"
+          size="large"
+          severity="secondary"
+        />
+      </div>
+      <img class="logo-image" [src]="headerImageUrl" alt="Dropped Image" />
     </div>
   </ng-template>
 </ng-container>
 
 <ng-template #printMode>
   <div class="logo-container" *ngIf="headerImageUrl">
-    <img
-      class="logo-image"
-      [src]="headerImageUrl"
-      alt="Dropped Image"
-    />
+    <img class="logo-image" [src]="headerImageUrl" alt="Dropped Image" />
   </div>
 </ng-template>
