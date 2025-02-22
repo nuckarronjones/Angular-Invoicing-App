@@ -45,7 +45,7 @@ export class UserInvoicesPageComponent implements OnInit {
 
   public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
-
+    this._userInvoicesServiceApi.setNewCurrentInvoice();
     this._router.navigate([`/invoices`]);
   }
 

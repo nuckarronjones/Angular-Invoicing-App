@@ -5,7 +5,6 @@ import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service
 import { EditorToolbarService } from "../../../services/editor-toolbar-service";
 import { AsyncPipe } from "@angular/common";
 import { documentData } from "../../../models/document-data.model";
-import { generateNewInvoiceId } from "../../../functions/generate-invoice-id";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 import { DocumentData } from "../../../enums/invoice-document.enum";
 
@@ -31,8 +30,6 @@ export class EditorNavbarComponent implements OnInit {
     this._userInvoicesServiceApi.currentInvoice$.subscribe((invoice) => {
       if (invoice) {
         this.currentInvoice = invoice;
-      }else{
-        this.currentInvoice.id = generateNewInvoiceId();
       }
     });
   }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { DocumentData } from "../../enums/invoice-document.enum";
 import { documentData } from "../../models/document-data.model";
+import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
 
 @Injectable({
   providedIn: "root",
@@ -22,18 +23,24 @@ export class UserInvoicesServiceApi {
   }
 
   public setCurrentInvoiceById(invoiceId: string | null): void {
-    if (!invoiceId) {
-      const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
-
-      this._currentInvoice.next(blankInvoiceDeepCopy);
-
-      return;
-    }
     const currentInvoice =
       this._allUserInvoices.value?.find(
         (invoice) => invoice.id === invoiceId
       ) || null;
 
     this._currentInvoice.next(currentInvoice);
+  }
+
+  public setNewCurrentInvoice(): void{
+    this._currentInvoice.next(this._generateNewInvoice());
+  }
+
+  private _generateNewInvoice (): DocumentData{
+    const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
+
+    blankInvoiceDeepCopy.id = generateNewInvoiceId();
+
+    return blankInvoiceDeepCopy
+
   }
 }
