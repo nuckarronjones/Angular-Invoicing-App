@@ -1,3 +1,7 @@
+<ng-content *ngIf="messages"> 
+  <p-messages [hideTransitionOptions]="'500ms'"  [showTransitionOptions]="'500ms'"[(value)]="messages" [enableService]="false" />
+</ng-content>
+
 <p-menubar>
   <ng-template pTemplate="start">
     <p-button
