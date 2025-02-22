@@ -44,7 +44,6 @@ export class ImageUploadComponent {
 
           if (this.headerImageUrl && typeof this.headerImageUrl === "string") {
             this.saveImageUrl.emit(this.headerImageUrl);
-            console.log("saved image url");
           } else {
             console.error("Image upload unsuccessful, url not valid");
           }
