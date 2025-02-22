@@ -35,14 +35,13 @@ import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.servi
 })
 export class EditingModeComponent implements OnInit{
   public currentInvoice!: DocumentData;
+  public formFields = formFields;
 
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
     private _userInvoiceModelService: UserInvoiceModelService,
     private _userInvoicesService: UserInvoicesServiceApi
   ) {}
-
-  public formFields = formFields;
 
   ngOnInit(): void {
     this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
