@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
       },
       {
         label: 'Invoices',
+        routerLink: ["/"]
       }
     ];
   }
