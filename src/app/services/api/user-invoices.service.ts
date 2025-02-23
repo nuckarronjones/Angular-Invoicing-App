@@ -36,6 +36,9 @@ export class UserInvoicesServiceApi {
   }
 
   private _generateNewInvoice (): DocumentData{
+  public saveInvoice(invoiceId: string, currentInvoice: any): void {
+    localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+  }
     const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
 
     blankInvoiceDeepCopy.id = generateNewInvoiceId();
