@@ -52,7 +52,6 @@
   padding: 1rem !important;
 }
 
-
 .cell-field {
   width: 100%;
   padding: 0.5rem !important;
@@ -63,6 +62,7 @@
   border: 2px solid #eee;
   position: relative;
   margin-bottom: 50px;
+  border: 2px solid lightgrey !important;
 
   &.edit-mode-padding {
     padding-bottom: 3rem;
