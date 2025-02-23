@@ -87,7 +87,7 @@ export class UserInvoicesPageComponent implements OnInit {
         label: "Delete",
         icon: "pi pi-trash",
         command: () => {
-          localStorage.removeItem(this._dropdownSelectedInvoice);
+          this._userInvoicesServiceApi.deleteInvoice(this._dropdownSelectedInvoice);
           //Our user invoice data needs to be refreshed, as the user has just deleted and invoice
           this._refreshComponent();
         },
