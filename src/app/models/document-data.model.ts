@@ -4,6 +4,7 @@ export const documentData: Readonly<DocumentData> = {
   id:"",
   documentName: "",
   currency: "PLN",
+  status: "",
   invoice:{
     form: {
       headerImage: "",

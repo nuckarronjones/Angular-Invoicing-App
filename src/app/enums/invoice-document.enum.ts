@@ -10,6 +10,7 @@ export interface TableUserInputs {
 }
 export interface DocumentData {
   id: string;
+  status: string;
   documentName: string;
   currency: string;
   invoice: Invoice;
