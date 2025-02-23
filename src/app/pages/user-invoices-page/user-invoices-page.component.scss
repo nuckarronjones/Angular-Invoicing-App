@@ -9,6 +9,12 @@
   }
 }
 
+p-table{
+  .centered-header{
+    text-align: center;
+  }
+}
+
 .spinner-container {
   margin-top: 100px;
   width: 100%;
@@ -21,8 +27,4 @@
   display: flex;
   justify-content: center;
   width: 100%;
-}
-
-.actions-column {
-  text-align: center;
 }
