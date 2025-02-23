@@ -4,11 +4,12 @@ import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
 import { MenuModule } from "primeng/menu";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
 import { DocumentData } from "../../enums/invoice-document.enum";
+import { DropdownModule } from "primeng/dropdown";
 
 @Component({
   selector: "app-user-invoices-page",
@@ -20,6 +21,8 @@ import { DocumentData } from "../../enums/invoice-document.enum";
     ButtonModule,
     MenuModule,
     FormsModule,
+    DropdownModule,
+    ReactiveFormsModule
   ],
   templateUrl: "./user-invoices-page.component.html",
   styleUrl: "./user-invoices-page.component.scss",
@@ -35,6 +38,7 @@ export class UserInvoicesPageComponent implements OnInit {
   public isLoading: boolean = true;
   public allUserInvoices: DocumentData[] | null = null;
   public actionItems: any[] = [];
+  public statusItems: any[] = [];
 
   private _dropdownSelectedInvoice: string = "";
 
@@ -93,11 +97,72 @@ export class UserInvoicesPageComponent implements OnInit {
         },
       },
     ];
+
+    this.statusItems = [
+      {
+        label: "Issued",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Issued");
+        }
+      },
+      {
+        label: "Paid",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Paid");
+        }
+      },
+      {
+        label: "Unpaid",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Unpaid");
+        }
+      },
+      {
+        label: "Overdue",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Overdue");
+        }
+      },
+      {
+        label: "Canceled",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Canceled");
+        }
+      },
+      {
+        label: "Partially Paid",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Partially Paid");
+        }
+      },
+      {
+        label: "Pending",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Pending");
+        }
+      },
+      {
+        label: "Refunded",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Refunded");
+        }
+      },
+      {
+        label: "Approved",
+        command: (invoiceId: string) => {
+          this._updateInvoiceStatus(invoiceId, "Approved");
+        }
+      }
+    ];
   }
 
   private _refreshComponent(): void {
     this.isLoading = true;
     this.ngOnInit();
+  }
+
+  private _updateInvoiceStatus(invoiceId: string, status: string):void{
+    this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
   }
 
 }

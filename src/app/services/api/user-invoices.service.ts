@@ -31,11 +31,23 @@ export class UserInvoicesServiceApi {
     this._currentInvoice.next(currentInvoice);
   }
 
-  public setNewCurrentInvoice(): void{
+  public setNewCurrentInvoice(): void {
     this._currentInvoice.next(this._generateNewInvoice());
   }
 
-  private _generateNewInvoice (): DocumentData{
+  public setInvoiceStatus(invoiceId: string, status: string) {
+    const currentInvoice =
+      this._allUserInvoices.value?.find(
+        (invoice) => invoice.id === invoiceId
+      ) || null;
+
+    if (currentInvoice) {
+      currentInvoice.status = status;
+
+      this.saveInvoice(invoiceId, currentInvoice);
+    }
+  }
+
   public saveInvoice(invoiceId: string, currentInvoice: any): void {
     localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
   }
@@ -44,11 +56,11 @@ export class UserInvoicesServiceApi {
     localStorage.removeItem(invoiceId);
   }
 
+  private _generateNewInvoice(): DocumentData {
     const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
 
     blankInvoiceDeepCopy.id = generateNewInvoiceId();
 
-    return blankInvoiceDeepCopy
-
+    return blankInvoiceDeepCopy;
   }
 }
