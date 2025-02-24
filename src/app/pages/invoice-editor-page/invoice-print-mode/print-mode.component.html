@@ -84,17 +84,17 @@
           <tr>
             <td class="text-left"><b>Net Total</b></td>
             <td>{{ netTotal != "" ? netTotal : 0 }}</td>
-            <td>{{ currency || "" }}</td>
+            <td>{{ currentInvoice.currency || "" }}</td>
           </tr>
           <tr>
             <td class="text-left"><b>VAT Total</b></td>
             <td>{{ vatTotal != "" ? vatTotal: 0 }}</td>
-            <td>{{ currency || ""}}</td>
+            <td>{{ currentInvoice.currency || ""}}</td>
           </tr>
           <tr>
             <td class="text-left"><b>Gross Total</b></td>
             <td>{{ grossTotal != "" ? grossTotal : 0 }}</td>
-            <td>{{ currency || ""}}</td>
+            <td>{{ currentInvoice.currency || ""}}</td>
           </tr>
         </tbody>
       </table>
@@ -105,7 +105,7 @@
     <table>
       <tr>
         <td><b>Total Due: </b></td>
-        <td>{{ grossTotal }}</td>
+        <td>{{ grossTotal + " " + currency}}</td>
       </tr>
     </table>
 

@@ -73,7 +73,7 @@ export class PrintModeComponent implements OnInit {
     this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
     this.vatTotal = this.currentInvoice?.invoice.totals.vatTotal ?? "";
     this.grossTotal = this.currentInvoice?.invoice.totals.grossTotal ?? "";
-    this.grossTotal = this.currentInvoice?.currency ?? "";
+    this.currency = this.currentInvoice?.currency ?? "";
   }
 
 }

@@ -33,14 +33,15 @@ import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.servi
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
 })
+
 export class EditingModeComponent implements OnInit{
   public currentInvoice!: DocumentData;
   public formFields = formFields;
   public tableData: TableUserInputs[] = [];
   public headerImage: string = "";
-  public netTotal: number | string = "";
-  public vatTotal: number | string = "";
-  public grossTotal: number | string = "";
+  public netTotal: string = "";
+  public vatTotal: string = "";
+  public grossTotal: string = "";
   public currency: string = "";
 
   constructor(
@@ -53,8 +54,8 @@ export class EditingModeComponent implements OnInit{
     this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
       if(currentInvoice){
         this.currentInvoice = currentInvoice;
+        this._updateInvoiceData();
       }
-      this._updateInvoiceData();
     })
   }
 
