@@ -36,6 +36,12 @@ import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.servi
 export class EditingModeComponent implements OnInit{
   public currentInvoice!: DocumentData;
   public formFields = formFields;
+  public tableData: TableUserInputs[] = [];
+  public headerImage: string = "";
+  public netTotal: number | string = "";
+  public vatTotal: number | string = "";
+  public grossTotal: number | string = "";
+  public currency: string = "";
 
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,
@@ -48,6 +54,7 @@ export class EditingModeComponent implements OnInit{
       if(currentInvoice){
         this.currentInvoice = currentInvoice;
       }
+      this._updateInvoiceData();
     })
   }
 
@@ -76,23 +83,13 @@ export class EditingModeComponent implements OnInit{
     }
   }
 
-  public get tableData(): TableUserInputs[] {
-    return this.currentInvoice?.invoice.formTable;
+  private _updateInvoiceData():void {
+    this.tableData = this.currentInvoice?.invoice.formTable ?? [];
+    this.headerImage = this.currentInvoice?.invoice.form.headerImage ?? "";
+    this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
+    this.vatTotal = this.currentInvoice?.invoice.totals.vatTotal ?? "";
+    this.grossTotal = this.currentInvoice?.invoice.totals.grossTotal ?? "";
+    this.currency = this.currentInvoice?.currency ?? "";
   }
 
-  public get headerImage(): string {
-    return this.currentInvoice?.invoice.form.headerImage ?? "";
-  }
-
-  public get netTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.netTotal ?? "";
-  }
-
-  public get vatTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.vatTotal ?? "";
-  }
-
-  public get grossTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.grossTotal ?? "";
-  }
 }

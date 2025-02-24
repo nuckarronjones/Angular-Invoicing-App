@@ -8,7 +8,10 @@ import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
 import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
 import { formFields } from "../../../models/form-fields.model";
-import { DocumentData, TableUserInputs } from "../../../enums/invoice-document.enum";
+import {
+  DocumentData,
+  TableUserInputs,
+} from "../../../enums/invoice-document.enum";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 
 @Component({
@@ -28,20 +31,25 @@ import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.serv
   templateUrl: "./print-mode.component.html",
   styleUrl: "./print-mode.component.scss",
 })
-export class PrintModeComponent implements OnInit{
+export class PrintModeComponent implements OnInit {
   public currentInvoice!: DocumentData;
   public formFields = formFields;
+  public tableData: TableUserInputs[] = [];
+  public headerImage: string = "";
+  public netTotal: number | string = "";
+  public vatTotal: number | string = "";
+  public grossTotal: number | string = "";
+  public currency: string = "";
 
-  constructor(
-    private _userInvoicesService: UserInvoicesServiceApi
-  ){}
+  constructor(private _userInvoicesService: UserInvoicesServiceApi) {}
 
   ngOnInit(): void {
-    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
-      if(currentInvoice){
+    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice) => {
+      if (currentInvoice) {
         this.currentInvoice = currentInvoice;
       }
-    })
+      this._updateInvoiceData();
+    });
   }
 
   public saveImageUrl(event: string): void {
@@ -59,23 +67,13 @@ export class PrintModeComponent implements OnInit{
     return "";
   }
 
-  public get tableData(): TableUserInputs[] {
-    return this.currentInvoice?.invoice.formTable;
+  private _updateInvoiceData():void {
+    this.tableData = this.currentInvoice?.invoice.formTable ?? [];
+    this.headerImage = this.currentInvoice?.invoice.form.headerImage ?? "";
+    this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
+    this.vatTotal = this.currentInvoice?.invoice.totals.vatTotal ?? "";
+    this.grossTotal = this.currentInvoice?.invoice.totals.grossTotal ?? "";
+    this.grossTotal = this.currentInvoice?.currency ?? "";
   }
 
-  public get headerImage(): string {
-    return this.currentInvoice?.invoice.form.headerImage ?? "";
-  }
-
-  public get netTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.netTotal ?? "";
-  }
-
-  public get vatTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.vatTotal ?? "";
-  }
-
-  public get grossTotal(): number | string {
-    return this.currentInvoice?.invoice.totals.grossTotal ?? "";
-  }
 }
