@@ -12,9 +12,13 @@ import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service
 import { UserInvoiceModelService } from "../../../services/user-invoice-model.service";
 
 import { formFields } from "../../../models/form-fields.model";
-import { DocumentData, TableUserInputs } from "../../../enums/invoice-document.enum";
+import {
+  DocumentData,
+  InvoiceFormKeys,
+  TableUserInputs,
+} from "../../../enums/invoice-document.enum";
 import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field/input-field.component";
-import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.service";
+import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 
 @Component({
   selector: "app-edit-mode",
@@ -33,8 +37,7 @@ import { UserInvoicesServiceApi} from "../../../services/api/user-invoices.servi
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",
 })
-
-export class EditingModeComponent implements OnInit{
+export class EditingModeComponent implements OnInit {
   public currentInvoice!: DocumentData;
   public formFields = formFields;
   public tableData: TableUserInputs[] = [];
@@ -51,12 +54,12 @@ export class EditingModeComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice)=>{
-      if(currentInvoice){
+    this._userInvoicesService.currentInvoice$.subscribe((currentInvoice) => {
+      if (currentInvoice) {
         this.currentInvoice = currentInvoice;
         this._updateInvoiceData();
       }
-    })
+    });
   }
 
   public saveImageUrl(event: string): void {
@@ -72,19 +75,15 @@ export class EditingModeComponent implements OnInit{
     this._userInvoiceModelService.setCellValue(event);
   }
 
-  public getFormValue(key: string): string {
+  public getInvoiceFormValueByKey(key: InvoiceFormKeys): string {
     if (this.currentInvoice) {
-      return (
-        this.currentInvoice.invoice.form[
-          key as keyof typeof this.currentInvoice.invoice.form
-        ] || ""
-      );
+      return this.currentInvoice.invoice.form[key] || "";
     } else {
       return "";
     }
   }
 
-  private _updateInvoiceData():void {
+  private _updateInvoiceData(): void {
     this.tableData = this.currentInvoice?.invoice.formTable ?? [];
     this.headerImage = this.currentInvoice?.invoice.form.headerImage ?? "";
     this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
@@ -92,5 +91,4 @@ export class EditingModeComponent implements OnInit{
     this.grossTotal = this.currentInvoice?.invoice.totals.grossTotal ?? "";
     this.currency = this.currentInvoice?.currency ?? "";
   }
-
 }

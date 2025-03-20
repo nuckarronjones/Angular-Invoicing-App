@@ -7,7 +7,7 @@
             [id]="headerField.id"
             [inputType]="headerField.inputType"
             [label]="headerField.label"
-            [placeholder]="getFormValue(headerField.id)"
+            [placeholder]="getInvoiceFormValueByKey(headerField.id)"
             [class]="headerField.style"
             (updatedInputValue)="updateInvoiceModelObject($event)"
           ></app-input-field>
@@ -33,7 +33,7 @@
               [id]="formField.id"
               [inputType]="formField.inputType"
               [label]="formField.label"
-              [placeholder]="getFormValue(formField.id)"
+              [placeholder]="getInvoiceFormValueByKey(formField.id)"
               [class]="formField.style"
               (updatedInputValue)="updateInvoiceModelObject($event)"
             ></app-input-field>
@@ -48,7 +48,7 @@
               [id]="formField.id"
               [inputType]="formField.inputType"
               [label]="formField.label"
-              [placeholder]="getFormValue(formField.id)"
+              [placeholder]="getInvoiceFormValueByKey(formField.id)"
               [class]="formField.style"
               (updatedInputValue)="updateInvoiceModelObject($event)"
             ></app-input-field>

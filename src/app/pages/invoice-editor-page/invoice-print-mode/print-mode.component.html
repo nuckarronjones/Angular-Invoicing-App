@@ -4,7 +4,7 @@
       <section class="flex-column">
         <ng-container *ngFor="let headerField of formFields.header">
           <div class="input-value w-100">
-            <b>{{ headerField.label }}</b> {{ getFormValue(headerField.id) }}
+            <b>{{ headerField.label }}</b> {{ getInvoiceFormValueByKey(headerField.id) }}
           </div>
         </ng-container>
       </section>
@@ -38,13 +38,13 @@
             >
               <!-- If the field was 50% width, we want to end up combining these fields together-->
               <div class="w-auto inline-block input-value">
-                {{ getFormValue(formField.id) }}&nbsp;
+                {{ getInvoiceFormValueByKey(formField.id) }}&nbsp;
               </div>
             </ng-container>
             <ng-template #fullWidth>
               <!-- Full-width style for inputs that took up 100% width, retain styling -->
               <div class="input-value" [ngClass]="formField.style">
-                <span>{{ getFormValue(formField.id) }}&nbsp;</span>
+                <span>{{ getInvoiceFormValueByKey(formField.id) }}&nbsp;</span>
               </div>
             </ng-template>
           </ng-container>
@@ -59,13 +59,13 @@
             >
               <!-- If the field was 50% width, we want to end up combining these fields together (e.g. 123 London Street)-->
               <div class="w-auto inline-block input-value">
-                {{ getFormValue(formField.id) }}&nbsp;
+                {{ getInvoiceFormValueByKey(formField.id) }}&nbsp;
               </div>
             </ng-container>
             <ng-template #fullWidth>
               <!-- Full-width style for inputs that took up 100% width, retain styling -->
               <div class="input-value" [ngClass]="formField.style">
-                <span>{{ getFormValue(formField.id) }}</span>
+                <span>{{ getInvoiceFormValueByKey(formField.id) }}</span>
               </div>
             </ng-template>
           </ng-container>

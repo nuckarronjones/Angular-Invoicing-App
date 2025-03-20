@@ -1,5 +1,7 @@
+import { InvoiceFormKeys } from "../enums/invoice-document.enum";
+
 interface InputField{
-  id: string,
+  id: InvoiceFormKeys,
   label: string,
   placeholder: string,
   inputType:  "date" | "text",

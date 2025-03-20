@@ -16,6 +16,7 @@ export interface DocumentData {
   invoice: Invoice;
 }
 
+export type FormObjectKey = keyof Form;
 interface Invoice {
   form: Form;
   formTable: TableUserInputs[];
@@ -28,7 +29,9 @@ interface Totals {
   grossTotal: string;
 }
 
-interface Form {
+export type InvoiceFormKeys = keyof Form;
+
+export interface Form {
   headerImage: string;
   invoiceNo: string;
   invoiceDate: string;

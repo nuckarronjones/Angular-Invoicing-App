@@ -10,6 +10,7 @@ import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-uplo
 import { formFields } from "../../../models/form-fields.model";
 import {
   DocumentData,
+  InvoiceFormKeys,
   TableUserInputs,
 } from "../../../enums/invoice-document.enum";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
@@ -56,18 +57,14 @@ export class PrintModeComponent implements OnInit {
     this.formFields.headerImage = event;
   }
 
-  public getFormValue(key: string): string {
+  public getInvoiceFormValueByKey(key: InvoiceFormKeys): string {
     if (this.currentInvoice) {
-      return (
-        this.currentInvoice.invoice.form[
-          key as keyof typeof this.currentInvoice.invoice.form
-        ] || ""
-      );
+      return this.currentInvoice.invoice.form[key] || "";
     }
     return "";
   }
 
-  private _updateInvoiceData():void {
+  private _updateInvoiceData(): void {
     this.tableData = this.currentInvoice?.invoice.formTable ?? [];
     this.headerImage = this.currentInvoice?.invoice.form.headerImage ?? "";
     this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
@@ -75,5 +72,4 @@ export class PrintModeComponent implements OnInit {
     this.grossTotal = this.currentInvoice?.invoice.totals.grossTotal ?? "";
     this.currency = this.currentInvoice?.currency ?? "";
   }
-
 }
