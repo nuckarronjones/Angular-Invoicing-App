@@ -1,0 +1,21 @@
+table {
+    width: 30% !important;
+    border-collapse: collapse;
+
+    .text-left{
+        white-space: nowrap;
+    }
+    
+    td {
+      padding: 0.8rem;
+      text-align: center;
+
+      &:not(:first-child) {
+        text-align: center;
+      }
+    }
+
+    tr {
+      border-bottom: 2px solid grey;
+    }
+  }
