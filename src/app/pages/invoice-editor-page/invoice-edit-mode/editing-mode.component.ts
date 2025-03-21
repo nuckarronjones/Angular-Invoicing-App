@@ -11,7 +11,7 @@ import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/inv
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 import { UserInvoiceModelService } from "../../../services/user-invoice-model.service";
 
-import { formFields } from "../../../models/form-fields.model";
+import { formFields } from "../../../config/form-fields.model";
 import {
   DocumentData,
   InvoiceFormKeys,

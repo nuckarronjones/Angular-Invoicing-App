@@ -7,7 +7,7 @@ import { TableModule } from "primeng/table";
 import { NgFor, NgIf } from "@angular/common";
 import { NgClass } from "@angular/common";
 import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-upload/image-upload.component";
-import { formFields } from "../../../models/form-fields.model";
+import { formFields } from "../../../config/form-fields.model";
 import {
   DocumentData,
   InvoiceFormKeys,
