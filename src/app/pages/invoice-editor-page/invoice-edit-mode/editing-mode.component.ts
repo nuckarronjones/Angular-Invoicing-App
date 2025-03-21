@@ -57,7 +57,7 @@ export class EditingModeComponent implements OnInit {
     this._userInvoicesService.currentInvoice$.subscribe((currentInvoice) => {
       if (currentInvoice) {
         this.currentInvoice = currentInvoice;
-        this._updateInvoiceData();
+        this._updateDraftData();
       }
     });
   }
@@ -69,6 +69,7 @@ export class EditingModeComponent implements OnInit {
   public recalculateTableRows(tableRows: TableUserInputs[]): void {
     this._userInvoiceModelService.updateFormTableRows(tableRows);
     this._userInvoiceModelService.updateTotals(tableRows);
+    this._updateDraftData();
   }
 
   public updateInvoiceModelObject(event: Record<string, any>): void {
@@ -83,7 +84,7 @@ export class EditingModeComponent implements OnInit {
     }
   }
 
-  private _updateInvoiceData(): void {
+  private _updateDraftData(): void {
     this.tableData = this.currentInvoice?.invoice.formTable ?? [];
     this.headerImage = this.currentInvoice?.invoice.form.headerImage ?? "";
     this.netTotal = this.currentInvoice?.invoice.totals.netTotal ?? "";
