@@ -246,9 +246,4 @@ export class InvoiceEditorPageComponent implements OnInit {
     });
 
   }
-
-  // Create new invoice form on /invoices route
-  // If we have /invoice/:id, populate the new invoice form with data obtained from local storage (use service)
-
-  // Create inputfield formgroup function (reusable)
 }
