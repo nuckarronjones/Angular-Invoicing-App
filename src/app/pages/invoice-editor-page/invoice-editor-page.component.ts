@@ -234,13 +234,13 @@ export class InvoiceEditorPageComponent implements OnInit {
     (invoiceConfig[invoiceConfigKey] as InputField[]).forEach(inputField => {
       invoiceFormGroupFormArray.push(
         new FormGroup({
-          id: new  FormControl(inputField.id),
+          id: new  FormControl({value: inputField.id, disabled: true}),
           value: new FormControl(null),
-          label:new FormControl(inputField.label),
+          label:new FormControl({value: inputField.label, disabled: true}),
           placeholder:new FormControl(inputField.placeholder),
-          inputType: new FormControl(inputField.inputType),
-          style: new FormControl(inputField.style),
-          column: new FormControl(inputField.column)
+          inputType: new FormControl({value: inputField.inputType, disabled: true}),
+          style: new FormControl({value: inputField.style, disabled: true}),
+          column: new FormControl({value: inputField.column, disabled: true}),
         })
       )
     });
