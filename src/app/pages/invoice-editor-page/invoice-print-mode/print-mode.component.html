@@ -1,10 +1,11 @@
-<form id="form-container">
+<form id="form-container" [formGroup]="invoice">
   <div id="printable-area">
     <header class="flex-container">
       <section class="flex-column">
-        <ng-container *ngFor="let headerField of formFields.header">
+        <ng-container *ngFor="let headerField of invoice.controls.header.controls">
           <div class="input-value w-100">
-            <b>{{ headerField.label }}</b> {{ getInvoiceFormValueByKey(headerField.id) }}
+            <b>{{ headerField.controls.label.value }}</b>
+            {{ headerField.controls.value.value }}
           </div>
         </ng-container>
       </section>
@@ -12,13 +13,11 @@
       <section class="flex-column">
         <app-image-upload
           [editMode]="false"
-          [headerImageUrl]="headerImage"
-          (saveImageUrl)="saveImageUrl($event)"
+          [headerImageUrl]="invoice.controls.headerImage.value"
         ></app-image-upload>
       </section>
     </header>
-
-    <hr class="mb-5 mt-5" />
+    <hr class="mb-5 mt-5"/>
 
     <section class="flex-container mt-5 mb-5">
       <div class="flex-column">
@@ -31,20 +30,20 @@
 
     <section class="flex-container">
       <div class="flex-column">
-        <ng-container *ngFor="let formField of formFields.body">
-          <ng-container *ngIf="formField.column === 'left'">
+        <ng-container *ngFor="let formField of invoice.controls.body.controls">
+          <ng-container *ngIf="formField.controls.column.value === 'left'">
             <ng-container
-              *ngIf="formField.style.includes('w-50'); else fullWidth"
+              *ngIf="formField.controls.style.value === 'w-50'; else fullWidth"
             >
-              <!-- If the field was 50% width, we want to end up combining these fields together-->
               <div class="w-auto inline-block input-value">
-                {{ getInvoiceFormValueByKey(formField.id) }}&nbsp;
+                {{formField.controls.value.value}}
               </div>
             </ng-container>
             <ng-template #fullWidth>
-              <!-- Full-width style for inputs that took up 100% width, retain styling -->
-              <div class="input-value" [ngClass]="formField.style">
-                <span>{{ getInvoiceFormValueByKey(formField.id) }}&nbsp;</span>
+              <div class="input-value" [ngClass]="formField.controls.style.value">
+                <span>
+                  {{formField.controls.value.value}}
+                </span>
               </div>
             </ng-template>
           </ng-container>
@@ -52,20 +51,20 @@
       </div>
 
       <div class="flex-column">
-        <ng-container *ngFor="let formField of formFields.body">
-          <ng-container *ngIf="formField.column === 'right'">
+        <ng-container *ngFor="let formField of invoice.controls.body.controls">
+          <ng-container *ngIf="formField.controls.column.value === 'left'">
             <ng-container
-              *ngIf="formField.style.includes('w-50'); else fullWidth"
+              *ngIf="formField.controls.style.value === 'w-50'; else fullWidth"
             >
-              <!-- If the field was 50% width, we want to end up combining these fields together (e.g. 123 London Street)-->
               <div class="w-auto inline-block input-value">
-                {{ getInvoiceFormValueByKey(formField.id) }}&nbsp;
+                {{formField.controls.value.value}}
               </div>
             </ng-container>
             <ng-template #fullWidth>
-              <!-- Full-width style for inputs that took up 100% width, retain styling -->
-              <div class="input-value" [ngClass]="formField.style">
-                <span>{{ getInvoiceFormValueByKey(formField.id) }}</span>
+              <div class="input-value" [ngClass]="formField.controls.style.value">
+                <span>
+                  {{formField.controls.value.value}}
+                </span>
               </div>
             </ng-template>
           </ng-container>
@@ -74,41 +73,50 @@
     </section>
 
     <app-invoice-editor-table 
-      [invoiceTableRowData]="tableData"
+      [invoiceTableRowData]="[]"
       [editMode]="false"
-     />
+/>
 
     <footer id="invoiceTotals">
       <table>
+
         <tbody>
           <tr>
-            <td class="text-left"><b>Net Total</b></td>
-            <td>{{ netTotal != "" ? netTotal : 0 }}</td>
-            <td>{{ currentInvoice.currency || "" }}</td>
+            <td class="text-left">
+              <b>Net Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.netTotal.value}}</td>
+            <td>zl</td>
           </tr>
           <tr>
-            <td class="text-left"><b>VAT Total</b></td>
-            <td>{{ vatTotal != "" ? vatTotal: 0 }}</td>
-            <td>{{ currentInvoice.currency || ""}}</td>
+            <td class="text-left">
+              <b>VAT Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.vatTotal.value}}</td>
+            <td>zl</td>
           </tr>
           <tr>
-            <td class="text-left"><b>Gross Total</b></td>
-            <td>{{ grossTotal != "" ? grossTotal : 0 }}</td>
-            <td>{{ currentInvoice.currency || ""}}</td>
+            <td class="text-left">
+              <b>Gross Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.grossTotal.value }}</td>
+            <td>zl</td>
           </tr>
         </tbody>
       </table>
     </footer>
 
-    <hr class="mt-5" />
+    <hr class="mt-5"/>
 
     <table>
       <tr>
-        <td><b>Total Due: </b></td>
-        <td>{{ grossTotal + " " + currency}}</td>
+        <td>
+          <b>Total Due: </b>
+        </td>
+        <td>{{invoice.controls.footer.controls.grossTotal.value}} zl</td>
       </tr>
     </table>
 
-    <hr />
+    <hr/>
   </div>
 </form>

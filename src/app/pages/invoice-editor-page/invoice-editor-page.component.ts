@@ -17,15 +17,12 @@ interface InputField {
   column: "left" | "right";
 }
 
-interface Formfields {
+interface FormConfig {
   header: ReadonlyArray<InputField>;
-  headerImage: string;
   body: ReadonlyArray<InputField>;
-  footer: ReadonlyArray<InputField>;
 }
 
-const invoiceConfig: Formfields = {
-  headerImage: "",
+const invoiceConfig: FormConfig = {
   header: [
     {
       id: "invoiceNo",
@@ -166,17 +163,22 @@ const invoiceConfig: Formfields = {
       column: "right",
     },
   ],
-  footer: [],
 };
 
-interface InvoiceFormGroup {
+export interface InvoiceFormGroup {
   header: FormArray<FormGroup<FormInputField>>;
-  headerImage: FormControl;
+  headerImage: FormControl<string | null>;
   body: FormArray<FormGroup<FormInputField>>;
-  footer: FormArray<FormGroup<FormInputField>>;
+  footer: FormGroup<FooterFormGroup>;
 }
 
-interface FormInputField {
+export interface FooterFormGroup {
+  netTotal: FormControl<number | null>;
+  vatTotal: FormControl<number | null>;
+  grossTotal: FormControl<number | null>;
+}
+
+export interface FormInputField {
   id: FormControl<string | null>;
   value: FormControl<string | null>;
   label: FormControl<string>;
@@ -208,7 +210,11 @@ export class InvoiceEditorPageComponent implements OnInit {
       header: new FormArray<FormGroup>([]),
       headerImage: new FormControl(""),
       body: new FormArray<FormGroup>([]),
-      footer: new FormArray<FormGroup>([]),
+      footer: new FormGroup<FooterFormGroup>({
+        netTotal: new FormControl(null),
+        vatTotal: new FormControl(null),
+        grossTotal: new FormControl(null)
+      }),
     });
   }
 
@@ -218,16 +224,14 @@ export class InvoiceEditorPageComponent implements OnInit {
 
   private _createInvoiceFormGroup(): void {
     Object.keys(invoiceConfig).forEach((section) => {
-      if (section !== "headerImage") {
-        this._createInputFields(section);
-      }
+      this._createInputFields(section);
     });
   }
 
   private _createInputFields(key: string): void {
     // Convert key string into what key for what object
     const invoiceFormKey = `${key}` as keyof InvoiceFormGroup;
-    const invoiceConfigKey = `${key}` as keyof Formfields;
+    const invoiceConfigKey = `${key}` as keyof FormConfig;
 
     const invoiceFormGroupFormArray = this.invoiceFormGroup.get(
       invoiceFormKey
@@ -238,6 +242,7 @@ export class InvoiceEditorPageComponent implements OnInit {
         new FormGroup({
           id: new FormControl({ value: inputField.id, disabled: true }),
           value: new FormControl(null),
+          value: new FormControl("test"),
           label: new FormControl({ value: inputField.label, disabled: true }),
           placeholder: new FormControl(inputField.placeholder),
           inputType: new FormControl({
