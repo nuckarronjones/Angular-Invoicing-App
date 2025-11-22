@@ -1,57 +1,101 @@
-<form id="form-container">
+<form id="form-container" [formGroup]="invoice">
   <div id="printable-area">
     <header class="flex-container">
-      <section class="flex-column">
-        <ng-container *ngFor="let headerField of formFields.header">
-          <app-input-field
-            [id]="headerField.id"
-            [inputType]="headerField.inputType"
-            [label]="headerField.label"
-            [placeholder]="getInvoiceFormValueByKey(headerField.id)"
-            [class]="headerField.style"
-            (updatedInputValue)="updateInvoiceModelObject($event)"
-          ></app-input-field>
+      <section formArrayName="header">
+        <ng-container
+          *ngFor="
+            let headerField of invoice.controls.header.controls;
+            let i = index
+          "
+        >
+          <div
+            [formGroupName]="i"
+            class="field-container"
+            [ngClass]="headerField.controls.style.value"
+          >
+            <label [for]="headerField.controls.id.value">
+              {{ headerField.controls.label.value }}
+            </label>
+
+            <input
+              formControlName="value"
+              class="input-field w-100"
+              [type]="headerField.controls.inputType.value"
+              [id]="headerField.controls.id.value"
+              [placeholder]="headerField.controls.placeholder.value"
+              pInputText
+            />
+          </div>
         </ng-container>
       </section>
 
       <section class="flex-column">
         <app-image-upload
           [editMode]="true"
-          [headerImageUrl]="headerImage"
-          (saveImageUrl)="saveImageUrl($event)"
+          [headerImageUrl]="invoice.controls.headerImage.value"
         ></app-image-upload>
       </section>
     </header>
 
     <hr class="mb-5 mt-5" />
 
-    <section class="flex-container">
+    <section class="flex-container body" formArrayName="body">
       <div class="flex-column">
-        <ng-container *ngFor="let formField of formFields.body">
-          <ng-container *ngIf="formField.column === 'left'">
-            <app-input-field
-              [id]="formField.id"
-              [inputType]="formField.inputType"
-              [label]="formField.label"
-              [placeholder]="getInvoiceFormValueByKey(formField.id)"
-              [class]="formField.style"
-              (updatedInputValue)="updateInvoiceModelObject($event)"
-            ></app-input-field>
+        <ng-container
+          *ngFor="
+            let bodyField of invoice.controls.body.controls;
+            let i = index
+          "
+        >
+          <ng-container *ngIf="bodyField.controls.column.value === 'left'">
+            <div
+              [formGroupName]="i"
+              class="field-container"
+              [ngClass]="bodyField.controls.style.value"
+            >
+              <label [for]="bodyField.controls.id.value">
+                {{ bodyField.controls.label.value }}
+              </label>
+
+              <input
+                formControlName="value"
+                class="input-field w-100"
+                [type]="bodyField.controls.inputType.value"
+                [id]="bodyField.controls.id.value"
+                [placeholder]="bodyField.controls.placeholder.value"
+                pInputText
+              />
+            </div>
           </ng-container>
         </ng-container>
       </div>
 
       <div class="flex-column">
-        <ng-container *ngFor="let formField of formFields.body">
-          <ng-container *ngIf="formField.column === 'right'">
-            <app-input-field
-              [id]="formField.id"
-              [inputType]="formField.inputType"
-              [label]="formField.label"
-              [placeholder]="getInvoiceFormValueByKey(formField.id)"
-              [class]="formField.style"
-              (updatedInputValue)="updateInvoiceModelObject($event)"
-            ></app-input-field>
+        <ng-container
+          *ngFor="
+            let bodyField of invoice.controls.body.controls;
+            let i = index
+          "
+        >
+          <ng-container *ngIf="bodyField.controls.column.value === 'right'">
+            <div
+              [formGroupName]="i"
+              class="field-container"
+              [ngClass]="bodyField.controls.style.value"
+            >
+              <label [for]="bodyField.controls.id.value">
+                {{ bodyField.controls.label.value }}
+              </label>
+
+              <input
+                formControlName="value"
+                class="input-field w-100"
+                [type]="bodyField.controls.inputType.value"
+                [id]="bodyField.controls.id.value"
+                [placeholder]="bodyField.controls.placeholder.value"
+                pInputText
+              />
+            </div>
           </ng-container>
         </ng-container>
       </div>
@@ -59,29 +103,35 @@
 
     <div class="mb-5"></div>
 
-    <app-invoice-editor-table
+    <!-- <app-invoice-editor-table
       [editMode]="true"
       [invoiceTableRowData]="tableData"
       (formChanges)="recalculateTableRows($event)"
-    />
+    /> -->
 
     <footer id="invoiceTotals">
       <table>
         <tbody>
           <tr>
-            <td class="text-left"><b>Net Total</b></td>
-            <td>{{ netTotal != "" ? netTotal : 0 }}</td>
-            <td>{{ currency }}</td>
+            <td class="text-left">
+              <b>Net Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.netTotal.value }}</td>
+            <td>zl</td>
           </tr>
           <tr>
-            <td class="text-left"><b>VAT Total</b></td>
-            <td>{{ vatTotal != "" ? vatTotal : 0 }}</td>
-            <td>{{ currency }}</td>
+            <td class="text-left">
+              <b>VAT Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.vatTotal.value }}</td>
+            <td>zl</td>
           </tr>
           <tr>
-            <td class="text-left"><b>Gross Total</b></td>
-            <td>{{ grossTotal != "" ? grossTotal : 0 }}</td>
-            <td>{{ currency }}</td>
+            <td class="text-left">
+              <b>Gross Total</b>
+            </td>
+            <td>{{ invoice.controls.footer.controls.grossTotal.value }}</td>
+            <td>zl</td>
           </tr>
         </tbody>
       </table>
@@ -91,8 +141,10 @@
 
     <table>
       <tr>
-        <td><b>Total Due: </b></td>
-        <td>{{ grossTotal + " " + currency}}</td>
+        <td>
+          <b>Total Due: </b>
+        </td>
+        <td>{{ invoice.controls.footer.controls.grossTotal.value }} zl</td>
       </tr>
     </table>
 

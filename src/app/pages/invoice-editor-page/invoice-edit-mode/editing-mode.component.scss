@@ -1,48 +1,60 @@
-.editorNavbarContainer{
-  margin-top:50px;
+.editorNavbarContainer {
+  margin-top: 50px;
 }
 
-*{
-  font-size:15pt;
+* {
+  font-size: 15pt;
 }
 
-#form-container{
+#form-container {
   width: 100%;
   align-content: center;
   justify-items: center;
-} 
+}
 
 form {
   margin-top: 3rem;
 }
 
-#printable-area{
+.body {
+  .field-container {
+    padding-right: 5px;
+  }
+
+  .input-field {
+    display: block; /* Ensures the input is on a new line */
+    margin-top: 5px; /*Adds space between label and input */
+    margin-bottom: 5px;
+  }
+}
+
+#printable-area {
   padding-top: 100px;
   padding-bottom: 100px;
   padding-left: 100px;
   padding-right: 100px;
   box-shadow: 1px 3px 5px #000000bf;
-  zoom: .65;
+  zoom: 0.65;
   width: 1240px;
   height: 1754px;
 }
 
 .flex-container {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .flex-column {
-  flex: 1; 
-  max-width: 47%; 
-  box-sizing: border-box; 
+  flex: 1;
+  max-width: 47%;
+  box-sizing: border-box;
 }
 
-.formFieldValue{
-  width:auto;
+.formFieldValue {
+  width: auto;
 }
-.input-value{
-  margin-bottom:20px;
+.input-value {
+  margin-bottom: 20px;
 }
 
 label {
@@ -52,11 +64,11 @@ label {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  
+
   table {
     width: 30% !important;
     border-collapse: collapse;
-    
+
     td {
       padding: 0.8rem;
       text-align: center;
