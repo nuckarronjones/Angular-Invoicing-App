@@ -85,53 +85,9 @@
       [invoiceTableForm]="invoice.controls.invoiceTable"
     />
 
-    <footer id="invoiceTotals">
-      <table>
-        <tbody>
-          <tr>
-            <td class="text-left">
-              <b>Net Total</b>
-            </td>
-            <td>
-              {{ invoice.controls.footer.controls.netTotal.value ?? "0.00" }}
-            </td>
-            <td>zl</td>
-          </tr>
-          <tr>
-            <td class="text-left">
-              <b>VAT Total</b>
-            </td>
-            <td>
-              {{ invoice.controls.footer.controls.vatTotal.value ?? "0.00" }}
-            </td>
-            <td>zl</td>
-          </tr>
-          <tr>
-            <td class="text-left">
-              <b>Gross Total</b>
-            </td>
-            <td>
-              {{ invoice.controls.footer.controls.grossTotal.value ?? "0.00" }}
-            </td>
-            <td>zl</td>
-          </tr>
-        </tbody>
-      </table>
-    </footer>
-
-    <hr class="mt-5" />
-
-    <table>
-      <tr>
-        <td>
-          <b>Total Due: </b>
-        </td>
-        <td>
-          {{ invoice.controls.footer.controls.grossTotal.value ?? "0.00" }} zl
-        </td>
-      </tr>
-    </table>
+    <app-invoice-totals [totalsForm]="invoice.controls.footer"/>
 
     <hr />
+    
   </div>
 </form>

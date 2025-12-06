@@ -49,26 +49,3 @@ form {
 label {
   margin-bottom: 0.5rem; /* Space between the label and input */
 }
-#invoiceTotals {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  
-  table {
-    width: 30% !important;
-    border-collapse: collapse;
-    
-    td {
-      padding: 0.8rem;
-      text-align: center;
-
-      &:not(:first-child) {
-        text-align: center;
-      }
-    }
-
-    tr {
-      border-bottom: 2px solid grey;
-    }
-  }
-}

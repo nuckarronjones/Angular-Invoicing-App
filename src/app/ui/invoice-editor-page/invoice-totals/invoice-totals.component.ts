@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input} from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FooterFormGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
 
 @Component({
   selector: "app-invoice-totals",
@@ -7,21 +9,6 @@ import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
   templateUrl: "./invoice-totals.component.html",
   styleUrls: ["./invoice-totals.component.scss"],
 })
-export class InvoiceTotalsComponent implements OnChanges {
-  @Input() currency: string = "";
-  @Input() netTotal: string = "";
-  @Input() vatTotal: string = "";
-  @Input() grossTotal: string = "";
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      "currency" in changes ||
-      "netTotal" in changes ||
-      "vatTotal" in changes ||
-      "grossTotal" in changes
-    ) {
-      console.log(changes)
-      console.log("changed here in component ");
-    }
-  }
+export class InvoiceTotalsComponent  {
+  @Input({required:true}) totalsForm!: FormGroup<FooterFormGroup>;
 }

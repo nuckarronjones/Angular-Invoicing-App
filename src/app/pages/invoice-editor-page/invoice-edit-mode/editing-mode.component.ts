@@ -19,6 +19,7 @@ import { InvoiceEditorTableComponent } from "../../../ui/invoice-editor-page/inv
 import { InputFieldComponent } from "../../../ui/invoice-editor-page/input-field/input-field.component";
 // import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 import { InvoiceFormGroup } from "../invoice-editor-page.component";
+import { InvoiceTotalsComponent } from "../../../ui/invoice-editor-page/invoice-totals/invoice-totals.component";
 
 @Component({
   selector: "app-edit-mode",
@@ -34,7 +35,8 @@ import { InvoiceFormGroup } from "../invoice-editor-page.component";
     NgFor,
     NgIf,
     ImageUploadComponent,
-    NgClass
+    NgClass,
+    InvoiceTotalsComponent
   ],
   templateUrl: "./editing-mode.component.html",
   styleUrl: "./editing-mode.component.scss",

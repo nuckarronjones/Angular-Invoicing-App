@@ -1,10 +1,11 @@
-table {
+#invoiceTotals {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  
+  table {
     width: 30% !important;
     border-collapse: collapse;
-
-    .text-left{
-        white-space: nowrap;
-    }
     
     td {
       padding: 0.8rem;
@@ -19,3 +20,4 @@ table {
       border-bottom: 2px solid grey;
     }
   }
+}

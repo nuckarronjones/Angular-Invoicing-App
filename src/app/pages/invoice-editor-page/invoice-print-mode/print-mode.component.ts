@@ -26,6 +26,7 @@ import { ImageUploadComponent } from "../../../ui/invoice-editor-page/image-uplo
 // } from "../../../enums/invoice-document.enum";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
 import { InvoiceFormGroup } from "../invoice-editor-page.component";
+import { InvoiceTotalsComponent } from "../../../ui/invoice-editor-page/invoice-totals/invoice-totals.component";
 
 @Component({
   selector: "app-print-mode",
@@ -41,6 +42,7 @@ import { InvoiceFormGroup } from "../invoice-editor-page.component";
     NgIf,
     NgClass,
     ImageUploadComponent,
+    InvoiceTotalsComponent
   ],
   templateUrl: "./print-mode.component.html",
   styleUrl: "./print-mode.component.scss",
