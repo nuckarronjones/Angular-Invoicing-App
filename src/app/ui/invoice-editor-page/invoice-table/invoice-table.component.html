@@ -17,90 +17,128 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-tablerow>
-        <tr *ngIf="editMode; else printableRows" class="appear-animation" [formGroup]="tablerow">
-          <td>
-            <input
-              formControlName="item"
-              name="name"
-              pInputText
-              class="w-100 p-2 cell-field"
-            />
-          </td>
-          <td>
-            <input
-              formControlName="quantity"
-              name="quantity"
-              type="number"
-              pInputText
-              class="w-100 p-2 cell-field"
-            />
-          </td>
-          <td>
-            <select formControlName="unit" class="cell-field" name="quantUnit">
-              <option value="hrs">hrs</option>
-              <option value="days">days</option>
-              <option value="months">months</option>
-            </select>
-          </td>
-          <td>
-            <input
-              formControlName="unitNetPrice"
-              name="unitNetPrice"
-              type="number"
-              pInputText
-              class="w-100 p-2 cell-field"
-            />
-          </td>
-          <td>
-            <input
-              formControlName="vatPercent"
-              name="vatPercentage"
-              type="number"
-              pInputText
-              class="w-100 p-2 cell-field"
-            />
-          </td>
-          <td>
-            <input
-              formControlName="totalNet"
-              name="totalNet"
-              pInputText
-              class="w-100 p-2 cell-field"
-              readonly
-            />
-          </td>
-          <td>
-            <input
-              formControlName="totalGross"
-              name="totalGross"
-              pInputText
-              class="w-100 p-2 cell-field"
-              readonly
-            />
-          </td>
-          <td>
-            <i
+      <tr
+        *ngIf="editMode; else printableRows"
+        [ngClass]="{
+          'error-row': tablerow.invalid && checkRowValidations
+        }"
+        class="appear-animation"
+        [formGroup]="tablerow"
+      >
+        <td>
+          <input
+            [ngClass]="{
+              'input-error':
+                tablerow.controls.item.invalid && checkRowValidations
+            }"
+            formControlName="item"
+            name="name"
+            pInputText
+            class="w-100 p-2 cell-field"
+          />
+          <div
+            *ngIf="tablerow.controls.item.invalid && checkRowValidations"
+            class="error-text-content"
+          >
+            Field is required.
+          </div>
+        </td>
+        <td>
+          <input
+            [ngClass]="{
+              'input-error':
+                tablerow.controls.quantity.invalid && checkRowValidations
+            }"
+            formControlName="quantity"
+            name="quantity"
+            type="number"
+            pInputText
+            class="w-100 p-2 cell-field"
+          />
+          <div
+            *ngIf="tablerow.controls.quantity.invalid && checkRowValidations"
+            class="error-text-content"
+          >
+            Field is required.
+          </div>
+        </td>
+        <td>
+          <select formControlName="unit" class="cell-field" name="quantUnit">
+            <option value="hrs">hrs</option>
+            <option value="days">days</option>
+            <option value="months">months</option>
+          </select>
+        </td>
+        <td>
+          <input
+            [ngClass]="{
+              'input-error':
+                tablerow.controls.unitNetPrice.invalid && checkRowValidations
+            }"
+            formControlName="unitNetPrice"
+            name="unitNetPrice"
+            type="number"
+            pInputText
+            class="w-100 p-2 cell-field"
+          />
+          <div
+            *ngIf="
+              tablerow.controls.unitNetPrice.invalid && checkRowValidations
+            "
+            class="error-text-content"
+          >
+            Field is required.
+          </div>
+        </td>
+        <td>
+          <input
+            formControlName="vatPercent"
+            name="vatPercentage"
+            type="number"
+            pInputText
+            class="w-100 p-2 cell-field"
+          />
+        </td>
+        <td>
+          <input
+            formControlName="totalNet"
+            name="totalNet"
+            pInputText
+            class="w-100 p-2 cell-field"
+            readonly
+          />
+        </td>
+        <td>
+          <input
+            formControlName="totalGross"
+            name="totalGross"
+            pInputText
+            class="w-100 p-2 cell-field"
+            readonly
+          />
+        </td>
+        <td>
+          <i
             *ngIf="editMode"
             class="pi pi-trash"
             style="font-size: 1rem; color: red; opacity: 0.5"
             (click)="deleteRowFromTable(tablerow)"
           ></i>
-          </td>
+        </td>
+      </tr>
+
+      <ng-template #printableRows>
+        <tr class="printable-rows" [formGroup]="tablerow">
+          <td>{{ tablerow.controls.item.value }}</td>
+          <td>{{ tablerow.controls.quantity.value }}</td>
+          <td>{{ tablerow.controls.unit.value }}</td>
+          <td>{{ tablerow.controls.unitNetPrice.value }}</td>
+          <td>{{ tablerow.controls.vatPercent.value }}</td>
+          <td>{{ tablerow.controls.totalNet.value }}</td>
+          <td>{{ tablerow.controls.totalGross.value }}</td>
+          <td></td>
         </tr>
-
-        <ng-template #printableRows>
-          <tr class="printable-rows" [formGroup]="tablerow">
-            <td>{{ tablerow.controls.item.value }}</td>
-            <td>{{ tablerow.controls.quantity.value }}</td>
-            <td>{{ tablerow.controls.unit.value }}</td>
-            <td>{{ tablerow.controls.unitNetPrice.value }}</td>
-            <td>{{ tablerow.controls.vatPercent.value }}</td>
-            <td>{{ tablerow.controls.totalNet.value }}</td>
-            <td>{{ tablerow.controls.totalGross.value }}</td>
-            <td></td>
-          </tr>
-        </ng-template>
-
+      </ng-template>
     </ng-template>
   </p-table>
 

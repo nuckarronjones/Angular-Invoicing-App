@@ -89,6 +89,22 @@
   text-overflow: '';
 }
 
+input{
+  position: relative;
+}
+
+.error-row{
+  // Provide extra space for error text
+  td{
+    padding-bottom: 25px !important;
+  }
+}
+
+.error-text-content{
+  position: absolute;
+  color: var( --error);
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

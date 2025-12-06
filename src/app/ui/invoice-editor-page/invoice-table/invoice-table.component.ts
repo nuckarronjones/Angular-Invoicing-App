@@ -6,7 +6,7 @@ import {
   OnInit,
 } from "@angular/core";
 import { TableModule } from "primeng/table";
-import { CommonModule } from "@angular/common";
+import { CommonModule, NgClass } from "@angular/common";
 import { ButtonModule } from "primeng/button";
 import {
   FormArray,
@@ -41,6 +41,7 @@ export interface FormTableValue {
     FormsModule,
     NgIf,
     ReactiveFormsModule,
+    NgClass
   ],
   templateUrl: "./invoice-table.component.html",
   styleUrls: ["./invoice-table.component.scss"],
@@ -48,9 +49,9 @@ export interface FormTableValue {
 export class InvoiceEditorTableComponent implements OnInit {
   // @Input() invoiceTableRowData?: TableUserInputs[];
   @Input({ required: true }) editMode!: boolean;
-  @Input({ required: true }) invoiceTableForm!: FormArray<
-    FormGroup<FormTableGroup>
-  >;
+  @Input({ required: true }) invoiceTableForm!: FormArray<FormGroup<FormTableGroup>>;
+
+  public checkRowValidations: boolean = false;
   // @Output() formChanges = new EventEmitter();
 
   // public tableRows: TableUserInputs[] = [];
@@ -78,16 +79,22 @@ export class InvoiceEditorTableComponent implements OnInit {
   ];
 
   public addNewTableRow(): void {
-    // Todo: form validation later if user can add a row or not
-    const newRow = createTableFormGroup();
+    this.checkRowValidations = true;
 
-    this.invoiceTableForm.push(newRow);
+    if(!this.invoiceTableForm.invalid){
+      const newRow = createTableFormGroup();
 
-    newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
-      const { totalNet, totalGross } = calculateTotals(row);
+      this.invoiceTableForm.push(newRow);
 
-      newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
-    });
+      newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
+        const { totalNet, totalGross } = calculateTotals(row);
+
+        newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
+      });
+
+      this.checkRowValidations = false;
+    }
+
   }
 
   //Updates calculation for saved invoicing table totals, and updates dom accordingly
