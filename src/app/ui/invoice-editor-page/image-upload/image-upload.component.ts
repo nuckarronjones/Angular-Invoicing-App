@@ -31,7 +31,20 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  public removeCurrentImageUrl(): void {
+  public onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const selectedFile = input.files[0];
+
+      if (this._fileIsValid(selectedFile)) {
+        this.headerImage.setValue(selectedFile);
+        this.headerImageUrl = URL.createObjectURL(selectedFile);
+      }
+    }
+  }
+
+  public removeFile(): void {
     this.headerImage.setValue(null);
     this.headerImageUrl = undefined;
   }
@@ -61,7 +74,7 @@ export class ImageUploadComponent implements OnInit {
       alert("File type must be an image.");
       return false;
     }
-    
+
     return true;
   }
 }

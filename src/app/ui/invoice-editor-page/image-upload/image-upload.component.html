@@ -17,9 +17,25 @@
   <ng-template #showLogo>
     <div class="logo-container">
       <div class="revision-button-container">
+        <!--Hidden file upload input, edit button below activates this-->
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          style="display: none"
+        />
+
         <p-button
-          (click)="removeCurrentImageUrl()"
+          class="image-action-button"
+          (click)="fileInput.click()"
           icon="pi pi-pen-to-square"
+          size="large"
+          severity="secondary"
+        />
+        <p-button
+          class="image-action-button "
+          (click)="removeFile()"
+          icon="pi pi-trash"
           size="large"
           severity="secondary"
         />
