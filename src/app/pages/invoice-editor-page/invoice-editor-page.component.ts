@@ -9,7 +9,7 @@ import { NgIf } from "@angular/common";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { FormTableValue } from "../../ui/invoice-editor-page/invoice-table/invoice-table.component";
 import { calculateTotals } from "../../shared/functions/calculate-totals";
-import { createTableFormGroup } from "../../shared/functions/create-form-groups";
+import { createTableFormGroup } from "../../shared/functions/create-table-form-group";
 
 interface InputField {
   id: string;

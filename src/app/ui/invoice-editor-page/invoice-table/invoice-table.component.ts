@@ -18,7 +18,7 @@ import {
 import { NgIf } from "@angular/common";
 import { FormTableGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
 import { calculateTotals } from "../../../shared/functions/calculate-totals";
-import { createTableFormGroup } from "../../../shared/functions/create-form-groups";
+import { createTableFormGroup } from "../../../shared/functions/create-table-form-group";
 // import { TableUserInputs } from "../../../enums/invoice-document.enum";
 
 export interface FormTableValue {
