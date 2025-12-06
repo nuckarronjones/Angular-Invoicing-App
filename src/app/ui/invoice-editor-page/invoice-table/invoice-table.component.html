@@ -7,7 +7,7 @@
 <br />
 
 <div class="table-container" [ngClass]="{ 'edit-mode-padding': editMode }">
-  <p-table [value]="tableRows" class="custom-table">
+  <p-table [value]="invoiceTableForm.controls" class="custom-table">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of columns" [class]="col.class">
@@ -16,114 +16,91 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-tablerows>
-
-      <tr *ngIf="editMode; else printableRows" [id]="tablerows.rowId" class="appear-animation">
-        <td>
-          <input
-            name="name"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.name"
-            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
-          />
-        </td>
-        <td>
-          <input
-            name="quantity"
-            type="number"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.quantity"
-            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
-          />
-        </td>
-        <td>
-          <select
-            [(ngModel)]="tablerows.quantUnit"
-            class="cell-field"
-            name="quantUnit"
-          >
-            <option value="hrs">hrs</option>
-            <option value="days">days</option>
-            <option value="months">months</option>
-          </select>
-        </td>
-        <td>
-          <input
-            name="unitNetPrice"
-            type="number"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.unitNetPrice"
-            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
-          />
-        </td>
-        <td>
-          <input
-            name="vatPercentage"
-            type="number"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.vatPercentage"
-            (ngModelChange)="updateRowCalculations(tablerows.rowId)"
-          />
-        </td>
-        <td>
-          <input
-            name="totalNet"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.totalNet"
-            readonly
-          />
-        </td>
-        <td>
-          <input
-            name="totalGross"
-            pInputText
-            class="w-100 p-2 cell-field"
-            [(ngModel)]="tablerows.totalGross"
-            readonly
-          />
-        </td>
-        <td>
-          <i
+    <ng-template pTemplate="body" let-tablerow>
+        <tr *ngIf="editMode; else printableRows" class="appear-animation" [formGroup]="tablerow">
+          <td>
+            <input
+              formControlName="item"
+              name="name"
+              pInputText
+              class="w-100 p-2 cell-field"
+            />
+          </td>
+          <td>
+            <input
+              formControlName="quantity"
+              name="quantity"
+              type="number"
+              pInputText
+              class="w-100 p-2 cell-field"
+            />
+          </td>
+          <td>
+            <select formControlName="unit" class="cell-field" name="quantUnit">
+              <option value="hrs">hrs</option>
+              <option value="days">days</option>
+              <option value="months">months</option>
+            </select>
+          </td>
+          <td>
+            <input
+              formControlName="unitNetPrice"
+              name="unitNetPrice"
+              type="number"
+              pInputText
+              class="w-100 p-2 cell-field"
+            />
+          </td>
+          <td>
+            <input
+              formControlName="vatPercent"
+              name="vatPercentage"
+              type="number"
+              pInputText
+              class="w-100 p-2 cell-field"
+            />
+          </td>
+          <td>
+            <input
+              formControlName="totalNet"
+              name="totalNet"
+              pInputText
+              class="w-100 p-2 cell-field"
+              readonly
+            />
+          </td>
+          <td>
+            <input
+              formControlName="totalGross"
+              name="totalGross"
+              pInputText
+              class="w-100 p-2 cell-field"
+              readonly
+            />
+          </td>
+          <td>
+            <i
             *ngIf="editMode"
             class="pi pi-trash"
             style="font-size: 1rem; color: red; opacity: 0.5"
-            (click)="deleteRowFromTable(tablerows.rowId)"
+            (click)="deleteRowFromTable(tablerow)"
           ></i>
-        </td>
-      </tr>
-
-      <ng-template #printableRows>
-        <tr  [id]="tablerows.rowId" class="printable-rows">
-          <td>
-            {{tablerows.name}}
           </td>
-          <td>
-            {{tablerows.quantity}}
-          </td>
-          <td>
-            {{tablerows.quantUnit}}
-          </td>
-          <td>
-            {{tablerows.unitNetPrice}}
-          </td>
-          <td>
-            {{tablerows.vatPercentage}}
-          </td>
-          <td>
-            {{tablerows.totalNet}}
-          </td>
-          <td>
-            {{tablerows.totalGross}}
-          </td>
-          <td></td>
         </tr>
-      </ng-template>
-      
+
+        <ng-template #printableRows>
+          <tr class="printable-rows" [formGroup]="tablerow">
+            <td>{{ tablerow.controls.item.value }}</td>
+            <td>{{ tablerow.controls.quantity.value }}</td>
+            <td>{{ tablerow.controls.unit.value }}</td>
+            <td>{{ tablerow.controls.unitNetPrice.value }}</td>
+            <td>{{ tablerow.controls.vatPercent.value }}</td>
+            <td>{{ tablerow.controls.totalNet.value }}</td>
+            <td>{{ tablerow.controls.totalGross.value }}</td>
+            <td></td>
+          </tr>
+        </ng-template>
+
     </ng-template>
   </p-table>
 
@@ -134,6 +111,6 @@
     pRipple
     label="Add Row"
     class="p-button-success"
-    (click)="addEmptyTableRow()"
+    (click)="addNewTableRow()"
   ></button>
 </div>

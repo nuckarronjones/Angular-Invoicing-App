@@ -169,6 +169,7 @@ export interface InvoiceFormGroup {
   header: FormArray<FormGroup<FormInputField>>;
   headerImage: FormControl<string | null>;
   body: FormArray<FormGroup<FormInputField>>;
+  invoiceTable: FormArray<FormGroup<FormTableGroup>>;
   footer: FormGroup<FooterFormGroup>;
 }
 
@@ -176,6 +177,16 @@ export interface FooterFormGroup {
   netTotal: FormControl<number | null>;
   vatTotal: FormControl<number | null>;
   grossTotal: FormControl<number | null>;
+}
+
+export interface FormTableGroup {
+  item: FormControl<string | null>;
+  quantity: FormControl<number | null>;
+  unit: FormControl<"days" | "hours" | "months" | null>;
+  unitNetPrice: FormControl<number | null>;
+  vatPercent: FormControl<number | null>;
+  totalNet: FormControl<number | null>;
+  totalGross: FormControl<number | null>;
 }
 
 export interface FormInputField {
@@ -210,10 +221,11 @@ export class InvoiceEditorPageComponent implements OnInit {
       header: new FormArray<FormGroup>([]),
       headerImage: new FormControl(""),
       body: new FormArray<FormGroup>([]),
+      invoiceTable: new FormArray<FormGroup>([]),
       footer: new FormGroup<FooterFormGroup>({
         netTotal: new FormControl(null),
         vatTotal: new FormControl(null),
-        grossTotal: new FormControl(null)
+        grossTotal: new FormControl(null),
       }),
     });
   }
@@ -223,6 +235,26 @@ export class InvoiceEditorPageComponent implements OnInit {
   }
 
   private _createInvoiceFormGroup(): void {
+    this._initilizeTableInputFields();
+
+    this._initilizeFormInputFields();
+  }
+
+  private _initilizeTableInputFields(): void {
+    this.invoiceFormGroup.controls.invoiceTable.push(
+      new FormGroup<FormTableGroup>({
+        item: new FormControl(null),
+        quantity: new FormControl(null),
+        unit: new FormControl("days"),
+        unitNetPrice: new FormControl(null),
+        vatPercent: new FormControl(null),
+        totalNet: new FormControl(null),
+        totalGross: new FormControl(null),
+      })
+    );
+  }
+
+  private _initilizeFormInputFields(): void {
     Object.keys(invoiceConfig).forEach((section) => {
       this._createInputFields(section);
     });
@@ -241,7 +273,6 @@ export class InvoiceEditorPageComponent implements OnInit {
       invoiceFormGroupFormArray.push(
         new FormGroup({
           id: new FormControl({ value: inputField.id, disabled: true }),
-          value: new FormControl(null),
           value: new FormControl("test"),
           label: new FormControl({ value: inputField.label, disabled: true }),
           placeholder: new FormControl(inputField.placeholder),

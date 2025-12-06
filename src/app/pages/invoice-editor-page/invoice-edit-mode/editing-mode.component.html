@@ -34,7 +34,9 @@
           [editMode]="true"
           [headerImageUrl]="invoice.controls.headerImage.value"
         ></app-image-upload>
+        
       </section>
+
     </header>
 
     <hr class="mb-5 mt-5" />
@@ -103,11 +105,10 @@
 
     <div class="mb-5"></div>
 
-    <!-- <app-invoice-editor-table
+    <app-invoice-editor-table
       [editMode]="true"
-      [invoiceTableRowData]="tableData"
-      (formChanges)="recalculateTableRows($event)"
-    /> -->
+      [invoiceTableForm]="invoice.controls.invoiceTable"
+    />
 
     <footer id="invoiceTotals">
       <table>

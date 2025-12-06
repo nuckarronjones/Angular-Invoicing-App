@@ -2,7 +2,9 @@
   <div id="printable-area">
     <header class="flex-container">
       <section class="flex-column">
-        <ng-container *ngFor="let headerField of invoice.controls.header.controls">
+        <ng-container
+          *ngFor="let headerField of invoice.controls.header.controls"
+        >
           <div class="input-value w-100">
             <b>{{ headerField.controls.label.value }}</b>
             {{ headerField.controls.value.value }}
@@ -17,7 +19,7 @@
         ></app-image-upload>
       </section>
     </header>
-    <hr class="mb-5 mt-5"/>
+    <hr class="mb-5 mt-5" />
 
     <section class="flex-container mt-5 mb-5">
       <div class="flex-column">
@@ -36,13 +38,16 @@
               *ngIf="formField.controls.style.value === 'w-50'; else fullWidth"
             >
               <div class="w-auto inline-block input-value">
-                {{formField.controls.value.value}}
+                {{ formField.controls.value.value }}
               </div>
             </ng-container>
             <ng-template #fullWidth>
-              <div class="input-value" [ngClass]="formField.controls.style.value">
+              <div
+                class="input-value"
+                [ngClass]="formField.controls.style.value"
+              >
                 <span>
-                  {{formField.controls.value.value}}
+                  {{ formField.controls.value.value }}
                 </span>
               </div>
             </ng-template>
@@ -57,13 +62,16 @@
               *ngIf="formField.controls.style.value === 'w-50'; else fullWidth"
             >
               <div class="w-auto inline-block input-value">
-                {{formField.controls.value.value}}
+                {{ formField.controls.value.value }}
               </div>
             </ng-container>
             <ng-template #fullWidth>
-              <div class="input-value" [ngClass]="formField.controls.style.value">
+              <div
+                class="input-value"
+                [ngClass]="formField.controls.style.value"
+              >
                 <span>
-                  {{formField.controls.value.value}}
+                  {{ formField.controls.value.value }}
                 </span>
               </div>
             </ng-template>
@@ -72,27 +80,26 @@
       </div>
     </section>
 
-    <app-invoice-editor-table 
-      [invoiceTableRowData]="[]"
+    <app-invoice-editor-table
       [editMode]="false"
-/>
+      [invoiceTableForm]="invoice.controls.invoiceTable"
+    />
 
     <footer id="invoiceTotals">
       <table>
-
         <tbody>
           <tr>
             <td class="text-left">
               <b>Net Total</b>
             </td>
-            <td>{{ invoice.controls.footer.controls.netTotal.value}}</td>
+            <td>{{ invoice.controls.footer.controls.netTotal.value }}</td>
             <td>zl</td>
           </tr>
           <tr>
             <td class="text-left">
               <b>VAT Total</b>
             </td>
-            <td>{{ invoice.controls.footer.controls.vatTotal.value}}</td>
+            <td>{{ invoice.controls.footer.controls.vatTotal.value }}</td>
             <td>zl</td>
           </tr>
           <tr>
@@ -106,17 +113,17 @@
       </table>
     </footer>
 
-    <hr class="mt-5"/>
+    <hr class="mt-5" />
 
     <table>
       <tr>
         <td>
           <b>Total Due: </b>
         </td>
-        <td>{{invoice.controls.footer.controls.grossTotal.value}} zl</td>
+        <td>{{ invoice.controls.footer.controls.grossTotal.value }} zl</td>
       </tr>
     </table>
 
-    <hr/>
+    <hr />
   </div>
 </form>

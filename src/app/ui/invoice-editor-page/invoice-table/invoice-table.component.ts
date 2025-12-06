@@ -1,41 +1,49 @@
 import {
   Component,
   Input,
-  Output,
-  EventEmitter,
-  OnInit
+  // Output,
+  // EventEmitter,
+  OnInit,
 } from "@angular/core";
 import { TableModule } from "primeng/table";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
-import { FormsModule } from "@angular/forms";
-import { v4 as uuidv4 } from "uuid";
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+// import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
-import { TableUserInputs } from "../../../enums/invoice-document.enum";
+import { FormTableGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
+// import { TableUserInputs } from "../../../enums/invoice-document.enum";
 
 @Component({
   selector: "app-invoice-editor-table",
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, FormsModule, NgIf],
+  imports: [TableModule, CommonModule, ButtonModule, FormsModule, NgIf, ReactiveFormsModule],
   templateUrl: "./invoice-table.component.html",
   styleUrls: ["./invoice-table.component.scss"],
 })
 export class InvoiceEditorTableComponent implements OnInit {
-  @Input() invoiceTableRowData?: TableUserInputs[];
-  @Input() editMode!: boolean;
-  @Output() formChanges = new EventEmitter();
+  // @Input() invoiceTableRowData?: TableUserInputs[];
+  @Input({ required: true }) editMode!: boolean;
+  @Input({ required: true }) invoiceTableForm!: FormArray<
+    FormGroup<FormTableGroup>
+  >;
+  // @Output() formChanges = new EventEmitter();
 
-  public tableRows: TableUserInputs[] = [];
+  // public tableRows: TableUserInputs[] = [];
 
   ngOnInit(): void {
-    const savedTableRows = this.invoiceTableRowData;
-    //If we have saved data for this invoice saved, we want to populate tableRows OnInit
-    if ((savedTableRows) && savedTableRows.length > 0) {
-      savedTableRows.forEach((row) => {
-        //Push saved data from rows into our component table rows
-        this.tableRows.push(row);
-      });
-    }
+    this.invoiceTableForm.valueChanges.subscribe((change)=>{
+      console.log(change)
+    });
+
+    // const savedTableRows = this.invoiceTableRowData;
+    // //If we have saved data for this invoice saved, we want to populate tableRows OnInit
+    // if ((savedTableRows) && savedTableRows.length > 0) {
+    //   savedTableRows.forEach((row) => {
+    //     //Push saved data from rows into our component table rows
+    //     this.tableRows.push(row);
+    //   });
+    // }
   }
 
   public columns = [
@@ -49,84 +57,68 @@ export class InvoiceEditorTableComponent implements OnInit {
     { field: "", header: "" },
   ];
 
-  //When add row button clicked, we want to add rows to later be populated
-  public addEmptyTableRow(): void {
-    const rowId = uuidv4();
+  public addNewTableRow(): void {
+    // Todo: form validation later if user can add a row or not
 
-    const canAddNewTableRow = this.tableRows.every((obj) =>
-      Object.entries(obj)
-        .filter(([key]) => key !== "vatPercentage") // Exclude the vatPercentage key
-        .every(([, value]) => value !== null && value !== "")
+    this.invoiceTableForm.push(
+      new FormGroup<FormTableGroup>({
+        item: new FormControl(null),
+        quantity: new FormControl(null),
+        unit: new FormControl("hours"),
+        unitNetPrice: new FormControl(null),
+        vatPercent: new FormControl(null),
+        totalNet: new FormControl(null),
+        totalGross: new FormControl(null),
+      })
     );
-
-    if (canAddNewTableRow) {
-      this.tableRows.push({
-        rowId: rowId,
-        name: "",
-        quantity: "",
-        quantUnit: "",
-        unitNetPrice: "",
-        vatPercentage: "",
-        totalNet: "",
-        totalGross: "",
-      });
-    } else {
-      alert("Please fill in missing table data before adding a new row");
-    }
   }
 
   //Updates calculation for saved invoicing table totals, and updates dom accordingly
-  public updateRowCalculations(rowId: string): void {
-    const tableRow = document.getElementById(`${rowId}`);
-    const tableRowArrayObject = this.tableRows.find(
-      (obj) => obj.rowId === rowId
-    );
+  // public updateRowCalculations(rowId: string): void {
+  //   const tableRow = document.getElementById(`${rowId}`);
+  //   const tableRowArrayObject = this.tableRows.find(
+  //     (obj) => obj.rowId === rowId
+  //   );
 
-    if (tableRowArrayObject && tableRow) {
-      //For the row with the matching ID, we will use these values to calculate our fields
-      const quantity = parseFloat(tableRowArrayObject.quantity as string);
-      const unitNetPrice = parseFloat(tableRowArrayObject.unitNetPrice as string);
-      const vatPercentage = parseFloat(tableRowArrayObject.vatPercentage as string);
-      const totalNet = quantity * unitNetPrice;
-      //Input values we want to malipulate
-      const totalNetHTML = tableRow?.querySelector('td input[name="totalNet"]') as HTMLInputElement;
-      const totalGrossHTML = tableRow?.querySelector('td input[name="totalGross"]') as HTMLInputElement;
-      //Returns calculations into cells as values
-      const totalNetCalculated = parseFloat((quantity * unitNetPrice).toFixed(2));
-      const totalGrossCalculated = parseFloat((totalNet + ((vatPercentage / 100) * totalNet)).toFixed(2));
-      totalNetHTML.value = totalNetCalculated ? totalNetCalculated.toString() : "";
-      totalGrossHTML.value = totalGrossCalculated
-        ? totalGrossCalculated.toString()
-        : totalNetCalculated
-        ? totalNetCalculated.toString()
-        : "";
+  //   if (tableRowArrayObject && tableRow) {
+  //     //For the row with the matching ID, we will use these values to calculate our fields
+  //     const quantity = parseFloat(tableRowArrayObject.quantity as string);
+  //     const unitNetPrice = parseFloat(tableRowArrayObject.unitNetPrice as string);
+  //     const vatPercentage = parseFloat(tableRowArrayObject.vatPercentage as string);
+  //     const totalNet = quantity * unitNetPrice;
+  //     //Input values we want to malipulate
+  //     const totalNetHTML = tableRow?.querySelector('td input[name="totalNet"]') as HTMLInputElement;
+  //     const totalGrossHTML = tableRow?.querySelector('td input[name="totalGross"]') as HTMLInputElement;
+  //     //Returns calculations into cells as values
+  //     const totalNetCalculated = parseFloat((quantity * unitNetPrice).toFixed(2));
+  //     const totalGrossCalculated = parseFloat((totalNet + ((vatPercentage / 100) * totalNet)).toFixed(2));
+  //     totalNetHTML.value = totalNetCalculated ? totalNetCalculated.toString() : "";
+  //     totalGrossHTML.value = totalGrossCalculated
+  //       ? totalGrossCalculated.toString()
+  //       : totalNetCalculated
+  //       ? totalNetCalculated.toString()
+  //       : "";
 
-      tableRowArrayObject.totalNet = parseFloat(totalNetHTML.value).toFixed(2);
-      tableRowArrayObject.totalGross = parseFloat(totalGrossHTML.value).toFixed(2);
+  //     tableRowArrayObject.totalNet = parseFloat(totalNetHTML.value).toFixed(2);
+  //     tableRowArrayObject.totalGross = parseFloat(totalGrossHTML.value).toFixed(2);
 
-      //We want to signal to the parent component that totals need to be re-calculated, and supply the tableRows with data
-      this.formChanges.emit(this.tableRows);
-    }
+  //     //We want to signal to the parent component that totals need to be re-calculated, and supply the tableRows with data
+  //     this.formChanges.emit(this.tableRows);
+  //   }
+  // }
+
+  public deleteRowFromTable(tableRow: FormGroup<FormTableGroup>): void {
+    const rowIndex = this.invoiceTableForm.controls.indexOf(tableRow);
+
+    this.invoiceTableForm.removeAt(rowIndex);
   }
 
-  public deleteRowFromTable(id: string): void {
-    this._addDeleteRowAnimation(id);
+  // private _addDeleteRowAnimation(id: string) {
+  //   const rowElement = document.getElementById(`${id}`);
 
-    //Give the animation enough time to finish, then remove row from tableRows
-    setTimeout(() => {
-      this.tableRows = this.tableRows.filter((row) => {
-        return row.rowId !== id;
-      });
-      this.formChanges.emit(this.tableRows);
-    }, 500)
-  }
-
-  private _addDeleteRowAnimation(id: string) {
-    const rowElement = document.getElementById(`${id}`);
-
-    if (rowElement) {
-      rowElement.classList.remove("appear-animation");
-      rowElement.classList.add("slide-out-animation");
-    }
-  }
+  //   if (rowElement) {
+  //     rowElement.classList.remove("appear-animation");
+  //     rowElement.classList.add("slide-out-animation");
+  //   }
+  // }
 }
