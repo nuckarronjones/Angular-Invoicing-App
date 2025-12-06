@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 import { NgIf, AsyncPipe } from "@angular/common";
 
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 
 import { Button } from "primeng/button";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-image-upload",
@@ -13,47 +14,54 @@ import { Button } from "primeng/button";
   templateUrl: "./image-upload.component.html",
   styleUrls: ["./image-upload.component.scss"],
 })
-export class ImageUploadComponent {
-  @Input() headerImageUrl?: string | ArrayBuffer | null = null;
+export class ImageUploadComponent implements OnInit {
+  //headerImage: new FormControl(null),
+  @Input({ required: true }) headerImage!: FormControl<File | null>;
   @Input({ required: true }) editMode!: boolean;
 
-  @Output() saveImageUrl = new EventEmitter<string>();
+  public headerImageUrl: string | undefined;
+
+  private _maxFileSize = 5000000; //5mb
 
   constructor(public invoiceEditModeState: InvoiceEditModeState) {}
 
-  public onDragOver(event: DragEvent): void {
-    event.preventDefault();
+  ngOnInit(): void {
+    if (this.headerImage.value !== null) {
+      this.headerImageUrl = URL.createObjectURL(this.headerImage.value);
+    }
   }
 
-  public removeCurrentImageUrl():void{
-    this.headerImageUrl = null;
+  public removeCurrentImageUrl(): void {
+    this.headerImage.setValue(null);
+    this.headerImageUrl = undefined;
   }
 
   public onDrop(event: DragEvent): void {
-    event.preventDefault();
-    const files = event.dataTransfer?.files;
+    const file = event.dataTransfer?.files[0];
 
-    if (files && files.length > 0) {
-      const file = files[0];
+    if (file && this._fileIsValid(file)) {
+      this.headerImage.setValue(file);
 
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          this.headerImageUrl = reader.result;
-
-          if (this.headerImageUrl && typeof this.headerImageUrl === "string") {
-            this.saveImageUrl.emit(this.headerImageUrl);
-          } else {
-            console.error("Image upload unsuccessful, url not valid");
-          }
-
-        };
-        
-        reader.readAsDataURL(file);
-      } else {
-        alert("Please drop an image file.");
-      }
+      this.headerImageUrl = URL.createObjectURL(file);
     }
+  }
+
+  public preventDefault(event: DragEvent): void {
+    // Prevent browser default behavior with drag event
+    event.preventDefault();
+  }
+
+  private _fileIsValid(file: File): boolean {
+    if (file.size > this._maxFileSize) {
+      alert("File size too large, must be less than 5mb.");
+      return false;
+    }
+
+    if (!file.type.includes("image/")) {
+      alert("File type must be an image.");
+      return false;
+    }
+    
+    return true;
   }
 }

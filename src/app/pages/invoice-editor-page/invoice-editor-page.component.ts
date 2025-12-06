@@ -173,7 +173,7 @@ const invoiceConfig: FormConfig = {
 
 export interface InvoiceFormGroup {
   header: FormArray<FormGroup<FormInputField>>;
-  headerImage: FormControl<string | null>;
+  headerImage: FormControl<File | null>;
   body: FormArray<FormGroup<FormInputField>>;
   invoiceTable: FormArray<FormGroup<FormTableGroup>>;
   footer: FormGroup<FooterFormGroup>;
@@ -225,7 +225,7 @@ export class InvoiceEditorPageComponent implements OnInit {
   constructor(public invoiceEditModeState: InvoiceEditModeState) {
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       header: new FormArray<FormGroup>([]),
-      headerImage: new FormControl(""),
+      headerImage: new FormControl(null),
       body: new FormArray<FormGroup>([]),
       invoiceTable: new FormArray<FormGroup>([]),
       footer: new FormGroup<FooterFormGroup>({

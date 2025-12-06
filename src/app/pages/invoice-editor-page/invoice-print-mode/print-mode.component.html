@@ -15,7 +15,7 @@
       <section class="flex-column">
         <app-image-upload
           [editMode]="false"
-          [headerImageUrl]="invoice.controls.headerImage.value"
+          [headerImage]="invoice.controls.headerImage"
         ></app-image-upload>
       </section>
     </header>
@@ -88,6 +88,6 @@
     <app-invoice-totals [totalsForm]="invoice.controls.footer"/>
 
     <hr />
-    
+
   </div>
 </form>
