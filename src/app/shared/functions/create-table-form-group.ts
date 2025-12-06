@@ -8,7 +8,7 @@ export function createTableFormGroup(): FormGroup<FormTableGroup> {
     unit: new FormControl("days"),
     unitNetPrice: new FormControl(null, [Validators.required]),
     vatPercent: new FormControl(null),
-    totalNet: new FormControl(null),
-    totalGross: new FormControl(null),
+    totalNet: new FormControl(0),
+    totalGross: new FormControl(0),
   });
 }
