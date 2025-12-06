@@ -7,6 +7,9 @@ import { CommonModule } from "@angular/common";
 import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { FormTableValue } from "../../ui/invoice-editor-page/invoice-table/invoice-table.component";
+import { calculateTotals } from "../../shared/functions/calculate-totals";
+import { createTableFormGroup } from "../../shared/functions/create-form-groups";
 
 interface InputField {
   id: string;
@@ -241,17 +244,15 @@ export class InvoiceEditorPageComponent implements OnInit {
   }
 
   private _initilizeTableInputFields(): void {
-    this.invoiceFormGroup.controls.invoiceTable.push(
-      new FormGroup<FormTableGroup>({
-        item: new FormControl(null),
-        quantity: new FormControl(null),
-        unit: new FormControl("days"),
-        unitNetPrice: new FormControl(null),
-        vatPercent: new FormControl(null),
-        totalNet: new FormControl(null),
-        totalGross: new FormControl(null),
-      })
-    );
+    const newRow = createTableFormGroup();
+    
+    this.invoiceFormGroup.controls.invoiceTable.push(newRow);
+
+    newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
+      const { totalNet, totalGross } = calculateTotals(row);
+
+      newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
+    });
   }
 
   private _initilizeFormInputFields(): void {

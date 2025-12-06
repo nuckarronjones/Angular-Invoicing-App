@@ -8,16 +8,40 @@ import {
 import { TableModule } from "primeng/table";
 import { CommonModule } from "@angular/common";
 import { ButtonModule } from "primeng/button";
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+  FormArray,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from "@angular/forms";
 // import { v4 as uuidv4 } from "uuid";
 import { NgIf } from "@angular/common";
 import { FormTableGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
+import { calculateTotals } from "../../../shared/functions/calculate-totals";
+import { createTableFormGroup } from "../../../shared/functions/create-form-groups";
 // import { TableUserInputs } from "../../../enums/invoice-document.enum";
+
+export interface FormTableValue {
+  item: string | null;
+  quantity: number | null;
+  unit: "days" | "hours" | "months" | null;
+  unitNetPrice: number | null;
+  vatPercent: number | null;
+  totalNet: number | null;
+  totalGross: number | null;
+}
 
 @Component({
   selector: "app-invoice-editor-table",
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, FormsModule, NgIf, ReactiveFormsModule],
+  imports: [
+    TableModule,
+    CommonModule,
+    ButtonModule,
+    FormsModule,
+    NgIf,
+    ReactiveFormsModule,
+  ],
   templateUrl: "./invoice-table.component.html",
   styleUrls: ["./invoice-table.component.scss"],
 })
@@ -32,10 +56,6 @@ export class InvoiceEditorTableComponent implements OnInit {
   // public tableRows: TableUserInputs[] = [];
 
   ngOnInit(): void {
-    this.invoiceTableForm.valueChanges.subscribe((change)=>{
-      console.log(change)
-    });
-
     // const savedTableRows = this.invoiceTableRowData;
     // //If we have saved data for this invoice saved, we want to populate tableRows OnInit
     // if ((savedTableRows) && savedTableRows.length > 0) {
@@ -59,18 +79,15 @@ export class InvoiceEditorTableComponent implements OnInit {
 
   public addNewTableRow(): void {
     // Todo: form validation later if user can add a row or not
+    const newRow = createTableFormGroup();
 
-    this.invoiceTableForm.push(
-      new FormGroup<FormTableGroup>({
-        item: new FormControl(null),
-        quantity: new FormControl(null),
-        unit: new FormControl("hours"),
-        unitNetPrice: new FormControl(null),
-        vatPercent: new FormControl(null),
-        totalNet: new FormControl(null),
-        totalGross: new FormControl(null),
-      })
-    );
+    this.invoiceTableForm.push(newRow);
+
+    newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
+      const { totalNet, totalGross } = calculateTotals(row);
+
+      newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
+    });
   }
 
   //Updates calculation for saved invoicing table totals, and updates dom accordingly
