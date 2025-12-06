@@ -8,7 +8,10 @@ import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { FormTableValue } from "../../ui/invoice-editor-page/invoice-table/invoice-table.component";
-import { calculateTotals } from "../../shared/functions/calculate-totals";
+import {
+  calculateOverallTotals,
+  calculateTotals,
+} from "../../shared/functions/calculate-totals";
 import { createTableFormGroup } from "../../shared/functions/create-table-form-group";
 
 interface InputField {
@@ -177,9 +180,9 @@ export interface InvoiceFormGroup {
 }
 
 export interface FooterFormGroup {
-  netTotal: FormControl<number | null>;
-  vatTotal: FormControl<number | null>;
-  grossTotal: FormControl<number | null>;
+  netTotal: FormControl<string | null>;
+  vatTotal: FormControl<string | null>;
+  grossTotal: FormControl<string | null>;
 }
 
 export interface FormTableGroup {
@@ -241,11 +244,26 @@ export class InvoiceEditorPageComponent implements OnInit {
     this._initilizeTableInputFields();
 
     this._initilizeFormInputFields();
+
+    this._listenToChangesToRecalculateTotals();
+  }
+
+  private _listenToChangesToRecalculateTotals(): void {
+    this.invoiceFormGroup.controls.invoiceTable.valueChanges.subscribe(() => {
+      const { netTotal, vatTotal, grossTotal } = calculateOverallTotals(
+        this.invoiceFormGroup.controls.invoiceTable
+      );
+
+      this.invoiceFormGroup.controls.footer.patchValue(
+        { netTotal, vatTotal, grossTotal },
+        { emitEvent: false }
+      );
+    });
   }
 
   private _initilizeTableInputFields(): void {
     const newRow = createTableFormGroup();
-    
+
     this.invoiceFormGroup.controls.invoiceTable.push(newRow);
 
     newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
