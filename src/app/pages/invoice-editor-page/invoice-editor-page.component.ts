@@ -172,6 +172,7 @@ const invoiceConfig: FormConfig = {
 };
 
 export interface InvoiceFormGroup {
+  metaData: FormGroup<DocumentMetaDataFormGroup>;
   header: FormArray<FormGroup<FormInputField>>;
   headerImage: FormControl<File | null>;
   body: FormArray<FormGroup<FormInputField>>;
@@ -179,6 +180,12 @@ export interface InvoiceFormGroup {
   footer: FormGroup<FooterFormGroup>;
 }
 
+export interface DocumentMetaDataFormGroup {
+  id: FormControl<string | null>;
+  status: FormControl<string | null>;
+  documentName: FormControl<string | null>;
+  currency: FormControl<string | null>;
+}
 export interface FooterFormGroup {
   netTotal: FormControl<string | null>;
   vatTotal: FormControl<string | null>;
@@ -224,6 +231,12 @@ export class InvoiceEditorPageComponent implements OnInit {
 
   constructor(public invoiceEditModeState: InvoiceEditModeState) {
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
+      metaData: new FormGroup<DocumentMetaDataFormGroup>({
+        id: new FormControl(null),
+        status: new FormControl(null),
+        documentName: new FormControl(null),
+        currency: new FormControl("zl"),
+      }),
       header: new FormArray<FormGroup>([]),
       headerImage: new FormControl(null),
       body: new FormArray<FormGroup>([]),
