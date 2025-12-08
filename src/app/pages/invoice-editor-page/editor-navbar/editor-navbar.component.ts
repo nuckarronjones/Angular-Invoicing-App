@@ -4,9 +4,9 @@ import { ButtonModule } from "primeng/button";
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 import { EditorToolbarService } from "../../../services/editor-toolbar-service";
 import { AsyncPipe, NgIf } from "@angular/common";
-import { documentData } from "../../../models/document-data.model";
+// import { documentData } from "../../../models/document-data.model";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
-import { DocumentData } from "../../../enums/invoice-document.enum";
+// import { DocumentData } from "../../../enums/invoice-document.enum";
 import { Message } from "primeng/api";
 import { MessagesModule } from "primeng/messages";
 import { RippleModule } from "primeng/ripple";
@@ -39,11 +39,7 @@ export class EditorNavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._userInvoicesServiceApi.currentInvoice$.subscribe((invoice) => {
-      if (invoice) {
-        this._currentInvoice = invoice;
-      }
-    });
+
   }
 
   public printInvoice(): void {
@@ -51,10 +47,8 @@ export class EditorNavbarComponent implements OnInit {
   }
 
   public saveInvoice(): void {
-    this._editorToolbarService.saveInvoice(
-      this._currentInvoice.id,
-      this._currentInvoice
-    );
+    this._userInvoicesServiceApi.saveInvoice(this.invoice);
+
     this._renderStatusMessage();
   }
 

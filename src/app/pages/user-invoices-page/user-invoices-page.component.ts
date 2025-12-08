@@ -49,20 +49,20 @@ export class UserInvoicesPageComponent implements OnInit {
 
   public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
-    this._userInvoicesServiceApi.setNewCurrentInvoice();
+    // this._userInvoicesServiceApi.setNewCurrentInvoice();
     this._router.navigate([`/invoices`]);
   }
 
   ngOnInit(): void {
-    this._userInvoicesServiceApi.setAllUserInvoices();
+    // this._userInvoicesServiceApi.setAllUserInvoices();
 
     //Get a "list" of all saved user invoices
-    this._userInvoicesServiceApi.allUserInvoices$.subscribe((userInvoices) => {
-      if (userInvoices !== null) {
-        this.isLoading = false;
-        this.allUserInvoices = userInvoices;
-      }
-    });
+    // this._userInvoicesServiceApi.allUserInvoices$.subscribe((userInvoices) => {
+    //   if (userInvoices !== null) {
+    //     this.isLoading = false;
+    //     this.allUserInvoices = userInvoices;
+    //   }
+    // });
 
     this.actionItems = [
       {
@@ -70,9 +70,9 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-pencil",
         command: () => {
           this._invoiceEditModeState.setEditMode(true);
-          this._userInvoicesServiceApi.setCurrentInvoiceById(
-            this._dropdownSelectedInvoice
-          );
+          // this._userInvoicesServiceApi.setCurrentInvoiceById(
+          //   this._dropdownSelectedInvoice
+          // );
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },
@@ -81,9 +81,9 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-search",
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
-          this._userInvoicesServiceApi.setCurrentInvoiceById(
-            this._dropdownSelectedInvoice
-          );
+          // this._userInvoicesServiceApi.setCurrentInvoiceById(
+          //   this._dropdownSelectedInvoice
+          // );
           this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
         },
       },
@@ -161,8 +161,9 @@ export class UserInvoicesPageComponent implements OnInit {
     this.ngOnInit();
   }
 
-  private _updateInvoiceStatus(invoiceId: string, status: string):void{
-    this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
+  private _updateInvoiceStatus(_invoiceId: string, _status: string):void{
+    return
+   // this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
   }
 
 }

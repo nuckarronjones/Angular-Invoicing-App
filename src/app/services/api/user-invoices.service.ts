@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { DocumentData } from "../../enums/invoice-document.enum";
-import { documentData } from "../../models/document-data.model";
-import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
+// import { BehaviorSubject } from "rxjs";
+// import { DocumentData } from "../../enums/invoice-document.enum";
+// import { documentData } from "../../models/document-data.model";
+// import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
 import { InvoiceFormGroup } from "../../pages/invoice-editor-page/invoice-editor-page.component";
 import { FormGroup } from "@angular/forms";
 
@@ -47,45 +47,46 @@ export interface InvoiceFooter {
   providedIn: "root",
 })
 export class UserInvoicesServiceApi {
-  private _allUserInvoices = new BehaviorSubject<null | DocumentData[]>(null);
-  public allUserInvoices$ = this._allUserInvoices.asObservable();
+  // private _allUserInvoices = new BehaviorSubject<null | DocumentData[]>(null);
+  // public allUserInvoices$ = this._allUserInvoices.asObservable();
 
-  private _currentInvoice = new BehaviorSubject<null | DocumentData>(null);
-  public currentInvoice$ = this._currentInvoice.asObservable();
+  // private _currentInvoice = new BehaviorSubject<null | DocumentData>(null);
+  // public currentInvoice$ = this._currentInvoice.asObservable();
 
-  public setAllUserInvoices(searchKey: string = "_invoice") {
-    const invoices: DocumentData[] = Object.keys(localStorage)
-      .filter((key) => key.startsWith(searchKey))
-      .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
+  // public setAllUserInvoices(searchKey: string = "_invoice") {
+  //   const invoices: DocumentData[] = Object.keys(localStorage)
+  //     .filter((key) => key.startsWith(searchKey))
+  //     .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
 
-    this._allUserInvoices.next(invoices);
-  }
+  //   this._allUserInvoices.next(invoices);
+  // }
 
-  public setCurrentInvoiceById(invoiceId: string | null): void {
-    const currentInvoice =
-      this._allUserInvoices.value?.find(
-        (invoice) => invoice.id === invoiceId
-      ) || null;
+  // public setCurrentInvoiceById(invoiceId: string | null): void {
+  //   const currentInvoice =
+  //     this._allUserInvoices.value?.find(
+  //       (invoice) => invoice.id === invoiceId
+  //     ) || null;
 
-    this._currentInvoice.next(currentInvoice);
-  }
+  //   this._currentInvoice.next(currentInvoice);
+  // }
 
-  public setNewCurrentInvoice(): void {
-    this._currentInvoice.next(this._generateNewInvoice());
-  }
+  // public setNewCurrentInvoice(): void {
+  //   this._currentInvoice.next(this._generateNewInvoice());
+  // }
 
-  public setInvoiceStatus(invoiceId: string, status: string) {
-    const currentInvoice =
-      this._allUserInvoices.value?.find(
-        (invoice) => invoice.id === invoiceId
-      ) || null;
+  // public setInvoiceStatus(invoiceId: string, status: string) {
+  //   console.log(invoiceId, status);
+  //   const currentInvoice =
+  //     this._allUserInvoices.value?.find(
+  //       (invoice) => invoice.id === invoiceId
+  //     ) || null;
 
-    if (currentInvoice) {
-      currentInvoice.status = status;
+  //   if (currentInvoice) {
+  //     currentInvoice.status = status;
 
-      this.saveInvoice(invoiceId, currentInvoice);
-    }
-  }
+  //     this.saveInvoice(invoiceId, currentInvoice);
+  //   }
+  // }
 
   public saveInvoice(invoice: FormGroup<InvoiceFormGroup>): void {
     const invoiceId = invoice.controls.metaData.controls.id.value;
@@ -97,17 +98,17 @@ export class UserInvoicesServiceApi {
     console.log(localStorage.getItem(invoiceId!));
   }
 
-  public deleteInvoice(invoiceId: string): void{
+  public deleteInvoice(invoiceId: string): void {
     localStorage.removeItem(invoiceId);
   }
 
-  private _generateNewInvoice(): DocumentData {
-    const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
+  // private _generateNewInvoice(): DocumentData {
+  //   const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
 
-    blankInvoiceDeepCopy.id = generateNewInvoiceId();
+  //   blankInvoiceDeepCopy.id = generateNewInvoiceId();
 
-    return blankInvoiceDeepCopy;
-  }
+  //   return blankInvoiceDeepCopy;
+  // }
 
   private _mapOutputObject(invoice: FormGroup<InvoiceFormGroup>): InvoiceDataOutput {
     return {
