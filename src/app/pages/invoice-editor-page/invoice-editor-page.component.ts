@@ -228,7 +228,7 @@ export interface FormInputField {
 })
 export class InvoiceEditorPageComponent implements OnInit {
   public invoiceFormGroup: FormGroup<InvoiceFormGroup>;
-
+  
   constructor(public invoiceEditModeState: InvoiceEditModeState) {
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({

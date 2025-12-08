@@ -3,6 +3,45 @@ import { BehaviorSubject } from "rxjs";
 import { DocumentData } from "../../enums/invoice-document.enum";
 import { documentData } from "../../models/document-data.model";
 import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
+import { InvoiceFormGroup } from "../../pages/invoice-editor-page/invoice-editor-page.component";
+import { FormGroup } from "@angular/forms";
+
+export interface InvoiceDataOutput {
+  metaData: InvoiceMetaData;
+  header: InvoiceField[];
+  headerImage: File | null;
+  body: InvoiceField[];
+  invoiceTable: InvoiceTableRow[];
+  footer: InvoiceFooter;
+}
+
+export interface InvoiceMetaData {
+  id: string | number | null;
+  status: string | null;
+  documentName: string | null;
+  currency: string | null;
+}
+
+export interface InvoiceField {
+  id: string | null;
+  value: string | null;
+}
+
+export interface InvoiceTableRow {
+  item: string | null;
+  quantity: number | null;
+  unit: string | null;
+  unitNetPrice: number | null;
+  vatPercent: number | null;
+  totalNet: number;
+  totalGross: number;
+}
+
+export interface InvoiceFooter {
+  netTotal: string | null;
+  vatTotal: string | null;
+  grossTotal: string | null;
+}
 
 @Injectable({
   providedIn: "root",
@@ -48,8 +87,14 @@ export class UserInvoicesServiceApi {
     }
   }
 
-  public saveInvoice(invoiceId: string, currentInvoice: any): void {
-    localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+  public saveInvoice(invoice: FormGroup<InvoiceFormGroup>): void {
+    const invoiceId = invoice.controls.metaData.controls.id.value;
+
+    const output = this._mapOutputObject(invoice);
+
+    localStorage.setItem(invoiceId!, JSON.stringify(output));
+
+    console.log(localStorage.getItem(invoiceId!));
   }
 
   public deleteInvoice(invoiceId: string): void{
@@ -62,5 +107,50 @@ export class UserInvoicesServiceApi {
     blankInvoiceDeepCopy.id = generateNewInvoiceId();
 
     return blankInvoiceDeepCopy;
+  }
+
+  private _mapOutputObject(invoice: FormGroup<InvoiceFormGroup>): InvoiceDataOutput {
+    return {
+      metaData: {
+        id: invoice.controls.metaData.controls.id.value,
+        status: invoice.controls.metaData.controls.status.value,
+        documentName: invoice.controls.metaData.controls.documentName.value,
+        currency: invoice.controls.metaData.controls.currency.value,
+      },
+
+      header: invoice.controls.header.controls.map((fg) => {
+        return {
+          id: fg.controls.value.value,
+          value: fg.controls.value.value,
+        };
+      }),
+
+      headerImage: invoice.controls.headerImage.value,
+
+      body: invoice.controls.body.controls.map((fg) => {
+        return {
+          id: fg.controls.value.value,
+          value: fg.controls.value.value,
+        };
+      }),
+
+      invoiceTable: invoice.controls.invoiceTable.controls.map((fg) => {
+        return {
+          item: fg.controls.item.value,
+          quantity: fg.controls.quantity.value,
+          unit: fg.controls.unit.value,
+          unitNetPrice: fg.controls.unitNetPrice.value,
+          vatPercent: fg.controls.vatPercent.value,
+          totalNet: fg.controls.totalNet.value ?? 0,
+          totalGross: fg.controls.totalGross.value ?? 0,
+        };
+      }),
+
+      footer: {
+        netTotal: invoice.controls.footer.controls.netTotal.value,
+        vatTotal: invoice.controls.footer.controls.vatTotal.value,
+        grossTotal: invoice.controls.footer.controls.grossTotal.value,
+      },
+    };
   }
 }

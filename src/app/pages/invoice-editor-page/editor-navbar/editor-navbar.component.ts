@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { MenubarModule } from "primeng/menubar";
 import { ButtonModule } from "primeng/button";
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
@@ -10,6 +10,8 @@ import { DocumentData } from "../../../enums/invoice-document.enum";
 import { Message } from "primeng/api";
 import { MessagesModule } from "primeng/messages";
 import { RippleModule } from "primeng/ripple";
+import { FormGroup } from "@angular/forms";
+import { InvoiceFormGroup } from "../invoice-editor-page.component";
 
 @Component({
   selector: "app-editor-navbar",
@@ -27,9 +29,8 @@ import { RippleModule } from "primeng/ripple";
 })
 export class EditorNavbarComponent implements OnInit {
   public messages: Message[] | undefined;
-  private _currentInvoice: DocumentData = documentData;
 
-  @Output() printEvent = new EventEmitter();
+  @Input({ required: true }) invoice!: FormGroup<InvoiceFormGroup>;
 
   constructor(
     public invoiceEditModeState: InvoiceEditModeState,

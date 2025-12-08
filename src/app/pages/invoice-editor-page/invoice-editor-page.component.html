@@ -1,5 +1,5 @@
 <div class="editorNavbarContainer">
-  <app-editor-navbar/>
+  <app-editor-navbar [invoice]=invoiceFormGroup/>
 </div>
 
 <ng-container *ngIf="invoiceEditModeState.editMode$ | async; else printMode">

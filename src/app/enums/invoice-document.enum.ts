@@ -16,6 +16,15 @@ export interface DocumentData {
   invoice: Invoice;
 }
 
+export interface DocumentData {
+  id: string;
+  status: string;
+  documentName: string;
+  currency: string;
+  invoice: Invoice;
+}
+
+
 export type FormObjectKey = keyof Form;
 interface Invoice {
   form: Form;
