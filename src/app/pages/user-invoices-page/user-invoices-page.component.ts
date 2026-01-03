@@ -8,8 +8,17 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
-import { DocumentData } from "../../enums/invoice-document.enum";
+//import { DocumentData } from "../../enums/invoice-document.enum";
 import { DropdownModule } from "primeng/dropdown";
+
+export interface InvoiceDetails {
+  invoiceNo: string;
+  invoiceDate: string;
+  invoiceDueDate: string;
+  grossTotal: string;
+  buyer: string;
+  status: string;
+}
 
 @Component({
   selector: "app-user-invoices-page",
@@ -22,7 +31,7 @@ import { DropdownModule } from "primeng/dropdown";
     MenuModule,
     FormsModule,
     DropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: "./user-invoices-page.component.html",
   styleUrl: "./user-invoices-page.component.scss",
@@ -36,7 +45,7 @@ export class UserInvoicesPageComponent implements OnInit {
   ) {}
 
   public isLoading: boolean = true;
-  public allUserInvoices: DocumentData[] | null = null;
+  public userInvoicesDetails: InvoiceDetails[] | null = null;
   public actionItems: any[] = [];
   public statusItems: any[] = [];
 
@@ -49,20 +58,14 @@ export class UserInvoicesPageComponent implements OnInit {
 
   public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
-    // this._userInvoicesServiceApi.setNewCurrentInvoice();
+
     this._router.navigate([`/invoices`]);
   }
 
   ngOnInit(): void {
-    // this._userInvoicesServiceApi.setAllUserInvoices();
+    this.userInvoicesDetails =
+      this._userInvoicesServiceApi.getAllUserInvoiceData();
 
-    //Get a "list" of all saved user invoices
-    // this._userInvoicesServiceApi.allUserInvoices$.subscribe((userInvoices) => {
-    //   if (userInvoices !== null) {
-    //     this.isLoading = false;
-    //     this.allUserInvoices = userInvoices;
-    //   }
-    // });
 
     this.actionItems = [
       {
@@ -91,7 +94,9 @@ export class UserInvoicesPageComponent implements OnInit {
         label: "Delete",
         icon: "pi pi-trash",
         command: () => {
-          this._userInvoicesServiceApi.deleteInvoice(this._dropdownSelectedInvoice);
+          this._userInvoicesServiceApi.deleteInvoice(
+            this._dropdownSelectedInvoice
+          );
           //Our user invoice data needs to be refreshed, as the user has just deleted and invoice
           this._refreshComponent();
         },
@@ -103,56 +108,56 @@ export class UserInvoicesPageComponent implements OnInit {
         label: "Issued",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Issued");
-        }
+        },
       },
       {
         label: "Paid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Paid");
-        }
+        },
       },
       {
         label: "Unpaid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Unpaid");
-        }
+        },
       },
       {
         label: "Overdue",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Overdue");
-        }
+        },
       },
       {
         label: "Canceled",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Canceled");
-        }
+        },
       },
       {
         label: "Partially Paid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Partially Paid");
-        }
+        },
       },
       {
         label: "Pending",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Pending");
-        }
+        },
       },
       {
         label: "Refunded",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Refunded");
-        }
+        },
       },
       {
         label: "Approved",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, "Approved");
-        }
-      }
+        },
+      },
     ];
   }
 
@@ -161,9 +166,8 @@ export class UserInvoicesPageComponent implements OnInit {
     this.ngOnInit();
   }
 
-  private _updateInvoiceStatus(_invoiceId: string, _status: string):void{
-    return
-   // this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
+  private _updateInvoiceStatus(_invoiceId: string, _status: string): void {
+    return;
+    // this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
   }
-
 }

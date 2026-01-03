@@ -28,6 +28,21 @@ interface FormConfig {
   body: ReadonlyArray<InputField>;
 }
 
+export interface InvoiceField {
+  id: string;
+  label: string;
+  placeholder: string;
+  inputType: "text" | "date";
+  style: string;
+  column: "left" | "right";
+}
+
+export interface InvoiceFieldsConfig {
+  header: InvoiceField[];
+  body: InvoiceField[];
+}
+
+
 const invoiceConfig: FormConfig = {
   header: [
     {
@@ -228,14 +243,14 @@ export interface FormInputField {
 })
 export class InvoiceEditorPageComponent implements OnInit {
   public invoiceFormGroup: FormGroup<InvoiceFormGroup>;
-  
+
   constructor(public invoiceEditModeState: InvoiceEditModeState) {
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({
-        id: new FormControl(null),
+        id: new FormControl("_invoice" + crypto.randomUUID()),
         status: new FormControl(null),
         documentName: new FormControl(null),
-        currency: new FormControl("zl"),
+        currency: new FormControl("zł"),
       }),
       header: new FormArray<FormGroup>([]),
       headerImage: new FormControl(null),
@@ -296,6 +311,7 @@ export class InvoiceEditorPageComponent implements OnInit {
     // Convert key string into what key for what object
     const invoiceFormKey = `${key}` as keyof InvoiceFormGroup;
     const invoiceConfigKey = `${key}` as keyof FormConfig;
+
 
     const invoiceFormGroupFormArray = this.invoiceFormGroup.get(
       invoiceFormKey

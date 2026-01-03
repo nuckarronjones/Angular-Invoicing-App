@@ -1,4 +1,4 @@
-<ng-container *ngIf="isLoading; else userInvoices">
+<ng-container *ngIf="false; else userInvoices">
   <div class="spinner-container">
     <p-progressSpinner></p-progressSpinner>
   </div>
@@ -15,7 +15,7 @@
       (click)="createNewInvoice()"
     />
   </div>
-  <p-table *ngIf="allUserInvoices" [value]="allUserInvoices">
+  <p-table *ngIf="userInvoicesDetails != null" [value]="userInvoicesDetails">
     <ng-template pTemplate="header">
       <tr>
         <th>Invoice No.</th>
@@ -23,22 +23,22 @@
         <th>Date Due</th>
         <th>Amount</th>
         <th>Client</th>
-        <th class="centered-header">Status</th>
-        <th class="centered-header">Actions</th>
+        <th>Status</th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-userInvoice>
       <tr>
-        <ng-container *ngIf="userInvoice.invoice?.form as form">
-          <td>{{ form.invoiceNo }}</td>
-          <td>{{ form.invoiceDate }}</td>
-          <td>{{ form.invoiceDueDate }}</td>
+        <ng-container>
+          <td>{{ userInvoice.invoiceNo }}</td>
+          <td>{{ userInvoice.invoiceDate }}</td>
+          <td>{{ userInvoice.invoiceDueDate }}</td>
           <td>
             {{
-              userInvoice.invoice.totals.grossTotal + " " + userInvoice.currency
+              userInvoice.grossTotal + " " + userInvoice.currency
             }}
           </td>
-          <td>{{ form.buyer }}</td>
+          <td>{{ userInvoice.buyer }}</td>
           <td>
             <div class="dropdown-cell">
               <p-dropdown
@@ -76,5 +76,5 @@
         </ng-container>
       </tr>
     </ng-template>
-  </p-table>
+  </p-table> 
 </ng-template>

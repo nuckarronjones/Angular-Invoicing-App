@@ -3,8 +3,11 @@ import { Injectable } from "@angular/core";
 // import { DocumentData } from "../../enums/invoice-document.enum";
 // import { documentData } from "../../models/document-data.model";
 // import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
-import { InvoiceFormGroup } from "../../pages/invoice-editor-page/invoice-editor-page.component";
+import {
+  InvoiceFormGroup,
+} from "../../pages/invoice-editor-page/invoice-editor-page.component";
 import { FormGroup } from "@angular/forms";
+import { InvoiceDetails } from "../../pages/user-invoices-page/user-invoices-page.component";
 
 export interface InvoiceDataOutput {
   metaData: InvoiceMetaData;
@@ -47,19 +50,34 @@ export interface InvoiceFooter {
   providedIn: "root",
 })
 export class UserInvoicesServiceApi {
+  private _invoicesKeyIdentifier = "_invoice";
+
   // private _allUserInvoices = new BehaviorSubject<null | DocumentData[]>(null);
   // public allUserInvoices$ = this._allUserInvoices.asObservable();
 
   // private _currentInvoice = new BehaviorSubject<null | DocumentData>(null);
   // public currentInvoice$ = this._currentInvoice.asObservable();
 
-  // public setAllUserInvoices(searchKey: string = "_invoice") {
-  //   const invoices: DocumentData[] = Object.keys(localStorage)
-  //     .filter((key) => key.startsWith(searchKey))
-  //     .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
+  public getAllUserInvoiceData(): InvoiceDetails[] {
+    const savedInvoiceData: InvoiceDataOutput[] = Object.keys(localStorage)
+      .filter((key) => key.startsWith(this._invoicesKeyIdentifier))
+      .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
 
-  //   this._allUserInvoices.next(invoices);
-  // }
+    const mappedValues: InvoiceDetails[] = savedInvoiceData.map((data) => {
+      
+      return {
+        invoiceNo: data.header.find((obj) => obj.id === "invoiceNo")?.value || "",
+        invoiceDate: data.header.find((obj) => obj.id === "invoiceDate")?.value || "",
+        invoiceDueDate: data.header.find((obj) => obj.id === "invoiceDueDate")?.value || "",
+        grossTotal: data.footer?.grossTotal || "",
+        buyer: data.body.find((obj) => obj.id === "buyer")?.value || "",
+        status: data.metaData?.status || "",
+      };
+    });
+
+    return mappedValues;
+  }
+
 
   // public setCurrentInvoiceById(invoiceId: string | null): void {
   //   const currentInvoice =
@@ -94,8 +112,6 @@ export class UserInvoicesServiceApi {
     const output = this._mapOutputObject(invoice);
 
     localStorage.setItem(invoiceId!, JSON.stringify(output));
-
-    console.log(localStorage.getItem(invoiceId!));
   }
 
   public deleteInvoice(invoiceId: string): void {
@@ -110,18 +126,20 @@ export class UserInvoicesServiceApi {
   //   return blankInvoiceDeepCopy;
   // }
 
-  private _mapOutputObject(invoice: FormGroup<InvoiceFormGroup>): InvoiceDataOutput {
+  private _mapOutputObject(
+    invoice: FormGroup<InvoiceFormGroup>
+  ): InvoiceDataOutput {
     return {
       metaData: {
         id: invoice.controls.metaData.controls.id.value,
         status: invoice.controls.metaData.controls.status.value,
         documentName: invoice.controls.metaData.controls.documentName.value,
-        currency: invoice.controls.metaData.controls.currency.value,
+        currency: "zł",
       },
 
       header: invoice.controls.header.controls.map((fg) => {
         return {
-          id: fg.controls.value.value,
+          id: fg.controls.id.value,
           value: fg.controls.value.value,
         };
       }),
@@ -130,7 +148,7 @@ export class UserInvoicesServiceApi {
 
       body: invoice.controls.body.controls.map((fg) => {
         return {
-          id: fg.controls.value.value,
+          id: fg.controls.id.value,
           value: fg.controls.value.value,
         };
       }),
@@ -148,9 +166,9 @@ export class UserInvoicesServiceApi {
       }),
 
       footer: {
-        netTotal: invoice.controls.footer.controls.netTotal.value,
-        vatTotal: invoice.controls.footer.controls.vatTotal.value,
-        grossTotal: invoice.controls.footer.controls.grossTotal.value,
+        netTotal: invoice.controls.footer.controls.netTotal.value ?? "0",
+        vatTotal: invoice.controls.footer.controls.vatTotal.value ?? "0",
+        grossTotal: invoice.controls.footer.controls.grossTotal.value ?? "0",
       },
     };
   }
