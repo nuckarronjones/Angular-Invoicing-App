@@ -12,7 +12,7 @@ import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
 import { DropdownModule } from "primeng/dropdown";
 
 export interface InvoiceDetails {
-  invoiceId: string | number | null;
+  invoiceId: string;
   invoiceNo: string;
   invoiceDate: string;
   invoiceDueDate: string;
