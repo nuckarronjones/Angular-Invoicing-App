@@ -12,12 +12,26 @@ import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
 import { DropdownModule } from "primeng/dropdown";
 
 export interface InvoiceDetails {
+  invoiceId: string | number | null;
   invoiceNo: string;
   invoiceDate: string;
   invoiceDueDate: string;
   grossTotal: string;
   buyer: string;
   status: string;
+  currency: string;
+}
+
+export enum InvoiceStatus {
+  Issued = "Issued",
+  Paid = "Paid",
+  Unpaid = "Unpaid",
+  Overdue = "Overdue",
+  Canceled = "Canceled",
+  PartiallyPaid = "Partially Paid",
+  Pending = "Pending",
+  Refunded = "Refunded",
+  Approved = "Approved",
 }
 
 @Component({
@@ -64,8 +78,7 @@ export class UserInvoicesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInvoicesDetails =
-      this._userInvoicesServiceApi.getAllUserInvoiceData();
-
+      this._userInvoicesServiceApi.loadAllSavedInvoices();
 
     this.actionItems = [
       {
@@ -105,57 +118,57 @@ export class UserInvoicesPageComponent implements OnInit {
 
     this.statusItems = [
       {
-        label: "Issued",
+        label: InvoiceStatus.Issued,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Issued");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Issued);
         },
       },
       {
-        label: "Paid",
+        label: InvoiceStatus.Paid,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Paid");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Paid);
         },
       },
       {
-        label: "Unpaid",
+        label: InvoiceStatus.Unpaid,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Unpaid");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Unpaid);
         },
       },
       {
-        label: "Overdue",
+        label: InvoiceStatus.Overdue,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Overdue");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Overdue);
         },
       },
       {
-        label: "Canceled",
+        label: InvoiceStatus.Canceled,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Canceled");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Canceled);
         },
       },
       {
-        label: "Partially Paid",
+        label: InvoiceStatus.PartiallyPaid,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Partially Paid");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.PartiallyPaid);
         },
       },
       {
-        label: "Pending",
+        label: InvoiceStatus.Pending,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Pending");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Pending);
         },
       },
       {
-        label: "Refunded",
+        label: InvoiceStatus.Refunded,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Refunded");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Refunded);
         },
       },
       {
-        label: "Approved",
+        label: InvoiceStatus.Approved,
         command: (invoiceId: string) => {
-          this._updateInvoiceStatus(invoiceId, "Approved");
+          this._updateInvoiceStatus(invoiceId, InvoiceStatus.Approved);
         },
       },
     ];
@@ -166,8 +179,7 @@ export class UserInvoicesPageComponent implements OnInit {
     this.ngOnInit();
   }
 
-  private _updateInvoiceStatus(_invoiceId: string, _status: string): void {
-    return;
-    // this._userInvoicesServiceApi.setInvoiceStatus(invoiceId, status);
+  private _updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus): void {
+    this._userInvoicesServiceApi.updateInvoiceStatus(invoiceId, newStatus);
   }
 }

@@ -42,7 +42,6 @@ export interface InvoiceFieldsConfig {
   body: InvoiceField[];
 }
 
-
 const invoiceConfig: FormConfig = {
   header: [
     {
@@ -196,7 +195,7 @@ export interface InvoiceFormGroup {
 }
 
 export interface DocumentMetaDataFormGroup {
-  id: FormControl<string | null>;
+  id: FormControl<string>;
   status: FormControl<string | null>;
   documentName: FormControl<string | null>;
   currency: FormControl<string | null>;
@@ -247,7 +246,9 @@ export class InvoiceEditorPageComponent implements OnInit {
   constructor(public invoiceEditModeState: InvoiceEditModeState) {
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({
-        id: new FormControl("_invoice" + crypto.randomUUID()),
+        id: new FormControl("_invoice" + crypto.randomUUID(), {
+          nonNullable: true,
+        }),
         status: new FormControl(null),
         documentName: new FormControl(null),
         currency: new FormControl("zł"),
@@ -311,7 +312,6 @@ export class InvoiceEditorPageComponent implements OnInit {
     // Convert key string into what key for what object
     const invoiceFormKey = `${key}` as keyof InvoiceFormGroup;
     const invoiceConfigKey = `${key}` as keyof FormConfig;
-
 
     const invoiceFormGroupFormArray = this.invoiceFormGroup.get(
       invoiceFormKey

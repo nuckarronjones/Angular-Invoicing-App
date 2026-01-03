@@ -45,10 +45,10 @@
                 [style]="{ width: '170px' }"
                 [options]="statusItems"
                 appendTo="body"
-                [placeholder]="userInvoice.status !=='' ? userInvoice.status : 'Select Status'"
+                [placeholder]="userInvoice.status !== '' ? userInvoice.status : 'Select Status'"
               >
                 <ng-template let-item pTemplate="item">
-                  <div (click)="item.command ? item.command(userInvoice.id) : null">
+                  <div (click)="item.command ? item.command(userInvoice.invoiceId) : null">
                     {{ item.label }}
                   </div>
                 </ng-template>

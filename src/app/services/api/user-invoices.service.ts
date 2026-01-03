@@ -3,11 +3,12 @@ import { Injectable } from "@angular/core";
 // import { DocumentData } from "../../enums/invoice-document.enum";
 // import { documentData } from "../../models/document-data.model";
 // import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
-import {
-  InvoiceFormGroup,
-} from "../../pages/invoice-editor-page/invoice-editor-page.component";
+import { InvoiceFormGroup } from "../../pages/invoice-editor-page/invoice-editor-page.component";
 import { FormGroup } from "@angular/forms";
-import { InvoiceDetails } from "../../pages/user-invoices-page/user-invoices-page.component";
+import {
+  InvoiceDetails,
+  InvoiceStatus,
+} from "../../pages/user-invoices-page/user-invoices-page.component";
 
 export interface InvoiceDataOutput {
   metaData: InvoiceMetaData;
@@ -19,8 +20,8 @@ export interface InvoiceDataOutput {
 }
 
 export interface InvoiceMetaData {
-  id: string | number | null;
-  status: string | null;
+  id: string;
+  status: InvoiceStatus | null;
   documentName: string | null;
   currency: string | null;
 }
@@ -51,33 +52,37 @@ export interface InvoiceFooter {
 })
 export class UserInvoicesServiceApi {
   private _invoicesKeyIdentifier = "_invoice";
+  private _allUserInvoices: InvoiceDataOutput[] = [];
 
-  // private _allUserInvoices = new BehaviorSubject<null | DocumentData[]>(null);
-  // public allUserInvoices$ = this._allUserInvoices.asObservable();
-
-  // private _currentInvoice = new BehaviorSubject<null | DocumentData>(null);
-  // public currentInvoice$ = this._currentInvoice.asObservable();
-
-  public getAllUserInvoiceData(): InvoiceDetails[] {
+  public loadAllSavedInvoices(): InvoiceDetails[] {
     const savedInvoiceData: InvoiceDataOutput[] = Object.keys(localStorage)
       .filter((key) => key.startsWith(this._invoicesKeyIdentifier))
       .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
 
-    const mappedValues: InvoiceDetails[] = savedInvoiceData.map((data) => {
-      
-      return {
-        invoiceNo: data.header.find((obj) => obj.id === "invoiceNo")?.value || "",
-        invoiceDate: data.header.find((obj) => obj.id === "invoiceDate")?.value || "",
-        invoiceDueDate: data.header.find((obj) => obj.id === "invoiceDueDate")?.value || "",
-        grossTotal: data.footer?.grossTotal || "",
-        buyer: data.body.find((obj) => obj.id === "buyer")?.value || "",
-        status: data.metaData?.status || "",
-      };
-    });
+    if (savedInvoiceData) {
+      this._allUserInvoices = savedInvoiceData;
 
-    return mappedValues;
+      const mappedValues: InvoiceDetails[] = savedInvoiceData.map((data) => {
+        return {
+          invoiceId: data.metaData.id,
+          invoiceNo:
+            data.header.find((obj) => obj.id === "invoiceNo")?.value || "",
+          invoiceDate:
+            data.header.find((obj) => obj.id === "invoiceDate")?.value || "",
+          invoiceDueDate:
+            data.header.find((obj) => obj.id === "invoiceDueDate")?.value || "",
+          grossTotal: data.footer?.grossTotal || "",
+          buyer: data.body.find((obj) => obj.id === "buyer")?.value || "",
+          status: data.metaData?.status || "",
+          currency: data.metaData?.currency || "",
+        };
+      });
+
+      return mappedValues;
+    } else {
+      return [];
+    }
   }
-
 
   // public setCurrentInvoiceById(invoiceId: string | null): void {
   //   const currentInvoice =
@@ -92,26 +97,27 @@ export class UserInvoicesServiceApi {
   //   this._currentInvoice.next(this._generateNewInvoice());
   // }
 
-  // public setInvoiceStatus(invoiceId: string, status: string) {
-  //   console.log(invoiceId, status);
-  //   const currentInvoice =
-  //     this._allUserInvoices.value?.find(
-  //       (invoice) => invoice.id === invoiceId
-  //     ) || null;
+  public updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus) {
+    const currentInvoice =
+      this._allUserInvoices.find(
+        (invoice) => invoice.metaData.id === invoiceId
+      ) || null;
 
-  //   if (currentInvoice) {
-  //     currentInvoice.status = status;
+    if (invoiceId && currentInvoice) {
+      currentInvoice.metaData.status = newStatus;
 
-  //     this.saveInvoice(invoiceId, currentInvoice);
-  //   }
-  // }
+      localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+    }
+  }
 
   public saveInvoice(invoice: FormGroup<InvoiceFormGroup>): void {
     const invoiceId = invoice.controls.metaData.controls.id.value;
 
-    const output = this._mapOutputObject(invoice);
+    if (invoiceId && invoice) {
+      const output = this._mapOutputObject(invoice);
 
-    localStorage.setItem(invoiceId!, JSON.stringify(output));
+      localStorage.setItem(invoiceId, JSON.stringify(output));
+    }
   }
 
   public deleteInvoice(invoiceId: string): void {
@@ -126,13 +132,11 @@ export class UserInvoicesServiceApi {
   //   return blankInvoiceDeepCopy;
   // }
 
-  private _mapOutputObject(
-    invoice: FormGroup<InvoiceFormGroup>
-  ): InvoiceDataOutput {
+  private _mapOutputObject(invoice: FormGroup<InvoiceFormGroup>): InvoiceDataOutput {
     return {
       metaData: {
         id: invoice.controls.metaData.controls.id.value,
-        status: invoice.controls.metaData.controls.status.value,
+        status: "Issued" as InvoiceStatus,
         documentName: invoice.controls.metaData.controls.documentName.value,
         currency: "zł",
       },
