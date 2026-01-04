@@ -12,7 +12,8 @@ bootstrapApplication(AppComponent, {
     ...appConfig.providers, 
     provideAnimations(),
     provideRouter([
-      { path: 'invoices', component: InvoiceEditorPageComponent },
+      { path: 'invoice/new', component: InvoiceEditorPageComponent },
+      { path: 'invoice', component: InvoiceEditorPageComponent },
       { path: 'invoice/:id', component: InvoiceEditorPageComponent },
       { path: '', component: UserInvoicesPageComponent },
       { path: '**', redirectTo: '' } 

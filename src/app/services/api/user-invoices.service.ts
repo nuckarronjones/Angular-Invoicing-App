@@ -76,6 +76,10 @@ export class UserInvoicesServiceApi {
     });
   }
 
+  public getInvoiceById(id: string): InvoiceDataOutput | null{
+    return this._allUserInvoices.find((inv)=> inv.metaData.id === id) ?? null;
+  }
+
   public updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus) {
     const savedInvoice =
       this._allUserInvoices.find(
@@ -112,18 +116,18 @@ export class UserInvoicesServiceApi {
     }
   }
 
-  private _postInvoice(invoice: InvoiceDataOutput, id: string): void {
-    const cacheInvoiceIndex = this._allUserInvoices.indexOf(invoice);
+  private _postInvoice(updatedInvoice: InvoiceDataOutput, id: string): void {
+    const cacheInvoiceIndex = this._allUserInvoices.findIndex((inv)=> inv.metaData.id === updatedInvoice.metaData.id);
 
     // Update cache
     if (cacheInvoiceIndex !== -1) {
       this._allUserInvoices.splice(cacheInvoiceIndex, 1);
     }
 
-    this._allUserInvoices.push(invoice);
+    this._allUserInvoices.push(updatedInvoice);
 
     // Update invoice in storage
-    localStorage.setItem(id, JSON.stringify(invoice));
+    localStorage.setItem(id, JSON.stringify(updatedInvoice));
   }
 
   private _loadAllInvoiceData(): void {

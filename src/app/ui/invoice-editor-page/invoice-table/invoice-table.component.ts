@@ -13,8 +13,7 @@ import {
 } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { FormTableGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
-import { calculateTotals } from "../../../shared/functions/calculate-totals";
-import { createTableFormGroup } from "../../../shared/functions/create-table-form-group";
+import { createTableFormRowGroup } from "../../../shared/functions/create-table-form-group";
 
 export interface FormTableValue {
   item: string | null;
@@ -62,15 +61,9 @@ export class InvoiceEditorTableComponent{
     this.checkRowValidations = true;
 
     if(!this.invoiceTableForm.invalid){
-      const newRow = createTableFormGroup();
+      const newRow = createTableFormRowGroup();
 
       this.invoiceTableForm.push(newRow);
-
-      newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
-        const { totalNet, totalGross } = calculateTotals(row);
-
-        newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
-      });
 
       this.checkRowValidations = false;
     }

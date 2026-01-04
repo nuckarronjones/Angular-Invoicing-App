@@ -7,12 +7,13 @@ import { CommonModule } from "@angular/common";
 import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { FormTableValue } from "../../ui/invoice-editor-page/invoice-table/invoice-table.component";
+import { calculateOverallTotals } from "../../shared/functions/calculate-totals";
+import { ActivatedRoute } from "@angular/router";
 import {
-  calculateOverallTotals,
-  calculateTotals,
-} from "../../shared/functions/calculate-totals";
-import { createTableFormGroup } from "../../shared/functions/create-table-form-group";
+  InvoiceDataOutput,
+  UserInvoicesServiceApi,
+} from "../../services/api/user-invoices.service";
+import { createTableFormRowGroup } from "../../shared/functions/create-table-form-group";
 
 interface InputField {
   id: string;
@@ -241,12 +242,40 @@ export interface FormInputField {
   styleUrl: "./invoice-editor-page.component.scss",
 })
 export class InvoiceEditorPageComponent implements OnInit {
-  public invoiceFormGroup: FormGroup<InvoiceFormGroup>;
+  public invoiceFormGroup!: FormGroup<InvoiceFormGroup>;
 
-  constructor(public invoiceEditModeState: InvoiceEditModeState) {
+  private _currentInvoice: InvoiceDataOutput | null = null;
+
+  constructor(
+    public invoiceEditModeState: InvoiceEditModeState,
+    private _activatedRoute: ActivatedRoute,
+    private _userInvoicesServiceApi: UserInvoicesServiceApi
+  ) {}
+
+  ngOnInit(): void {
+    this._activatedRoute.queryParamMap.subscribe((params) => {
+      const currentInvoiceId = params.get("id");
+
+      this._currentInvoice = currentInvoiceId
+        ? this._userInvoicesServiceApi.getInvoiceById(currentInvoiceId)
+        : null;
+
+      this._initilizeInvoice();
+
+      this._initilizeFormInputFields();
+
+      this._listenToChangesToRecalculateTotals();
+    });
+  }
+
+  private _initilizeInvoice(): void {
+    const invoiceId = this._currentInvoice
+      ? this._currentInvoice.metaData.id
+      : "_invoice" + crypto.randomUUID();
+
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({
-        id: new FormControl("_invoice" + crypto.randomUUID(), {
+        id: new FormControl(invoiceId, {
           nonNullable: true,
         }),
         status: new FormControl(null),
@@ -265,18 +294,6 @@ export class InvoiceEditorPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this._createInvoiceFormGroup();
-  }
-
-  private _createInvoiceFormGroup(): void {
-    this._initilizeTableInputFields();
-
-    this._initilizeFormInputFields();
-
-    this._listenToChangesToRecalculateTotals();
-  }
-
   private _listenToChangesToRecalculateTotals(): void {
     this.invoiceFormGroup.controls.invoiceTable.valueChanges.subscribe(() => {
       const { netTotal, vatTotal, grossTotal } = calculateOverallTotals(
@@ -290,38 +307,49 @@ export class InvoiceEditorPageComponent implements OnInit {
     });
   }
 
-  private _initilizeTableInputFields(): void {
-    const newRow = createTableFormGroup();
-
-    this.invoiceFormGroup.controls.invoiceTable.push(newRow);
-
-    newRow.valueChanges.subscribe((row: Partial<FormTableValue>) => {
-      const { totalNet, totalGross } = calculateTotals(row);
-
-      newRow.patchValue({ totalNet, totalGross }, { emitEvent: false });
-    });
-  }
-
   private _initilizeFormInputFields(): void {
     Object.keys(invoiceConfig).forEach((section) => {
       this._createInputFields(section);
     });
+
+    this._initilizeTableInputFields();
+  }
+
+  private _initilizeTableInputFields(): void {
+    if (this._currentInvoice) {
+      this._currentInvoice.invoiceTable.forEach((row) => {
+        this.invoiceFormGroup.controls.invoiceTable.push(
+          createTableFormRowGroup(row)
+        );
+      });
+    } else {
+      this.invoiceFormGroup.controls.invoiceTable.push(
+        createTableFormRowGroup()
+      );
+    }
   }
 
   private _createInputFields(key: string): void {
     // Convert key string into what key for what object
     const invoiceFormKey = `${key}` as keyof InvoiceFormGroup;
-    const invoiceConfigKey = `${key}` as keyof FormConfig;
+    const invoiceSectionKey = `${key}` as keyof FormConfig;
 
     const invoiceFormGroupFormArray = this.invoiceFormGroup.get(
       invoiceFormKey
     ) as FormArray;
 
-    (invoiceConfig[invoiceConfigKey] as InputField[]).forEach((inputField) => {
+    const currentInvoiceSection =
+      this._currentInvoice?.[invoiceSectionKey] ?? [];
+
+    const valueMap = new Map(
+      currentInvoiceSection.map((field) => [field.id, field.value])
+    );
+
+    (invoiceConfig[invoiceSectionKey] as InputField[]).forEach((inputField) => {
       invoiceFormGroupFormArray.push(
         new FormGroup({
           id: new FormControl({ value: inputField.id, disabled: true }),
-          value: new FormControl("test"),
+          value: new FormControl(valueMap.get(inputField.id) ?? ""),
           label: new FormControl({ value: inputField.label, disabled: true }),
           placeholder: new FormControl(inputField.placeholder),
           inputType: new FormControl({

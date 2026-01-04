@@ -73,12 +73,11 @@ export class UserInvoicesPageComponent implements OnInit {
   public createNewInvoice(): void {
     this._invoiceEditModeState.setEditMode(true);
 
-    this._router.navigate([`/invoices`]);
+    this._router.navigate([`/invoice/new`]);
   }
 
   ngOnInit(): void {
-    this.userInvoicesDetails =
-      this._userInvoicesServiceApi.getInvoiceDetails();
+    this.userInvoicesDetails = this._userInvoicesServiceApi.getInvoiceDetails();
 
     this.actionItems = [
       {
@@ -86,10 +85,7 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-pencil",
         command: () => {
           this._invoiceEditModeState.setEditMode(true);
-          // this._userInvoicesServiceApi.setCurrentInvoiceById(
-          //   this._dropdownSelectedInvoice
-          // );
-          this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
+          this._setInvoiceURL();
         },
       },
       {
@@ -97,10 +93,7 @@ export class UserInvoicesPageComponent implements OnInit {
         icon: "pi pi-search",
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
-          // this._userInvoicesServiceApi.setCurrentInvoiceById(
-          //   this._dropdownSelectedInvoice
-          // );
-          this._router.navigate([`/invoice/${this._dropdownSelectedInvoice}`]);
+          this._setInvoiceURL();
         },
       },
       {
@@ -174,12 +167,21 @@ export class UserInvoicesPageComponent implements OnInit {
     ];
   }
 
+  private _setInvoiceURL(): void {
+    this._router.navigate(["/invoice"], {
+      queryParams: { id: this._dropdownSelectedInvoice },
+    });
+  }
+
   private _refreshComponent(): void {
     this.isLoading = true;
     this.ngOnInit();
   }
 
-  private _updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus): void {
+  private _updateInvoiceStatus(
+    invoiceId: string,
+    newStatus: InvoiceStatus
+  ): void {
     this._userInvoicesServiceApi.updateInvoiceStatus(invoiceId, newStatus);
   }
 }
