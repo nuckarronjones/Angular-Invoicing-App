@@ -54,85 +54,87 @@ export class UserInvoicesServiceApi {
   private _invoicesKeyIdentifier = "_invoice";
   private _allUserInvoices: InvoiceDataOutput[] = [];
 
-  public loadAllSavedInvoices(): InvoiceDetails[] {
-    const savedInvoiceData: InvoiceDataOutput[] = Object.keys(localStorage)
-      .filter((key) => key.startsWith(this._invoicesKeyIdentifier))
-      .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
-
-    if (savedInvoiceData) {
-      this._allUserInvoices = savedInvoiceData;
-
-      const mappedValues: InvoiceDetails[] = savedInvoiceData.map((data) => {
-        return {
-          invoiceId: data.metaData.id,
-          invoiceNo:
-            data.header.find((obj) => obj.id === "invoiceNo")?.value || "",
-          invoiceDate:
-            data.header.find((obj) => obj.id === "invoiceDate")?.value || "",
-          invoiceDueDate:
-            data.header.find((obj) => obj.id === "invoiceDueDate")?.value || "",
-          grossTotal: data.footer?.grossTotal || "",
-          buyer: data.body.find((obj) => obj.id === "buyer")?.value || "",
-          status: data.metaData?.status || "",
-          currency: data.metaData?.currency || "",
-        };
-      });
-
-      return mappedValues;
-    } else {
-      return [];
-    }
+  constructor() {
+    this._loadAllInvoiceData();
   }
 
-  // public setCurrentInvoiceById(invoiceId: string | null): void {
-  //   const currentInvoice =
-  //     this._allUserInvoices.value?.find(
-  //       (invoice) => invoice.id === invoiceId
-  //     ) || null;
-
-  //   this._currentInvoice.next(currentInvoice);
-  // }
-
-  // public setNewCurrentInvoice(): void {
-  //   this._currentInvoice.next(this._generateNewInvoice());
-  // }
+  public getInvoiceDetails(): InvoiceDetails[] {
+    return this._allUserInvoices.map((data) => {
+      return {
+        invoiceId: data.metaData.id,
+        invoiceNo:
+          data.header.find((obj) => obj.id === "invoiceNo")?.value || "",
+        invoiceDate:
+          data.header.find((obj) => obj.id === "invoiceDate")?.value || "",
+        invoiceDueDate:
+          data.header.find((obj) => obj.id === "invoiceDueDate")?.value || "",
+        grossTotal: data.footer?.grossTotal || "",
+        buyer: data.body.find((obj) => obj.id === "buyer")?.value || "",
+        status: data.metaData?.status || "",
+        currency: data.metaData?.currency || "",
+      };
+    });
+  }
 
   public updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus) {
-    const currentInvoice =
+    const savedInvoice =
       this._allUserInvoices.find(
         (invoice) => invoice.metaData.id === invoiceId
       ) || null;
 
-    if (invoiceId && currentInvoice) {
-      currentInvoice.metaData.status = newStatus;
+    if (savedInvoice) {
+      savedInvoice.metaData.status = newStatus;
 
-      localStorage.setItem(invoiceId, JSON.stringify(currentInvoice));
+      this._postInvoice(savedInvoice, invoiceId);
     }
   }
 
   public saveInvoice(invoice: FormGroup<InvoiceFormGroup>): void {
-    const invoiceId = invoice.controls.metaData.controls.id.value;
+    if (invoice) {
+      const invoiceId = invoice.controls.metaData.controls.id.value;
+      const formattedInvoice = this._mapOutputObject(invoice);
 
-    if (invoiceId && invoice) {
-      const output = this._mapOutputObject(invoice);
-
-      localStorage.setItem(invoiceId, JSON.stringify(output));
+      this._postInvoice(formattedInvoice, invoiceId);
     }
   }
 
   public deleteInvoice(invoiceId: string): void {
-    localStorage.removeItem(invoiceId);
+    const cacheIndexToRemove = this._allUserInvoices.findIndex(
+      (inv) => inv.metaData.id === invoiceId
+    );
+
+    if (cacheIndexToRemove !== -1) {
+      // Update cache
+      this._allUserInvoices.splice(cacheIndexToRemove, 1);
+
+      // Update local storage
+      localStorage.removeItem(invoiceId);
+    }
   }
 
-  // private _generateNewInvoice(): DocumentData {
-  //   const blankInvoiceDeepCopy = JSON.parse(JSON.stringify(documentData));
+  private _postInvoice(invoice: InvoiceDataOutput, id: string): void {
+    const cacheInvoiceIndex = this._allUserInvoices.indexOf(invoice);
 
-  //   blankInvoiceDeepCopy.id = generateNewInvoiceId();
+    // Update cache
+    if (cacheInvoiceIndex !== -1) {
+      this._allUserInvoices.splice(cacheInvoiceIndex, 1);
+    }
 
-  //   return blankInvoiceDeepCopy;
-  // }
+    this._allUserInvoices.push(invoice);
 
-  private _mapOutputObject(invoice: FormGroup<InvoiceFormGroup>): InvoiceDataOutput {
+    // Update invoice in storage
+    localStorage.setItem(id, JSON.stringify(invoice));
+  }
+
+  private _loadAllInvoiceData(): void {
+    this._allUserInvoices = Object.keys(localStorage)
+      .filter((key) => key.startsWith(this._invoicesKeyIdentifier))
+      .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
+  }
+
+  private _mapOutputObject(
+    invoice: FormGroup<InvoiceFormGroup>
+  ): InvoiceDataOutput {
     return {
       metaData: {
         id: invoice.controls.metaData.controls.id.value,

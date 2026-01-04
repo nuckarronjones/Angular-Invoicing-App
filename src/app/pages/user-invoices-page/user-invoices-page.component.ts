@@ -78,7 +78,7 @@ export class UserInvoicesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInvoicesDetails =
-      this._userInvoicesServiceApi.loadAllSavedInvoices();
+      this._userInvoicesServiceApi.getInvoiceDetails();
 
     this.actionItems = [
       {
