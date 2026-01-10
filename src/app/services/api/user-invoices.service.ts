@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
-// import { BehaviorSubject } from "rxjs";
-// import { DocumentData } from "../../enums/invoice-document.enum";
-// import { documentData } from "../../models/document-data.model";
-// import { generateNewInvoiceId } from "../../functions/generate-invoice-id";
+import { fileToBase64 } from "../../shared/convert-file";
 import { InvoiceFormGroup } from "../../pages/invoice-editor-page/invoice-editor-page.component";
 import { FormGroup } from "@angular/forms";
 import {
@@ -13,7 +10,7 @@ import {
 export interface InvoiceDataOutput {
   metaData: InvoiceMetaData;
   header: InvoiceField[];
-  headerImage: File | null;
+  headerImage: string | null;
   body: InvoiceField[];
   invoiceTable: InvoiceTableRow[];
   footer: InvoiceFooter;
@@ -76,8 +73,8 @@ export class UserInvoicesServiceApi {
     });
   }
 
-  public getInvoiceById(id: string): InvoiceDataOutput | null{
-    return this._allUserInvoices.find((inv)=> inv.metaData.id === id) ?? null;
+  public getInvoiceById(id: string): InvoiceDataOutput | null {
+    return this._allUserInvoices.find((inv) => inv.metaData.id === id) ?? null;
   }
 
   public updateInvoiceStatus(invoiceId: string, newStatus: InvoiceStatus) {
@@ -93,10 +90,10 @@ export class UserInvoicesServiceApi {
     }
   }
 
-  public saveInvoice(invoice: FormGroup<InvoiceFormGroup>): void {
+  public async saveInvoice(invoice: FormGroup<InvoiceFormGroup>): Promise<void> {
     if (invoice) {
       const invoiceId = invoice.controls.metaData.controls.id.value;
-      const formattedInvoice = this._mapOutputObject(invoice);
+      const formattedInvoice = await  this._mapOutputObject(invoice);
 
       this._postInvoice(formattedInvoice, invoiceId);
     }
@@ -117,7 +114,9 @@ export class UserInvoicesServiceApi {
   }
 
   private _postInvoice(updatedInvoice: InvoiceDataOutput, id: string): void {
-    const cacheInvoiceIndex = this._allUserInvoices.findIndex((inv)=> inv.metaData.id === updatedInvoice.metaData.id);
+    const cacheInvoiceIndex = this._allUserInvoices.findIndex(
+      (inv) => inv.metaData.id === updatedInvoice.metaData.id
+    );
 
     // Update cache
     if (cacheInvoiceIndex !== -1) {
@@ -136,9 +135,11 @@ export class UserInvoicesServiceApi {
       .map((invoiceKey) => JSON.parse(localStorage[invoiceKey]));
   }
 
-  private _mapOutputObject(
+  private async _mapOutputObject(
     invoice: FormGroup<InvoiceFormGroup>
-  ): InvoiceDataOutput {
+  ): Promise<InvoiceDataOutput> {
+    const file = invoice.controls.headerImage.value;
+
     return {
       metaData: {
         id: invoice.controls.metaData.controls.id.value,
@@ -154,7 +155,7 @@ export class UserInvoicesServiceApi {
         };
       }),
 
-      headerImage: invoice.controls.headerImage.value,
+      headerImage: file ? await fileToBase64(file) : null,
 
       body: invoice.controls.body.controls.map((fg) => {
         return {

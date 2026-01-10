@@ -13,6 +13,7 @@ import {
   UserInvoicesServiceApi,
 } from "../../services/api/user-invoices.service";
 import { createTableFormRowGroup } from "../../shared/create-table-form-group";
+import { base64ToFile } from "../../shared/convert-file";
 
 interface InputField {
   id: string;
@@ -206,6 +207,7 @@ export interface DocumentMetaDataFormGroup {
   documentName: FormControl<string | null>;
   currency: FormControl<string | null>;
 }
+
 export interface FooterFormGroup {
   netTotal: FormControl<string | null>;
   vatTotal: FormControl<string | null>;
@@ -278,17 +280,25 @@ export class InvoiceEditorPageComponent implements OnInit {
       ? this._currentInvoice.metaData.id
       : "_invoice" + crypto.randomUUID();
 
+    const invoiceStatus = this._currentInvoice
+      ? this._currentInvoice.metaData.status : null;
+    
+    const headerImage = this._currentInvoice?.headerImage
+          ? base64ToFile(this._currentInvoice.headerImage)
+          : null
+
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({
         id: new FormControl(invoiceId, {
           nonNullable: true,
         }),
-        status: new FormControl(null),
+        status: new FormControl(invoiceStatus),
         documentName: new FormControl(null),
         currency: new FormControl("zł"),
       }),
       header: new FormArray<FormGroup>([]),
-      headerImage: new FormControl(null),
+      headerImage: new FormControl(headerImage
+      ),
       body: new FormArray<FormGroup>([]),
       invoiceTable: new FormArray<FormGroup>([]),
       footer: new FormGroup<FooterFormGroup>({

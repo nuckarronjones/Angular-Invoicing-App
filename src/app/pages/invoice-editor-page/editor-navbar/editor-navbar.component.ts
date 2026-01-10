@@ -47,9 +47,10 @@ export class EditorNavbarComponent implements OnInit {
   }
 
   public saveInvoice(): void {
-    this._userInvoicesServiceApi.saveInvoice(this.invoice);
-
-    this._renderStatusMessage();
+    this._userInvoicesServiceApi.saveInvoice(this.invoice)
+    .then(()=>{
+      this._renderStatusMessage();
+    });
   }
 
   private _renderStatusMessage(): void {
