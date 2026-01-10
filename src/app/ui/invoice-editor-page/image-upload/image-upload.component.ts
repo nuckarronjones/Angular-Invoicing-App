@@ -15,7 +15,6 @@ import { FormControl } from "@angular/forms";
   styleUrls: ["./image-upload.component.scss"],
 })
 export class ImageUploadComponent implements OnInit {
-  //headerImage: new FormControl(null),
   @Input({ required: true }) headerImage!: FormControl<File | null>;
   @Input({ required: true }) editMode!: boolean;
 

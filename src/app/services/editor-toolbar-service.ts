@@ -1,16 +1,9 @@
 import { Injectable } from "@angular/core";
-//import { UserInvoicesServiceApi } from "./api/user-invoices.service";
-
 @Injectable({
   providedIn: "root",
 })
 
 export class EditorToolbarService {
- // constructor( private _userInvoicesServiceApi: UserInvoicesServiceApi){}
-  
-  // public saveInvoice(invoiceId: string, currentInvoice: any): void {
-  //   this._userInvoicesServiceApi.saveInvoice(invoiceId, currentInvoice);
-  // }
 
   public printInvoice(): void {
     const printContent = document.getElementById("printable-area");

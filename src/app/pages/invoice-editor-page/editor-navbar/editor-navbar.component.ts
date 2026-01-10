@@ -1,12 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { MenubarModule } from "primeng/menubar";
 import { ButtonModule } from "primeng/button";
 import { InvoiceEditModeState } from "../../../services/toggle-edit-mode.service";
 import { EditorToolbarService } from "../../../services/editor-toolbar-service";
 import { AsyncPipe, NgIf } from "@angular/common";
-// import { documentData } from "../../../models/document-data.model";
 import { UserInvoicesServiceApi } from "../../../services/api/user-invoices.service";
-// import { DocumentData } from "../../../enums/invoice-document.enum";
 import { Message } from "primeng/api";
 import { MessagesModule } from "primeng/messages";
 import { RippleModule } from "primeng/ripple";
@@ -27,7 +25,7 @@ import { InvoiceFormGroup } from "../invoice-editor-page.component";
   templateUrl: "./editor-navbar.component.html",
   styleUrl: "./editor-navbar.component.scss",
 })
-export class EditorNavbarComponent implements OnInit {
+export class EditorNavbarComponent {
   public messages: Message[] | undefined;
 
   @Input({ required: true }) invoice!: FormGroup<InvoiceFormGroup>;
@@ -37,10 +35,6 @@ export class EditorNavbarComponent implements OnInit {
     private _editorToolbarService: EditorToolbarService,
     private _userInvoicesServiceApi: UserInvoicesServiceApi
   ) {}
-
-  ngOnInit(): void {
-
-  }
 
   public printInvoice(): void {
     this._editorToolbarService.printInvoice();

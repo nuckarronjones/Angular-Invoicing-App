@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { InvoiceEditModeState } from "../../services/toggle-edit-mode.service";
-//import { DocumentData } from "../../enums/invoice-document.enum";
 import { DropdownModule } from "primeng/dropdown";
 
 export interface InvoiceDetails {
