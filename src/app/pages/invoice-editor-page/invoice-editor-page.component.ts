@@ -7,13 +7,12 @@ import { CommonModule } from "@angular/common";
 import { AsyncPipe } from "@angular/common";
 import { NgIf } from "@angular/common";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { calculateOverallTotals } from "../../shared/functions/calculate-totals";
 import { ActivatedRoute } from "@angular/router";
 import {
   InvoiceDataOutput,
   UserInvoicesServiceApi,
 } from "../../services/api/user-invoices.service";
-import { createTableFormRowGroup } from "../../shared/functions/create-table-form-group";
+import { createTableFormRowGroup } from "../../shared/create-table-form-group";
 
 interface InputField {
   id: string;
@@ -22,6 +21,12 @@ interface InputField {
   inputType: "date" | "text";
   style: "w-100" | "w-50" | "w-50 inline-block";
   column: "left" | "right";
+}
+
+interface OverallTotals {
+  netTotal: string;
+  vatTotal: string;
+  grossTotal: string;
 }
 
 interface FormConfig {
@@ -294,9 +299,33 @@ export class InvoiceEditorPageComponent implements OnInit {
     });
   }
 
+  private _calculateOverallTotals(
+    invoiceTable: FormArray<FormGroup<FormTableGroup>>
+  ): OverallTotals {
+    let totalOverallNet = 0;
+    let totalOverallVat = 0;
+    let totalOverallGross = 0;
+
+    invoiceTable.controls.forEach((row) => {
+      totalOverallNet += row.controls.totalNet.value ?? 0;
+
+      totalOverallVat +=
+        ((row.controls.vatPercent.value ?? 0) / 100) *
+        (row.controls.totalNet.value ?? 0);
+    });
+
+    totalOverallGross = totalOverallNet + totalOverallVat;
+
+    return {
+      netTotal: totalOverallNet.toFixed(2),
+      vatTotal: totalOverallVat.toFixed(2),
+      grossTotal: totalOverallGross.toFixed(2),
+    };
+  }
+
   private _listenToChangesToRecalculateTotals(): void {
     this.invoiceFormGroup.controls.invoiceTable.valueChanges.subscribe(() => {
-      const { netTotal, vatTotal, grossTotal } = calculateOverallTotals(
+      const { netTotal, vatTotal, grossTotal } = this._calculateOverallTotals(
         this.invoiceFormGroup.controls.invoiceTable
       );
 

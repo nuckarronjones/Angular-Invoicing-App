@@ -13,7 +13,7 @@ import {
 } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { FormTableGroup } from "../../../pages/invoice-editor-page/invoice-editor-page.component";
-import { createTableFormRowGroup } from "../../../shared/functions/create-table-form-group";
+import { createTableFormRowGroup } from "../../../shared/create-table-form-group";
 
 export interface FormTableValue {
   item: string | null;
