@@ -262,9 +262,9 @@ export class InvoiceEditorPageComponent implements OnInit {
 
       this._initilizeInvoice();
 
-      this._initilizeFormInputFields();
-
       this._listenToChangesToRecalculateTotals();
+
+      this._initilizeFormInputFields();
     });
   }
 
