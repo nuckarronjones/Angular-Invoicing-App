@@ -35,20 +35,6 @@ interface FormConfig {
   body: ReadonlyArray<InputField>;
 }
 
-export interface InvoiceField {
-  id: string;
-  label: string;
-  placeholder: string;
-  inputType: "text" | "date";
-  style: string;
-  column: "left" | "right";
-}
-
-export interface InvoiceFieldsConfig {
-  header: InvoiceField[];
-  body: InvoiceField[];
-}
-
 const invoiceConfig: FormConfig = {
   header: [
     {
@@ -201,7 +187,7 @@ export interface InvoiceFormGroup {
   footer: FormGroup<FooterFormGroup>;
 }
 
-export interface DocumentMetaDataFormGroup {
+interface DocumentMetaDataFormGroup {
   id: FormControl<string>;
   status: FormControl<string | null>;
   documentName: FormControl<string | null>;
@@ -224,7 +210,7 @@ export interface FormTableGroup {
   totalGross: FormControl<number | null>;
 }
 
-export interface FormInputField {
+interface FormInputField {
   id: FormControl<string | null>;
   value: FormControl<string | null>;
   label: FormControl<string>;
@@ -281,11 +267,12 @@ export class InvoiceEditorPageComponent implements OnInit {
       : "_invoice" + crypto.randomUUID();
 
     const invoiceStatus = this._currentInvoice
-      ? this._currentInvoice.metaData.status : null;
-    
+      ? this._currentInvoice.metaData.status
+      : null;
+
     const headerImage = this._currentInvoice?.headerImage
-          ? base64ToFile(this._currentInvoice.headerImage)
-          : null
+      ? base64ToFile(this._currentInvoice.headerImage)
+      : null;
 
     this.invoiceFormGroup = new FormGroup<InvoiceFormGroup>({
       metaData: new FormGroup<DocumentMetaDataFormGroup>({
@@ -297,8 +284,7 @@ export class InvoiceEditorPageComponent implements OnInit {
         currency: new FormControl("zł"),
       }),
       header: new FormArray<FormGroup>([]),
-      headerImage: new FormControl(headerImage
-      ),
+      headerImage: new FormControl(headerImage),
       body: new FormArray<FormGroup>([]),
       invoiceTable: new FormArray<FormGroup>([]),
       footer: new FormGroup<FooterFormGroup>({
