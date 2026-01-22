@@ -15,7 +15,11 @@
       (click)="createNewInvoice()"
     />
   </div>
-  <p-table *ngIf="userInvoicesDetails != null" [value]="userInvoicesDetails">
+  <p-table
+    cy-data="invoice-preview-table"
+    *ngIf="userInvoicesDetails != null"
+    [value]="userInvoicesDetails"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Invoice No.</th>
@@ -34,21 +38,29 @@
           <td>{{ userInvoice.invoiceDate }}</td>
           <td>{{ userInvoice.invoiceDueDate }}</td>
           <td>
-            {{
-              userInvoice.grossTotal + " " + userInvoice.currency
-            }}
+            {{ userInvoice.grossTotal + " " + userInvoice.currency }}
           </td>
           <td>{{ userInvoice.buyer }}</td>
           <td>
             <div class="dropdown-cell">
               <p-dropdown
+                cy-data="status-dropdown"
                 [style]="{ width: '170px' }"
                 [options]="statusItems"
                 appendTo="body"
-                [placeholder]="userInvoice.status !== '' ? userInvoice.status : 'Select Status'"
+                [placeholder]="
+                  userInvoice.status !== ''
+                    ? userInvoice.status
+                    : 'Select Status'
+                "
               >
                 <ng-template let-item pTemplate="item">
-                  <div (click)="item.command ? item.command(userInvoice.invoiceId) : null">
+                  <div
+                    [attr.data-cy]="item.dataCy"
+                    (click)="
+                      item.command ? item.command(userInvoice.invoiceId) : null
+                    "
+                  >
                     {{ item.label }}
                   </div>
                 </ng-template>
@@ -62,8 +74,10 @@
                 [model]="actionItems"
                 [popup]="true"
                 appendTo="body"
-              />
+              >
+            </p-menu>
               <p-button
+                cy-data="action-dropdown"
                 (click)="
                   setSelectedInvoice(userInvoice.invoiceId); menu.toggle($event)
                 "
@@ -76,5 +90,5 @@
         </ng-container>
       </tr>
     </ng-template>
-  </p-table> 
+  </p-table>
 </ng-template>

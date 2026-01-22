@@ -33,6 +33,19 @@ export enum InvoiceStatus {
   Approved = "Approved",
 }
 
+interface ActionItems {
+  label: string;
+  icon: string;
+  styleClass: string;
+  command: () => void;
+}
+
+interface SatusItems {
+  label: InvoiceStatus;
+  dataCy: string;
+  command: (invoiceId: string) => void;
+}
+
 @Component({
   selector: "app-user-invoices-page",
   standalone: true,
@@ -54,13 +67,13 @@ export class UserInvoicesPageComponent implements OnInit {
   constructor(
     private _userInvoicesServiceApi: UserInvoicesServiceApi,
     private _router: Router,
-    private _invoiceEditModeState: InvoiceEditModeState
+    private _invoiceEditModeState: InvoiceEditModeState,
   ) {}
 
   public isLoading: boolean = true;
   public userInvoicesDetails: InvoiceDetails[] | null = null;
-  public actionItems: any[] = [];
-  public statusItems: any[] = [];
+  public actionItems: ActionItems[] = [];
+  public statusItems: SatusItems[] = [];
 
   private _dropdownSelectedInvoice: string = "";
 
@@ -82,6 +95,7 @@ export class UserInvoicesPageComponent implements OnInit {
       {
         label: "Edit",
         icon: "pi pi-pencil",
+        styleClass: "cy-action-edit",
         command: () => {
           this._invoiceEditModeState.setEditMode(true);
           this._setInvoiceURL();
@@ -90,6 +104,7 @@ export class UserInvoicesPageComponent implements OnInit {
       {
         label: "View",
         icon: "pi pi-search",
+        styleClass: "cy-action-view",
         command: () => {
           this._invoiceEditModeState.setEditMode(false);
           this._setInvoiceURL();
@@ -98,9 +113,10 @@ export class UserInvoicesPageComponent implements OnInit {
       {
         label: "Delete",
         icon: "pi pi-trash",
+        styleClass: "cy-action-delete",
         command: () => {
           this._userInvoicesServiceApi.deleteInvoice(
-            this._dropdownSelectedInvoice
+            this._dropdownSelectedInvoice,
           );
           //Our user invoice data needs to be refreshed, as the user has just deleted and invoice
           this._refreshComponent();
@@ -111,54 +127,63 @@ export class UserInvoicesPageComponent implements OnInit {
     this.statusItems = [
       {
         label: InvoiceStatus.Issued,
+        dataCy: "status-option-issued",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Issued);
         },
       },
       {
         label: InvoiceStatus.Paid,
+        dataCy: "status-option-paid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Paid);
         },
       },
       {
         label: InvoiceStatus.Unpaid,
+        dataCy: "status-option-unpaid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Unpaid);
         },
       },
       {
         label: InvoiceStatus.Overdue,
+        dataCy: "status-option-overdue",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Overdue);
         },
       },
       {
         label: InvoiceStatus.Canceled,
+        dataCy: "status-option-canceled",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Canceled);
         },
       },
       {
         label: InvoiceStatus.PartiallyPaid,
+        dataCy: "status-option-partially-paid",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.PartiallyPaid);
         },
       },
       {
         label: InvoiceStatus.Pending,
+        dataCy: "status-option-pending",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Pending);
         },
       },
       {
         label: InvoiceStatus.Refunded,
+        dataCy: "status-option-refunded",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Refunded);
         },
       },
       {
         label: InvoiceStatus.Approved,
+        dataCy: "status-option-approved",
         command: (invoiceId: string) => {
           this._updateInvoiceStatus(invoiceId, InvoiceStatus.Approved);
         },
@@ -179,7 +204,7 @@ export class UserInvoicesPageComponent implements OnInit {
 
   private _updateInvoiceStatus(
     invoiceId: string,
-    newStatus: InvoiceStatus
+    newStatus: InvoiceStatus,
   ): void {
     this._userInvoicesServiceApi.updateInvoiceStatus(invoiceId, newStatus);
   }
