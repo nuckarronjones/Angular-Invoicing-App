@@ -1,0 +1,97 @@
+{
+  "metaData": {
+    "id": "_invoiceccb806f6-493e-4f8c-9cf3-fc9157653349",
+    "status": "Issued",
+    "documentName": null,
+    "currency": "zł"
+  },
+  "header": [
+    {
+      "id": "invoiceNo",
+      "value": "06"
+    },
+    {
+      "id": "invoiceDate",
+      "value": "2026-01-09"
+    },
+    {
+      "id": "invoiceDueDate",
+      "value": "2026-01-15"
+    },
+    {
+      "id": "invoiceType",
+      "value": ""
+    }
+  ],
+  "headerImage": "",
+  "body": [
+    {
+      "id": "seller",
+      "value": ""
+    },
+    {
+      "id": "sellerVAT",
+      "value": ""
+    },
+    {
+      "id": "sellerStreetNo",
+      "value": ""
+    },
+    {
+      "id": "sellerPostCode",
+      "value": ""
+    },
+    {
+      "id": "sellerCity",
+      "value": ""
+    },
+    {
+      "id": "sellerBankAcct",
+      "value": ""
+    },
+    {
+      "id": "sellerBank",
+      "value": ""
+    },
+    {
+      "id": "sellerSwift",
+      "value": ""
+    },
+    {
+      "id": "buyer",
+      "value": "Bank of America"
+    },
+    {
+      "id": "buyerVAT",
+      "value": ""
+    },
+    {
+      "id": "buyerStreetNo",
+      "value": ""
+    },
+    {
+      "id": "buyerPostCode",
+      "value": ""
+    },
+    {
+      "id": "buyerCity",
+      "value": ""
+    }
+  ],
+  "invoiceTable": [
+    {
+      "item": "Test",
+      "quantity": 2,
+      "unit": "days",
+      "unitNetPrice": 20,
+      "vatPercent": 20,
+      "totalNet": 40,
+      "totalGross": 48
+    }
+  ],
+  "footer": {
+    "netTotal": "40.00",
+    "vatTotal": "8.00",
+    "grossTotal": "48.00"
+  }
+}
